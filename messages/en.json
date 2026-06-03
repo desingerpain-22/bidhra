@@ -1,0 +1,479 @@
+{
+  "Home": {
+    "title": "Bidhra",
+    "tagline": "A seed planted today.",
+    "description": "Bidhra connects Palestinian project owners with global supporters. Apply with your idea, contribute money to verified projects, or share your guidance and expertise with founders who need it.",
+    "cta": "Get started",
+    "secondaryCta": "Browse projects"
+  },
+  "Hero": {
+    "line": "Empower Palestinians to rebuild themselves",
+    "beforeAlt": "A thriving Palestinian city before the war",
+    "afterAlt": "The same neighborhood destroyed by war",
+    "beforeCaption": "Before",
+    "afterCaption": "After"
+  },
+  "Problems": {
+    "eyebrow": "Seed a Palestinian business",
+    "heading": "Aid keeps them alive. Investment gives them a life.",
+    "subheading": "How long will we keep donating, while Palestinians wait to build?",
+    "items": {
+      "collapse": {
+        "label": "01",
+        "title": "The economy is broken",
+        "stat": "84%",
+        "statCaption": "How much smaller the Palestinian economy is since the war",
+        "body": "Gaza needs $71 billion to rebuild. The West Bank can barely trade. 3.5 million Palestinians at home and 7 million abroad need a new way to earn. Not the one that's holding them back."
+      },
+      "displacement": {
+        "label": "02",
+        "title": "Pushed out, cut off",
+        "stat": "7M",
+        "statCaption": "Palestinians living outside Palestine, with no way to help home",
+        "body": "War pushed Palestinians out of Palestine. Many are starting over in Egypt, Jordan, Turkey, Europe, and North America. Those who stayed have no easy way to receive help from those who left. People abroad want to help. People at home need it. Nothing connects them."
+      },
+      "aid": {
+        "label": "03",
+        "title": "Aid feeds. It does not build.",
+        "stat": "80%",
+        "statCaption": "Share of people in Gaza now living on aid",
+        "body": "Aid keeps people alive, but it does not build anything. When the aid stops, nothing is left behind. One dollar of food aid is eaten once. One dollar in a small business is spent again and again, making $4 to $7 of new local activity."
+      },
+      "unemployment": {
+        "label": "04",
+        "title": "Skilled people, no work",
+        "stat": "78%",
+        "statCaption": "Of people in Gaza have no job, and 32% in the West Bank",
+        "body": "Hundreds of thousands of skilled Palestinians sit at home with nothing to do. Engineers, teachers, designers, builders, farmers, shopkeepers. A whole generation is losing its skills and its hope. That talent is going to waste."
+      }
+    }
+  },
+  "Manifesto": {
+    "eyebrow": "Why a business, not a meal",
+    "heading": "Food runs out. A business doesn't.",
+    "lede": "Most aid in Gaza keeps people alive. That matters. But survival isn't a future.",
+    "body": "Bidhra funds the next step: the bakery that reopens, the seamstress who buys a new machine, the shop owner who restocks his shelves. When you give to Bidhra, you're not feeding one family for one week. You're restarting a business that will feed dozens of families for years.",
+    "closing": "Every dollar you give goes directly into the hands of a Palestinian business owner who has a plan, a skill, and a will to rebuild.",
+    "examples": {
+      "bakery": "A bakery reopens",
+      "seamstress": "A seamstress buys a new machine",
+      "shop": "A shop owner restocks his shelves"
+    }
+  },
+  "HowItWorks": {
+    "eyebrow": "How Bidhra works",
+    "heading": "The seed grows into a tree. The tree drops new seeds.",
+    "steps": {
+      "apply": {
+        "number": "01",
+        "title": "A Palestinian applies",
+        "body": "Any Palestinian, anywhere, applies with a business idea, or one that needs to grow. To be accepted, <promise>they make two promises:</promise> hire only Palestinians who need work, and share a part of future profits to fund the next business."
+      },
+      "verify": {
+        "number": "02",
+        "title": "Bidhra verifies",
+        "body": "Our team checks every applicant through video calls, references, and a clear plan. No anonymous projects. No middlemen. Every owner we approve is real, named, and answerable."
+      },
+      "fund": {
+        "number": "03",
+        "title": "Supporters fund the seed",
+        "body": "People in the diaspora and ethical supporters contribute $50, $500, or more. Every contribution is tracked. Every dollar is shown in public."
+      },
+      "build": {
+        "number": "04",
+        "title": "The business builds. The community grows.",
+        "body": "The owner opens the business and hires Palestinians who need work. Supporters follow the journey through updates, photos, and videos. One funded business becomes a small employer."
+      },
+      "forest": {
+        "number": "05",
+        "title": "The seed becomes a forest",
+        "body": "When the business turns a profit, it gives back a share to Bidhra. That money funds the next Palestinian business. Then that one funds the next. And so on."
+      }
+    },
+    "closing": "One funded family becomes a community. A community becomes an economy."
+  },
+  "Nav": {
+    "browse": "Browse",
+    "apply": "Apply",
+    "mentor": "Become a mentor",
+    "knowledge": "Knowledge Match",
+    "scholarships": "Scholarships",
+    "dashboard": "Dashboard"
+  },
+  "GetStarted": {
+    "title": "How would you like to start?",
+    "ownerHeading": "I have an idea",
+    "ownerDescription": "Apply with your business idea, get verified, and ask for funding, guidance, or both.",
+    "ownerCta": "Apply as a project owner",
+    "supporterHeading": "I want to fund a project",
+    "supporterDescription": "Browse verified Palestinian projects and contribute money to ones you believe in.",
+    "supporterCta": "Browse projects",
+    "mentorHeading": "I want to share my expertise",
+    "mentorDescription": "Browse founders asking for guidance and offer mentorship via chat. No money needed.",
+    "mentorCta": "Browse guidance requests",
+    "studentHeading": "I want to support a student",
+    "studentDescription": "Help a Palestinian student stay in their seat. Fund tuition, books, or housing.",
+    "studentCta": "Browse scholarships"
+  },
+  "Projects": {
+    "title": "Verified projects",
+    "subtitle": "Hand-picked Palestinian businesses ready for your support.",
+    "of": "of",
+    "supporters": "supporters",
+    "supportBadge": {
+      "funding": "Seeking funding",
+      "knowledge": "Seeking guidance",
+      "both": "Funding & guidance"
+    }
+  },
+  "Project": {
+    "back": "← All projects",
+    "raised": "raised of",
+    "supporters": "supporters",
+    "daysLeft": "days left",
+    "contributeMoney": "Contribute money",
+    "offerSkills": "Offer skills",
+    "verified": "Verified",
+    "category": "Category",
+    "owner": "Project owner",
+    "location": "Location",
+    "storyEyebrow": "The story",
+    "galleryEyebrow": "From the workshop",
+    "galleryHeading": "Pieces being made today",
+    "supportBadge": {
+      "funding": "Seeking funding",
+      "knowledge": "Seeking guidance",
+      "both": "Funding & guidance"
+    }
+  },
+  "Apply": {
+    "title": "Apply with your idea",
+    "subtitle": "Tell us about your business idea. Verified applicants get listed publicly and start receiving contributions.",
+    "name": "Full name",
+    "email": "Email",
+    "location": "City in Palestine",
+    "projectTitle": "Project title",
+    "category": "Category",
+    "summary": "Short summary",
+    "summaryHelp": "One sentence. This is what supporters see in the list.",
+    "story": "Tell your story",
+    "storyHelp": "Why this idea, what you've already done, and what you'll do with the funding.",
+    "fundingGoal": "Funding goal (USD)",
+    "supportType": "What kind of support do you need?",
+    "supportTypeHelp": "Choose one or both based on your current needs.",
+    "supportOptions": {
+      "money": "Money",
+      "knowledge": "Knowledge & Mentorship"
+    },
+    "knowledgeType": "Type of knowledge needed",
+    "knowledgeTypeHelp": "Select one or more mentorship categories.",
+    "knowledgeOptions": {
+      "business_strategy": "Business strategy",
+      "digital_marketing": "Digital marketing",
+      "design_branding": "Design & branding",
+      "tech_development": "Tech & development",
+      "finance_accounting": "Finance & accounting",
+      "legal_licensing": "Legal & licensing"
+    },
+    "knowledgeDescriptionAr": "What support do you need? (Arabic)",
+    "knowledgeDescriptionArHelp": "Write practical guidance goals in Arabic.",
+    "knowledgeDescriptionEn": "What support do you need? (English)",
+    "knowledgeDescriptionEnHelp": "Write practical guidance goals in English.",
+    "urgency": "Urgency",
+    "urgencyOptions": {
+      "urgent": "Urgent (within 1 week)",
+      "soon": "Soon (within 1 month)",
+      "flexible": "Flexible"
+    },
+    "preferredSessions": "Preferred sessions",
+    "preferredHoursPerSession": "Hours per session",
+    "languagePreference": "Language preference",
+    "languageOptions": {
+      "ar": "Arabic",
+      "en": "English",
+      "both": "Both"
+    },
+    "skillsNeeded": "Skills you also need",
+    "skillsNeededHelp": "Comma-separated, e.g. design, marketing, accounting.",
+    "submit": "Submit application",
+    "submitting": "Submitting…",
+    "successTitle": "Application received",
+    "success": "Thanks. We received your application. Our team will review it within a few days.",
+    "successBrowse": "Browse projects",
+    "successDashboard": "Open dashboard",
+    "errors": {
+      "required": "Required",
+      "email": "Enter a valid email",
+      "min": "Too short",
+      "positive": "Must be greater than zero",
+      "pickOne": "Select at least one option"
+    }
+  },
+  "Knowledge": {
+    "title": "Knowledge Match",
+    "subtitle": "Share your expertise and mentor Palestinian entrepreneurs.",
+    "knowledgeOptions": {
+      "business_strategy": "Business strategy",
+      "digital_marketing": "Digital marketing",
+      "design_branding": "Design & branding",
+      "tech_development": "Tech & development",
+      "finance_accounting": "Finance & accounting",
+      "legal_licensing": "Legal & licensing"
+    },
+    "urgencyOptions": {
+      "urgent": "Urgent",
+      "soon": "Soon",
+      "flexible": "Flexible"
+    },
+    "languageOptions": {
+      "ar": "Arabic",
+      "en": "English",
+      "both": "Both"
+    },
+    "filters": {
+      "title": "Filters",
+      "knowledgeType": "Knowledge type",
+      "urgency": "Urgency",
+      "language": "Language",
+      "region": "Region",
+      "all": "All",
+      "none": "No requests match these filters."
+    },
+    "card": {
+      "lookingFor": "Looking for",
+      "sessions": "{count} sessions",
+      "offer": "Offer mentorship"
+    }
+  },
+  "Donate": {
+    "close": "Close",
+    "step": {
+      "amount": "Amount",
+      "payment": "Payment",
+      "confirm": "Confirm"
+    },
+    "amountStep": {
+      "heading": "How much would you like to contribute?",
+      "customLabel": "Or enter a custom amount",
+      "minError": "Minimum $1",
+      "next": "Continue"
+    },
+    "paymentStep": {
+      "heading": "Choose payment method",
+      "card": "Card",
+      "applePay": "Apple Pay",
+      "googlePay": "Google Pay",
+      "cardNumber": "Card number",
+      "expiry": "MM/YY",
+      "cvc": "CVC",
+      "back": "Back",
+      "next": "Continue"
+    },
+    "confirmStep": {
+      "heading": "Confirm your donation",
+      "amount": "Amount",
+      "method": "Payment method",
+      "project": "Project",
+      "back": "Back",
+      "submit": "Confirm donation",
+      "submitting": "Processing…"
+    },
+    "success": {
+      "heading": "Thank you for your support",
+      "body": "Your contribution of ${amount} is on its way to {project}.",
+      "share": "Share campaign",
+      "close": "Done"
+    },
+    "failure": {
+      "heading": "Payment failed",
+      "body": "Your card was not charged. Please try again or use a different method.",
+      "retry": "Try again",
+      "cancel": "Cancel"
+    },
+    "resume": {
+      "banner": "You have an unfinished donation",
+      "resume": "Resume",
+      "discard": "Start over"
+    }
+  },
+  "LocaleSwitcher": {
+    "label": "Language",
+    "en": "English",
+    "ar": "العربية"
+  },
+  "ProjectKnowledge": {
+    "title": "This project needs guidance, not just money",
+    "offer": "Offer Mentorship",
+    "checking": "Checking profile...",
+    "sessions": "Sessions needed",
+    "language": "Preferred language",
+    "offers": "Mentors already offered",
+    "knowledgeOptions": {
+      "business_strategy": "Business strategy",
+      "digital_marketing": "Digital marketing",
+      "design_branding": "Design & branding",
+      "tech_development": "Tech & development",
+      "finance_accounting": "Finance & accounting",
+      "legal_licensing": "Legal & licensing"
+    },
+    "languageOptions": {
+      "ar": "Arabic",
+      "en": "English",
+      "both": "Both"
+    },
+    "errors": {
+      "authRequired": "Please sign in first to offer mentorship.",
+      "tryAgain": "Could not verify your mentor profile right now. Please try again."
+    }
+  },
+  "MentorshipOffer": {
+    "title": "Offer mentorship",
+    "close": "Close",
+    "project": "Project",
+    "nameLabel": "Your name",
+    "namePlaceholder": "e.g. Layla H.",
+    "roleLabel": "Your role",
+    "rolePlaceholder": "e.g. Operations consultant",
+    "motivationLabel": "Why do you want to help this project?",
+    "motivationPlaceholder": "Share your motivation and what support you can provide.",
+    "commitment": "I commit to respectful communication and realistic availability throughout this mentorship.",
+    "submit": "Send offer",
+    "success": {
+      "title": "Offer sent",
+      "body": "The project owner can now review your offer in the dashboard and start a chat with you.",
+      "done": "Close",
+      "openDashboard": "Open dashboard",
+      "demoNote": "Demo: this offer is saved on this device only."
+    },
+    "errors": {
+      "missingFields": "Please add your name and role."
+    }
+  },
+  "BecomeMentor": {
+    "title": "Become a mentor",
+    "subtitle": "Share your expertise through Bidhra Knowledge Match and support Palestinian founders with real guidance.",
+    "stepLabel": "Step {current} of {total}",
+    "selectedCount": "{count} selected",
+    "confirmation": "By submitting, you commit to respectful mentorship, timely responses, and transparent collaboration with project owners.",
+    "successTitle": "Your mentor profile is ready",
+    "successBody": "Thank you for joining Knowledge Match. Project owners can now discover your expertise and send mentorship requests.",
+    "successBrowseKnowledge": "Browse guidance requests",
+    "successBrowseProjects": "Browse all projects",
+    "actions": {
+      "back": "Back",
+      "next": "Continue",
+      "submit": "Create mentor profile",
+      "submitting": "Saving..."
+    },
+    "fields": {
+      "bioAr": "Bio (Arabic)",
+      "bioArHelp": "Describe your background and how you can help.",
+      "bioEn": "Bio (English)",
+      "bioEnHelp": "Include your focus areas and mentoring style.",
+      "expertiseAreas": "Expertise areas",
+      "expertiseHelp": "Select all domains where you can mentor founders.",
+      "yearsOfExperience": "Years of experience",
+      "currentRole": "Current role",
+      "currentCompany": "Current company",
+      "hoursPerWeekAvailable": "Hours available per week",
+      "weeksCommitted": "Commitment length (weeks)",
+      "responseTimeHours": "Response time commitment (hours)",
+      "languages": "Languages",
+      "linkedinUrl": "LinkedIn URL (optional)",
+      "portfolioUrl": "Portfolio URL (optional)"
+    },
+    "expertiseOptions": {
+      "business_strategy": "Business strategy",
+      "digital_marketing": "Digital marketing",
+      "design_branding": "Design & branding",
+      "tech_development": "Tech & development",
+      "finance_accounting": "Finance & accounting",
+      "legal_licensing": "Legal & licensing"
+    },
+    "languageOptions": {
+      "ar": "Arabic",
+      "en": "English",
+      "both": "Both"
+    },
+    "errors": {
+      "required": "Required",
+      "requiredLong": "Please provide at least 20 characters",
+      "pickOne": "Select at least one option",
+      "number": "Enter a valid number",
+      "url": "Enter a valid URL starting with http:// or https://",
+      "auth": "Please sign in first to create your mentor profile.",
+      "submit": "Could not save your profile. Please try again."
+    }
+  },
+  "Scholarships": {
+    "title": "Scholarships",
+    "subtitle": "Palestinian students who need tuition, mentorship, or both to stay in their seat. Support one and follow their journey.",
+    "of": "of",
+    "supporters": "supporters",
+    "ageLabel": "{age} yrs",
+    "fullyFunded": "Fully funded",
+    "supportBadge": {
+      "funding": "Needs funding",
+      "guidance": "Needs a mentor",
+      "both": "Funding & mentor"
+    }
+  },
+  "Scholarship": {
+    "back": "← All scholarships",
+    "raised": "raised of",
+    "supporters": "supporters",
+    "daysLeft": "days left",
+    "verified": "Verified",
+    "fieldLabel": "Field of study",
+    "universityLabel": "University",
+    "yearLabel": "Year",
+    "ageLabel": "{age} years old",
+    "supportStudent": "Support this student",
+    "fullyFunded": "Fully funded. Thank you",
+    "fullyFundedShort": "Fully funded",
+    "supportBadge": {
+      "funding": "Needs funding",
+      "guidance": "Needs a mentor",
+      "both": "Funding & mentor"
+    },
+    "guidanceTitle": "This student is looking for a mentor",
+    "offerGuidance": "Offer guidance"
+  },
+  "Dashboard": {
+    "title": "Your dashboard",
+    "subtitle": "Review mentorship offers and continue active conversations.",
+    "nav": {
+      "offers": "Mentorship offers"
+    }
+  },
+  "OwnerOffers": {
+    "loading": "Loading...",
+    "empty": "No mentorship offers yet. Open a project that needs guidance and send the first offer.",
+    "emptyCta": "Browse projects needing guidance →",
+    "forProject": "For project",
+    "openChat": "Open chat",
+    "accept": "Accept",
+    "decline": "Decline",
+    "status": {
+      "pending": "Pending review",
+      "active": "Active",
+      "declined": "Declined"
+    }
+  },
+  "Chat": {
+    "loading": "Loading conversation...",
+    "notFound": "We couldn't find this conversation on this device.",
+    "backToOffers": "Back to dashboard",
+    "threadFor": "Mentorship for",
+    "youAre": "You are",
+    "notActive": "Accept the offer from the dashboard to start chatting.",
+    "emptyThread": "Send the first message as the {role}.",
+    "roles": {
+      "mentor": "Mentor",
+      "owner": "Project owner"
+    },
+    "placeholder": "Write a message... (Enter to send, Shift+Enter for newline)",
+    "disabledPlaceholder": "Messaging is disabled until the offer is accepted.",
+    "send": "Send"
+  }
+}

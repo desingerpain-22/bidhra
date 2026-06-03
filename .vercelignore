@@ -1,0 +1,8 @@
+# Raw documentary footage. Compressed assets live in /public/footage/.
+/Footage
+
+# Local-only artifacts
+.next
+node_modules
+.env*
+*.tsbuildinfo

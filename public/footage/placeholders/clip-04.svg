@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1250" width="1000" height="1250" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a1816"/>
+      <stop offset="100%" stop-color="#0f0e0c"/>
+    </linearGradient>
+    <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+      <path d="M 80 0 L 0 0 0 80" fill="none" stroke="#2a2724" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1000" height="1250" fill="url(#bg)"/>
+  <rect width="1000" height="1250" fill="url(#grid)"/>
+  <rect x="40" y="40" width="920" height="1170" rx="0" ry="0" fill="none" stroke="#3d3933" stroke-width="2" stroke-dasharray="8 12"/>
+  <g font-family="ui-monospace, SF Mono, Menlo, monospace" fill="#c8a96a" text-anchor="middle">
+    <text x="500" y="605" font-size="56" letter-spacing="6">CLIP-04</text>
+  </g>
+  <g font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="33" fill="#9a948a" text-anchor="middle">
+    <text x="500" y="655" letter-spacing="3">4/5</text>
+  </g>
+  <g font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="23" fill="#5f5a52">
+    <text x="48" y="1202" letter-spacing="2">PLACEHOLDER * MOAMEN FOOTAGE</text>
+  </g>
+</svg>
