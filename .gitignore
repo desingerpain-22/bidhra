@@ -36,6 +36,9 @@ yarn-error.log*
 # raw source media (not served by the app; lives in public/footage instead)
 /Footage/
 
+# large video excluded from git (push timed out); upload to Replit/host manually
+/public/footage/chapter-1.mp4
+
 # vercel
 .vercel
 
