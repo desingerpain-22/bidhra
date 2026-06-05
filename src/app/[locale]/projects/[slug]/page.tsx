@@ -342,17 +342,21 @@ export default async function ProjectDetail({
         lang="en"
         dir="ltr"
       >
-        <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-8 md:grid-cols-2">
-          {c.pdfStudy.map((page, pageIndex) => (
-            <Reveal key={pageIndex} direction="up" delay={(pageIndex % 2) * 80}>
+        <div className="mx-auto flex w-full max-w-4xl flex-col gap-10">
+          {c.feasibilityStudy.map((section, sectionIndex) => (
+            <Reveal key={section[0]} direction="up" delay={(sectionIndex % 2) * 80}>
               <div
                 className="h-full border p-5 sm:p-8"
                 style={{ borderColor: "var(--line)", background: "var(--bg)" }}
               >
-                {page.map((line, lineIndex) => (
+                {section.map((line, lineIndex) => (
                   <p
-                    key={`${pageIndex}-${lineIndex}`}
-                    className="mb-2 last:mb-0 text-base font-light leading-[1.55] text-foreground sm:text-lg"
+                    key={`${sectionIndex}-${lineIndex}`}
+                    className={
+                      lineIndex === 0
+                        ? "mb-4 font-mono text-[11px] uppercase tracking-[0.25em] text-accent"
+                        : "mb-2 last:mb-0 text-base font-light leading-[1.65] text-foreground sm:text-lg"
+                    }
                   >
                     {line}
                   </p>
