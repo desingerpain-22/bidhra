@@ -8,28 +8,76 @@ type FeasibilityStudyProps = {
 
 export function FeasibilityStudy({ sections }: FeasibilityStudyProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const activeIndexRef = useRef(0);
   const itemRefs = useRef<(HTMLElement | null)[]>([]);
+  const headerRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const manualUntilRef = useRef(0);
+
+  const setActive = (index: number) => {
+    activeIndexRef.current = index;
+    setActiveIndex(index);
+  };
 
   useEffect(() => {
-    const items = itemRefs.current.filter(Boolean) as HTMLElement[];
-    if (items.length === 0) return;
+    activeIndexRef.current = activeIndex;
+  }, [activeIndex]);
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+  useEffect(() => {
+    let frame = 0;
 
-        if (visible?.target instanceof HTMLElement) {
-          setActiveIndex(Number(visible.target.dataset.studyIndex ?? 0));
+    const updateFromScroll = () => {
+      frame = 0;
+      if (Date.now() < manualUntilRef.current) return;
+
+      const headers = headerRefs.current.filter(Boolean) as HTMLButtonElement[];
+      if (headers.length === 0) return;
+
+      const targetY = window.innerHeight * 0.38;
+      let nextIndex = activeIndexRef.current;
+      let closestDistance = Number.POSITIVE_INFINITY;
+
+      for (const header of headers) {
+        const index = Number(header.dataset.studyIndex ?? 0);
+        const distance = Math.abs(header.getBoundingClientRect().top - targetY);
+
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          nextIndex = index;
         }
-      },
-      { rootMargin: "-28% 0px -48% 0px", threshold: [0, 0.2, 0.5, 0.8] },
-    );
+      }
 
-    for (const item of items) observer.observe(item);
-    return () => observer.disconnect();
+      if (nextIndex !== activeIndexRef.current) {
+        setActive(nextIndex);
+      }
+    };
+
+    const requestUpdate = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(updateFromScroll);
+    };
+
+    updateFromScroll();
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+    };
   }, [sections.length]);
+
+  const openManually = (sectionIndex: number, shouldScroll = false) => {
+    manualUntilRef.current = Date.now() + 900;
+    setActive(sectionIndex);
+
+    if (shouldScroll) {
+      itemRefs.current[sectionIndex]?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  };
 
   return (
     <section
@@ -50,36 +98,32 @@ export function FeasibilityStudy({ sections }: FeasibilityStudyProps) {
             className="mt-10 hidden border-t pt-5 xl:block"
             style={{ borderColor: "var(--line)" }}
           >
-            {sections.map((section, sectionIndex) => (
-              <button
-                key={section[0]}
-                type="button"
-                onClick={() => {
-                  setActiveIndex(sectionIndex);
-                  itemRefs.current[sectionIndex]?.scrollIntoView({
-                    behavior: "smooth",
-                    block: "center",
-                  });
-                }}
-                className="grid w-full grid-cols-[2.5rem_1fr_auto] items-center gap-3 border-b py-3 text-start font-mono text-[10px] uppercase leading-[1.5] tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
-                style={{ borderColor: "var(--line)" }}
-                aria-expanded={activeIndex === sectionIndex}
-              >
-                <span className="text-accent">
-                  {String(sectionIndex + 1).padStart(2, "0")}
-                </span>
-                <span>{section[0]}</span>
-                <span
-                  className={
-                    "text-accent transition-transform duration-300 " +
-                    (activeIndex === sectionIndex ? "rotate-180" : "")
-                  }
-                  aria-hidden
+            {sections.map((section, sectionIndex) => {
+              const isOpen = activeIndex === sectionIndex;
+
+              return (
+                <button
+                  key={section[0]}
+                  type="button"
+                  onClick={() => openManually(sectionIndex, true)}
+                  className="grid w-full grid-cols-[2.5rem_1fr_auto] items-center gap-3 border-b py-3 text-start font-mono text-[10px] uppercase leading-[1.5] tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
+                  style={{ borderColor: "var(--line)" }}
+                  aria-expanded={isOpen}
                 >
-                  ↓
-                </span>
-              </button>
-            ))}
+                  <span className="text-accent">
+                    {String(sectionIndex + 1).padStart(2, "0")}
+                  </span>
+                  <span>{section[0]}</span>
+                  <span
+                    className={
+                      "h-2 w-2 rotate-45 border-b border-r border-accent transition-transform duration-300 " +
+                      (isOpen ? "-rotate-135" : "")
+                    }
+                    aria-hidden
+                  />
+                </button>
+              );
+            })}
           </div>
         </header>
 
@@ -93,13 +137,16 @@ export function FeasibilityStudy({ sections }: FeasibilityStudyProps) {
                 ref={(node) => {
                   itemRefs.current[sectionIndex] = node;
                 }}
-                data-study-index={sectionIndex}
                 className="border-t py-5 sm:py-6"
                 style={{ borderColor: "var(--line)" }}
               >
                 <button
                   type="button"
-                  onClick={() => setActiveIndex(sectionIndex)}
+                  ref={(node) => {
+                    headerRefs.current[sectionIndex] = node;
+                  }}
+                  data-study-index={sectionIndex}
+                  onClick={() => openManually(sectionIndex)}
                   className="grid w-full grid-cols-[1fr_auto] gap-5 text-start"
                   aria-expanded={isOpen}
                 >
@@ -126,20 +173,24 @@ export function FeasibilityStudy({ sections }: FeasibilityStudyProps) {
                     </span>
                   </span>
                   <span
-                    className={
-                      "mt-2 inline-flex h-10 w-10 items-center justify-center border font-mono text-xl text-accent transition-transform duration-300 " +
-                      (isOpen ? "rotate-180" : "")
-                    }
-                    style={{ borderColor: "var(--line)" }}
+                    className="mt-2 inline-flex h-10 w-10 items-center justify-center border transition-colors duration-300"
+                    style={{
+                      borderColor: isOpen ? "var(--accent)" : "var(--line)",
+                    }}
                     aria-hidden
                   >
-                    ↓
+                    <span
+                      className={
+                        "h-2.5 w-2.5 rotate-45 border-b border-r border-accent transition-transform duration-300 " +
+                        (isOpen ? "-rotate-135" : "")
+                      }
+                    />
                   </span>
                 </button>
 
                 <div
                   className={
-                    "grid overflow-hidden transition-[grid-template-rows,opacity] duration-500 ease-out " +
+                    "grid overflow-hidden transition-[grid-template-rows,opacity] duration-300 ease-out " +
                     (isOpen
                       ? "grid-rows-[1fr] opacity-100"
                       : "grid-rows-[0fr] opacity-0")
