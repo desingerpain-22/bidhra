@@ -403,80 +403,39 @@ export default async function ProjectDetail({
                     </h3>
                   </div>
 
-                  {sectionIndex === 1 ? (
-                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-                      {section.slice(1).reduce(
-                        (groups, line) => {
-                          if (/^[0-9]+\./.test(line)) {
-                            groups.push({ title: line, items: [] });
-                          } else {
-                            groups[groups.length - 1]?.items.push(line);
-                          }
+                  <div
+                    className={
+                      sectionIndex === 0
+                        ? "max-w-3xl"
+                        : "grid grid-cols-1 gap-x-10 gap-y-3 2xl:grid-cols-2"
+                    }
+                  >
+                    {section.slice(1).map((line, lineIndex) => {
+                      const isSubhead = /^[0-9]+\./.test(line);
 
-                          return groups;
-                        },
-                        [] as { title: string; items: string[] }[],
-                      ).map((group) => (
-                        <div
-                          key={group.title}
-                          className="border p-5"
-                          style={{
-                            borderColor: "var(--line)",
-                            background: "var(--bg-elev)",
-                          }}
+                      return isSubhead ? (
+                        <h4
+                          key={`${sectionIndex}-${lineIndex}`}
+                          className="mt-5 border-t pt-5 font-mono text-[11px] uppercase tracking-[0.22em] text-accent first:mt-0 2xl:col-span-2"
+                          style={{ borderColor: "var(--line)" }}
                         >
-                          <h4 className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
-                            {group.title}
-                          </h4>
-                          <ul className="mt-5 flex flex-col gap-3">
-                            {group.items.map((item) => (
-                              <li
-                                key={item}
-                                className="grid grid-cols-[auto_1fr] gap-3 text-sm font-light leading-[1.65] text-foreground sm:text-base"
-                              >
-                                <span
-                                  className="mt-2 h-1.5 w-1.5 rounded-full bg-accent"
-                                  aria-hidden
-                                />
-                                <span>{item}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <ul
-                      className={
-                        "grid grid-cols-1 gap-4 " +
-                        (sectionIndex === 0
-                          ? "max-w-3xl"
-                          : "lg:grid-cols-2")
-                      }
-                    >
-                      {section.slice(1).map((line) => (
-                        <li
-                          key={line}
+                          {line}
+                        </h4>
+                      ) : (
+                        <p
+                          key={`${sectionIndex}-${lineIndex}`}
                           className={
-                            "grid grid-cols-[auto_1fr] gap-4 border p-5 font-light leading-[1.7] text-foreground " +
+                            "text-base font-light leading-[1.7] text-foreground sm:text-lg " +
                             (sectionIndex === 0
                               ? "text-xl leading-[1.55] sm:text-2xl"
-                              : "text-base sm:text-lg")
+                              : "")
                           }
-                          style={{
-                            borderColor: "var(--line)",
-                            background: "var(--bg-elev)",
-                          }}
                         >
-                          <span
-                            className="mt-3 h-2 w-2 rounded-full bg-accent"
-                            aria-hidden
-                          />
-                          <span>{line}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                          {line}
+                        </p>
+                      );
+                    })}
+                  </div>
                 </article>
               </Reveal>
             ))}
