@@ -56,12 +56,6 @@ export async function SiteHeader() {
           >
             {t("knowledge")}
           </Link>
-          <Link
-            href="/dashboard/offers"
-            className="rounded-full bg-primary px-2.5 py-1.5 text-xs font-medium text-primary-foreground transition hover:opacity-90 sm:px-3 sm:text-sm"
-          >
-            {t("dashboard")}
-          </Link>
           <LocaleSwitcher />
         </div>
       </div>

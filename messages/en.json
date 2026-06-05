@@ -97,8 +97,7 @@
     "apply": "Apply",
     "mentor": "Become a mentor",
     "knowledge": "Knowledge Match",
-    "scholarships": "Scholarships",
-    "dashboard": "Dashboard"
+    "scholarships": "Scholarships"
   },
   "GetStarted": {
     "title": "How would you like to start?",
@@ -200,7 +199,6 @@
     "successTitle": "Application received",
     "success": "Thanks. We received your application. Our team will review it within a few days.",
     "successBrowse": "Browse projects",
-    "successDashboard": "Open dashboard",
     "errors": {
       "required": "Required",
       "email": "Enter a valid email",
@@ -340,9 +338,9 @@
     "submit": "Send offer",
     "success": {
       "title": "Offer sent",
-      "body": "The project owner can now review your offer in the dashboard and start a chat with you.",
+      "body": "Your offer has been saved on this device.",
       "done": "Close",
-      "openDashboard": "Open dashboard",
+      "browseProjects": "Browse projects",
       "demoNote": "Demo: this offer is saved on this device only."
     },
     "errors": {
@@ -438,42 +436,5 @@
     },
     "guidanceTitle": "This student is looking for a mentor",
     "offerGuidance": "Offer guidance"
-  },
-  "Dashboard": {
-    "title": "Your dashboard",
-    "subtitle": "Review mentorship offers and continue active conversations.",
-    "nav": {
-      "offers": "Mentorship offers"
-    }
-  },
-  "OwnerOffers": {
-    "loading": "Loading...",
-    "empty": "No mentorship offers yet. Open a project that needs guidance and send the first offer.",
-    "emptyCta": "Browse projects needing guidance →",
-    "forProject": "For project",
-    "openChat": "Open chat",
-    "accept": "Accept",
-    "decline": "Decline",
-    "status": {
-      "pending": "Pending review",
-      "active": "Active",
-      "declined": "Declined"
-    }
-  },
-  "Chat": {
-    "loading": "Loading conversation...",
-    "notFound": "We couldn't find this conversation on this device.",
-    "backToOffers": "Back to dashboard",
-    "threadFor": "Mentorship for",
-    "youAre": "You are",
-    "notActive": "Accept the offer from the dashboard to start chatting.",
-    "emptyThread": "Send the first message as the {role}.",
-    "roles": {
-      "mentor": "Mentor",
-      "owner": "Project owner"
-    },
-    "placeholder": "Write a message... (Enter to send, Shift+Enter for newline)",
-    "disabledPlaceholder": "Messaging is disabled until the offer is accepted.",
-    "send": "Send"
   }
 }

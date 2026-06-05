@@ -126,12 +126,6 @@ export default function ApplyPage() {
           >
             {t("successBrowse")}
           </Link>
-          <Link
-            href="/dashboard/offers"
-            className="inline-flex h-11 items-center justify-center rounded-full border border-border px-5 text-sm font-medium text-foreground transition hover:bg-muted"
-          >
-            {t("successDashboard")}
-          </Link>
         </div>
       </main>
     );

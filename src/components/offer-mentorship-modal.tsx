@@ -49,9 +49,9 @@ export function OfferMentorshipModal({
     setDone(true);
   }
 
-  function goToDashboard() {
+  function goToProjects() {
     onOpenChange(false);
-    router.push("/dashboard/offers");
+    router.push("/projects");
   }
 
   return (
@@ -86,10 +86,10 @@ export function OfferMentorshipModal({
               <div className="flex flex-wrap gap-2">
                 <button
                   type="button"
-                  onClick={goToDashboard}
+                  onClick={goToProjects}
                   className="inline-flex h-10 items-center rounded-full bg-emerald-400 px-5 text-sm font-medium text-zinc-950"
                 >
-                  {t("success.openDashboard")}
+                  {t("success.browseProjects")}
                 </button>
                 <button
                   type="button"
