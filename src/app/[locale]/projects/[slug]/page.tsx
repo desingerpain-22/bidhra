@@ -348,7 +348,7 @@ export default async function ProjectDetail({
               <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-accent">
                 Project 001
               </p>
-              <h2 className="mt-5 max-w-sm text-6xl font-semibold leading-[0.92] text-foreground sm:text-7xl xl:text-8xl">
+              <h2 className="mt-5 max-w-sm text-5xl font-semibold leading-[0.95] text-foreground sm:text-6xl xl:text-7xl">
                 Feasibility Study
               </h2>
               <div
@@ -421,6 +421,17 @@ export default async function ProjectDetail({
                         >
                           {line}
                         </h4>
+                      ) : sectionIndex === 1 ? (
+                        <p
+                          key={`${sectionIndex}-${lineIndex}`}
+                          className="grid grid-cols-[auto_1fr] gap-3 text-base font-light leading-[1.7] text-foreground sm:text-lg"
+                        >
+                          <span
+                            className="mt-3 h-1.5 w-1.5 rounded-full bg-accent"
+                            aria-hidden
+                          />
+                          <span>{line}</span>
+                        </p>
                       ) : (
                         <p
                           key={`${sectionIndex}-${lineIndex}`}
