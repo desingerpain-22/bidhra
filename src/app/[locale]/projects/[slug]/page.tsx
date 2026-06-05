@@ -534,23 +534,6 @@ export default async function ProjectDetail({
         )}
       </section>
 
-      <section
-        className="border-t px-4 py-20 text-center sm:px-12 sm:py-32"
-        style={{ borderColor: "var(--line)", background: "var(--bg-elev)" }}
-      >
-        <Reveal direction="up">
-          <h2 className="mx-auto max-w-3xl text-[clamp(2rem,7vw,4.5rem)] font-light leading-[1.1] tracking-[-0.03em] text-foreground">
-            {c.closing.headline[loc].plain}
-            <br />
-            <em className="em-accent">{c.closing.headline[loc].accent}</em>
-          </h2>
-        </Reveal>
-        <Reveal direction="up" delay={120}>
-          <p className="mt-16 font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-            {c.closing.signature[loc]}
-          </p>
-        </Reveal>
-      </section>
     </div>
   );
 }
