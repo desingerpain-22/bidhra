@@ -342,17 +342,17 @@ export default async function ProjectDetail({
         lang="en"
         dir="ltr"
       >
-        <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-12 lg:grid-cols-[minmax(0,3fr)_minmax(0,7fr)] lg:gap-20">
+        <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-12 xl:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] xl:gap-20">
           <Reveal direction="up">
-            <header className="lg:sticky lg:top-28">
+            <header className="xl:sticky xl:top-28">
               <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-accent">
                 Project 001
               </p>
-              <h2 className="mt-5 max-w-sm text-[clamp(2.75rem,7vw,6rem)] font-semibold leading-[0.92] text-foreground">
+              <h2 className="mt-5 max-w-sm text-6xl font-semibold leading-[0.92] text-foreground sm:text-7xl xl:text-8xl">
                 Feasibility Study
               </h2>
               <div
-                className="mt-10 hidden border-t pt-5 lg:block"
+                className="mt-10 hidden border-t pt-5 xl:block"
                 style={{ borderColor: "var(--line)" }}
               >
                 {c.feasibilityStudy.map((section, sectionIndex) => (
@@ -407,7 +407,7 @@ export default async function ProjectDetail({
                     className={
                       sectionIndex === 0
                         ? "max-w-3xl"
-                        : "grid grid-cols-1 gap-x-10 gap-y-3 sm:grid-cols-2"
+                        : "grid grid-cols-1 gap-x-10 gap-y-3 2xl:grid-cols-2"
                     }
                   >
                     {section.slice(1).map((line, lineIndex) => {
@@ -416,7 +416,7 @@ export default async function ProjectDetail({
                       return isSubhead ? (
                         <h4
                           key={`${sectionIndex}-${lineIndex}`}
-                          className="mt-5 border-t pt-5 font-mono text-[11px] uppercase tracking-[0.22em] text-accent first:mt-0 sm:col-span-2"
+                          className="mt-5 border-t pt-5 font-mono text-[11px] uppercase tracking-[0.22em] text-accent first:mt-0 2xl:col-span-2"
                           style={{ borderColor: "var(--line)" }}
                         >
                           {line}
