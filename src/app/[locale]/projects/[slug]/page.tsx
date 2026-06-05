@@ -421,7 +421,7 @@ export default async function ProjectDetail({
                         >
                           {line}
                         </h4>
-                      ) : sectionIndex === 1 ? (
+                      ) : sectionIndex > 0 && sectionIndex < 6 ? (
                         <p
                           key={`${sectionIndex}-${lineIndex}`}
                           className="grid grid-cols-[auto_1fr] gap-3 text-base font-light leading-[1.7] text-foreground sm:text-lg"
