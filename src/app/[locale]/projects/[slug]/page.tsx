@@ -10,7 +10,6 @@ import { FootageMedia } from "@/components/footage-media";
 import { PortraitSlideshow } from "@/components/portrait-slideshow";
 import { Reveal } from "@/components/reveal";
 import { moamenContent } from "@/lib/moamen-content";
-import Image from "next/image";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -352,18 +351,6 @@ export default async function ProjectDetail({
               <h2 className="mt-5 max-w-sm text-6xl font-semibold leading-[0.92] text-foreground sm:text-7xl xl:text-8xl">
                 Feasibility Study
               </h2>
-              <div
-                className="mt-8 overflow-hidden border"
-                style={{ borderColor: "var(--line)" }}
-              >
-                <Image
-                  src="/projects/moamen-wooden-chair.jpeg"
-                  alt="Wooden chair produced for the Moamen woodworking project"
-                  width={225}
-                  height={225}
-                  className="aspect-[4/3] w-full object-cover"
-                />
-              </div>
               <div
                 className="mt-10 hidden border-t pt-5 xl:block"
                 style={{ borderColor: "var(--line)" }}
