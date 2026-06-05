@@ -9,6 +9,7 @@ import { ProjectKnowledgeSection } from "@/components/project-knowledge-section"
 import { FootageMedia } from "@/components/footage-media";
 import { PortraitSlideshow } from "@/components/portrait-slideshow";
 import { Reveal } from "@/components/reveal";
+import { FeasibilityStudy } from "@/components/feasibility-study";
 import { moamenContent } from "@/lib/moamen-content";
 
 export function generateStaticParams() {
@@ -336,123 +337,7 @@ export default async function ProjectDetail({
         );
       })}
 
-      <section
-        className="border-t px-4 py-16 sm:px-12 sm:py-32"
-        style={{ borderColor: "var(--line)", background: "var(--bg)" }}
-        lang="en"
-        dir="ltr"
-      >
-        <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-12 xl:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] xl:gap-20">
-          <Reveal direction="up">
-            <header className="xl:sticky xl:top-28">
-              <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-accent">
-                Project 001
-              </p>
-              <h2 className="mt-5 max-w-sm text-5xl font-semibold leading-[0.95] text-foreground sm:text-6xl xl:text-7xl">
-                Feasibility Study
-              </h2>
-              <div
-                className="mt-10 hidden border-t pt-5 xl:block"
-                style={{ borderColor: "var(--line)" }}
-              >
-                {c.feasibilityStudy.map((section, sectionIndex) => (
-                  <p
-                    key={section[0]}
-                    className="grid grid-cols-[2.5rem_1fr] border-b py-3 font-mono text-[10px] uppercase leading-[1.5] tracking-[0.18em] text-muted-foreground"
-                    style={{ borderColor: "var(--line)" }}
-                  >
-                    <span className="text-accent">
-                      {String(sectionIndex + 1).padStart(2, "0")}
-                    </span>
-                    <span>{section[0]}</span>
-                  </p>
-                ))}
-              </div>
-            </header>
-          </Reveal>
-
-          <div className="flex flex-col">
-            {c.feasibilityStudy.map((section, sectionIndex) => (
-              <Reveal
-                key={section[0]}
-                direction="up"
-                delay={(sectionIndex % 2) * 80}
-              >
-                <article
-                  className={
-                    "grid grid-cols-1 border-t py-10 sm:py-14 " +
-                    (sectionIndex === 0
-                      ? "gap-6"
-                      : "gap-5 md:grid-cols-[minmax(0,2fr)_minmax(0,5fr)] md:gap-12")
-                  }
-                  style={{ borderColor: "var(--line)" }}
-                >
-                  <div>
-                    <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-accent">
-                      {String(sectionIndex + 1).padStart(2, "0")}
-                    </p>
-                    <h3
-                      className={
-                        "mt-3 font-semibold leading-[1.05] text-foreground " +
-                        (sectionIndex === 0
-                          ? "max-w-2xl text-[clamp(2rem,5vw,4rem)]"
-                          : "text-2xl sm:text-3xl")
-                      }
-                    >
-                      {section[0]}
-                    </h3>
-                  </div>
-
-                  <div
-                    className={
-                      sectionIndex === 0
-                        ? "max-w-3xl"
-                        : "grid grid-cols-1 gap-x-10 gap-y-3 2xl:grid-cols-2"
-                    }
-                  >
-                    {section.slice(1).map((line, lineIndex) => {
-                      const isSubhead = /^[0-9]+\./.test(line);
-
-                      return isSubhead ? (
-                        <h4
-                          key={`${sectionIndex}-${lineIndex}`}
-                          className="mt-5 border-t pt-5 font-mono text-[11px] uppercase tracking-[0.22em] text-accent first:mt-0 2xl:col-span-2"
-                          style={{ borderColor: "var(--line)" }}
-                        >
-                          {line}
-                        </h4>
-                      ) : sectionIndex > 0 && sectionIndex < 6 ? (
-                        <p
-                          key={`${sectionIndex}-${lineIndex}`}
-                          className="grid grid-cols-[auto_1fr] gap-3 text-base font-light leading-[1.7] text-foreground sm:text-lg"
-                        >
-                          <span
-                            className="mt-3 h-1.5 w-1.5 rounded-full bg-accent"
-                            aria-hidden
-                          />
-                          <span>{line}</span>
-                        </p>
-                      ) : (
-                        <p
-                          key={`${sectionIndex}-${lineIndex}`}
-                          className={
-                            "text-base font-light leading-[1.7] text-foreground sm:text-lg " +
-                            (sectionIndex === 0
-                              ? "text-xl leading-[1.55] sm:text-2xl"
-                              : "")
-                          }
-                        >
-                          {line}
-                        </p>
-                      );
-                    })}
-                  </div>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FeasibilityStudy sections={c.feasibilityStudy} />
 
       <section
         id="donate"
