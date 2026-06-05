@@ -35,15 +35,7 @@ export const moamenContent: {
   pullQuote: { body: RichLocalized; cite: Localized };
   fullBleed: { eyebrow: Localized; caption: Localized };
   workGrid: { eyebrow: RichLocalized; meta: Localized };
-  feasibilityStudy: {
-    eyebrow: string;
-    title: string;
-    source: string;
-    overview: string;
-    stats: { value: string; label: string }[];
-    sections: { title: string; items: string[] }[];
-    conclusion: string;
-  };
+  pdfStudy: string[][];
   ask: {
     eyebrow: Localized;
     amount: string;
@@ -258,65 +250,119 @@ export const moamenContent: {
       ar: "تصوير موثّق · دير البلح",
     },
   },
-  feasibilityStudy: {
-    eyebrow: "Brief Feasibility Study",
-    title: "Moamen Woodworking Project - Deir Al-Balah",
-    source: "English study excerpt",
-    overview:
-      "The project aims to establish a small woodworking workshop specializing in the production of wooden furniture and products needed by people in Gaza, such as chairs, tables, cabinets, home furniture, and school furniture. The project focuses on practical and affordable products that meet the current needs of families and institutions.",
-    stats: [
-      {
-        value: "1,500 NIS",
-        label:
-          "minimum expected profit from regular local furniture sales, approximately $520 USD",
-      },
-      {
-        value: "$2,000+",
-        label:
-          "possible profit when contracts are secured with schools or institutions",
-      },
-      {
-        value: "12 people",
-        label:
-          "expected direct and indirect impact through workers and their families",
-      },
+  pdfStudy: [
+    [
+      "Bidrah",
+      "PROJECT NO. 001 · GAZA",
+      "THE FIRST STORY",
+      "He spent half his life",
+      "shaping children. Now he's",
+      "shaping",
+      "Gaza.",
+      "The war took his home in Shejaiya. The schools rejected him despite 16",
+      "years of teaching. So he taught himself a new craft with his own hands —",
+      "and now he's ready to do it for others too.",
+      "DEIR AL-BALAH, GAZA",
+      "A BIDRAH STORY",
     ],
-    sections: [
-      {
-        title: "Key requirements",
-        items: [
-          "A suitable rented workshop or workspace with access to reliable electricity.",
-          "Essential equipment including a circular saw, table saw, electric drill, sanding machine, measuring tools, screwdrivers, hammers, and hand tools.",
-          "Raw materials including available wood, wooden planks, nails, screws, wood glue, hinges, furniture accessories, paints, and varnish.",
-        ],
-      },
-      {
-        title: "Expected products and services",
-        items: [
-          "Wooden chairs, home tables, school tables, cabinets, and shelves.",
-          "Custom woodworking services based on local demand.",
-          "School desks and benches, with potential work furnishing facilities and institutions when contract opportunities become available.",
-        ],
-      },
-      {
-        title: "Social impact",
-        items: [
-          "The workshop is expected to create direct employment opportunities for at least two people alongside Moamen.",
-          "It helps move families away from long-term dependence on aid by creating sustainable income opportunities.",
-          "A portion of future profits will be allocated to support other small community projects.",
-        ],
-      },
-      {
-        title: "Current need",
-        items: [
-          "Because of the destruction and ongoing challenges in Gaza, many families are turning to wooden furniture as a practical alternative for tents and temporary living conditions.",
-          "The workshop can produce chairs, school desks, cabinets, and other furniture that directly improves daily living conditions.",
-        ],
-      },
+    [
+      "Bidrah",
+      "MEET MOAMEN · 02",
+      "[ PHOTO ]",
+      "Moamen Naim Wasfi",
+      "Mushtaha",
+      "TEACHER · CARPENTER · FATHER OF FIVE",
+      "AGE",
+      "39 years old",
+      "ORIGINAL RESIDENCE",
+      "Shejaiya, North Gaza",
+      "DISPLACED TO",
+      "Deir Al-Balah",
+      "FAMILY",
+      "5 members",
+      "EXPERIENCE",
+      "16 yrs Elementary Teacher",
+      "EDUCATION",
+      "B.A. Basic Education",
+      "VERIFIED PROJECT",
+      "BIDRAH · 02",
     ],
-    conclusion:
-      "Moamen Woodworking Project is a practical and sustainable small business that combines economic and social impact. It provides a stable source of income, creates employment opportunities, and produces essential furniture needed by the local community.",
-  },
+    [
+      "Bidrah",
+      "THE STORY · 03",
+      "CHAPTER ONE — DISPLACEMENT",
+      "The war took his house. It didn't take",
+      "his hands.",
+      "Moamen has 5 family members to take care of. The war took his house in the north of Gaza, in Shejaiya. He",
+      "is now displaced to the south, in Deir Al-Balah.",
+      "Like every Palestinian in Gaza, Moamen needed furniture and basic things for his tent. But instead of crying,",
+      "instead of waiting for the aid, instead of waiting for the conditions to become easier —",
+      "he built his own",
+      "things with his own hands.",
+      "He built tents for his family. Then for his relatives. And through this, Moamen became an engineer in",
+      "woodworking. He gained the experience the only way he could: by doing it.",
+      "MOAMEN MUSHTAHA · PROJECT 001",
+      "BIDRAH · 03",
+    ],
+    [
+      "\"",
+      "In a system where Gaza has lost so many",
+      "experienced teachers — to the war, to the",
+      "conditions we live in — a man like him should be",
+      "treated as valuable gold.",
+      "ON MOAMEN — 16 YEARS OF TEACHING EXPERIENCE",
+    ],
+    [
+      "Bidrah",
+      "THE STORY · 05",
+      "CHAPTER TWO — REJECTION",
+      "Rejected. Not for lack of skill. For lack of",
+      "connections.",
+      "Moamen tried many times to go back to teaching. He was rejected every time. Not because of his skills. Not",
+      "because of his experience.",
+      "He was rejected because he didn't know the right people. In a broken system, connections decide who",
+      "works and who doesn't — not talent, not years of service. In a Gaza that has lost so many teachers,",
+      "Moamen should have been the first to be hired, not the last.",
+      "So he made a decision. If the system wouldn't use his mind, he would use his hands.",
+      "MOAMEN MUSHTAHA · PROJECT 001",
+      "BIDRAH · 05",
+    ],
+    [
+      "Bidrah",
+      "THE STORY · 06",
+      "CHAPTER THREE — THE PLAN",
+      "A woodworking shop. For tents, homes, shops,",
+      "weddings.",
+      "Moamen decided to open a Woodworking Shop.",
+      "Because the lives of Gazans have become lives in tents. And wood is the only thing they can use to make",
+      "furniture for their tents, for the homes they are trying to rebuild, for shops, for wedding furniture.",
+      "The need is urgent. The need is everywhere.",
+      "And Moamen doesn't want to do this alone. He wants to hire skilled Palestinians to work with him — to give",
+      "them what no one gave him: a chance based on skill, not connections.",
+      "MOAMEN MUSHTAHA · PROJECT 001",
+      "BIDRAH · 06",
+    ],
+    [
+      "MOAMEN NEEDS",
+      "$",
+      "4,500",
+      "Moamen already has some of the tools and equipment. He",
+      "needs more machines, wooden pallets for raw material, and a",
+      "place to rent so he can fully open the shop, support his family,",
+      "and hire skilled Palestinians to work with him.",
+      "Bidrah",
+      "THE ASK · 07",
+      "PROJECT 001 · FULLY VERIFIED",
+      "BIDRAH · 07",
+    ],
+    [
+      "Moamen rebuilt his life with",
+      "his own hands.",
+      "Now he's ready to do it for",
+      "others.",
+      "BIDRAH · PROJECT NO. 001 · DEIR AL-BALAH, GAZA",
+    ],
+  ],
   ask: {
     eyebrow: { en: "The Ask · Project No. 001", ar: "المطلوب · المشروع رقم 001" },
     amount: "4,500",

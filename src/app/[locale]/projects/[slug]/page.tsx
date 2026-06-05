@@ -134,7 +134,6 @@ export default async function ProjectDetail({
   }
 
   const c = moamenContent;
-  const study = c.feasibilityStudy;
 
   return (
     <div className="editorial flex flex-1 flex-col">
@@ -343,91 +342,24 @@ export default async function ProjectDetail({
         lang="en"
         dir="ltr"
       >
-        <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-20">
-          <Reveal direction="up">
-            <div className="lg:sticky lg:top-28">
-              <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-accent">
-                {study.eyebrow}
-              </p>
-              <h2 className="mt-5 text-[clamp(2rem,5vw,4rem)] font-light leading-[1.05] tracking-[-0.03em] text-foreground">
-                {study.title}
-              </h2>
-              <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
-                {study.source}
-              </p>
-            </div>
-          </Reveal>
-
-          <div className="flex flex-col gap-10">
-            <Reveal direction="up" delay={100}>
-              <p className="text-xl font-light leading-[1.55] tracking-[-0.01em] text-foreground sm:text-2xl">
-                {study.overview}
-              </p>
-            </Reveal>
-
-            <Reveal direction="up" delay={160}>
+        <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-8 md:grid-cols-2">
+          {c.pdfStudy.map((page, pageIndex) => (
+            <Reveal key={pageIndex} direction="up" delay={(pageIndex % 2) * 80}>
               <div
-                className="grid grid-cols-1 border-t sm:grid-cols-3"
-                style={{ borderColor: "var(--line)" }}
+                className="h-full border p-5 sm:p-8"
+                style={{ borderColor: "var(--line)", background: "var(--bg)" }}
               >
-                {study.stats.map((stat, i) => (
-                  <div
-                    key={stat.value}
-                    className="border-b py-6 sm:border-e sm:px-6 sm:first:ps-0 sm:last:border-e-0 sm:last:pe-0"
-                    style={{ borderColor: "var(--line)" }}
+                {page.map((line, lineIndex) => (
+                  <p
+                    key={`${pageIndex}-${lineIndex}`}
+                    className="mb-2 last:mb-0 text-base font-light leading-[1.55] text-foreground sm:text-lg"
                   >
-                    <p className="text-3xl font-light italic text-accent">
-                      {stat.value}
-                    </p>
-                    <p className="mt-3 text-sm font-light leading-[1.6] text-muted-foreground">
-                      {stat.label}
-                    </p>
-                    <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
-                      0{i + 1}
-                    </p>
-                  </div>
+                    {line}
+                  </p>
                 ))}
               </div>
             </Reveal>
-
-            <div className="grid grid-cols-1 gap-x-10 gap-y-8 md:grid-cols-2">
-              {study.sections.map((section, i) => (
-                <Reveal key={section.title} direction="up" delay={120 + i * 60}>
-                  <section
-                    className="border-t pt-5"
-                    style={{ borderColor: "var(--line)" }}
-                  >
-                    <h3 className="font-mono text-[11px] uppercase tracking-[0.25em] text-foreground">
-                      {section.title}
-                    </h3>
-                    <ul className="mt-5 flex flex-col gap-3">
-                      {section.items.map((item) => (
-                        <li
-                          key={item}
-                          className="grid grid-cols-[auto_1fr] gap-3 text-sm font-light leading-[1.65] text-muted-foreground"
-                        >
-                          <span
-                            className="mt-2 h-1.5 w-1.5 rounded-full bg-accent"
-                            aria-hidden
-                          />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
-                </Reveal>
-              ))}
-            </div>
-
-            <Reveal direction="up" delay={240}>
-              <p
-                className="border-t pt-8 text-lg font-light leading-[1.65] text-foreground"
-                style={{ borderColor: "var(--line)" }}
-              >
-                {study.conclusion}
-              </p>
-            </Reveal>
-          </div>
+          ))}
         </div>
       </section>
 
