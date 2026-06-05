@@ -35,6 +35,15 @@ export const moamenContent: {
   pullQuote: { body: RichLocalized; cite: Localized };
   fullBleed: { eyebrow: Localized; caption: Localized };
   workGrid: { eyebrow: RichLocalized; meta: Localized };
+  feasibilityStudy: {
+    eyebrow: string;
+    title: string;
+    source: string;
+    overview: string;
+    stats: { value: string; label: string }[];
+    sections: { title: string; items: string[] }[];
+    conclusion: string;
+  };
   ask: {
     eyebrow: Localized;
     amount: string;
@@ -248,6 +257,65 @@ export const moamenContent: {
       en: "Verified Footage · Deir Al-Balah",
       ar: "تصوير موثّق · دير البلح",
     },
+  },
+  feasibilityStudy: {
+    eyebrow: "Brief Feasibility Study",
+    title: "Moamen Woodworking Project - Deir Al-Balah",
+    source: "English study excerpt",
+    overview:
+      "The project aims to establish a small woodworking workshop specializing in the production of wooden furniture and products needed by people in Gaza, such as chairs, tables, cabinets, home furniture, and school furniture. The project focuses on practical and affordable products that meet the current needs of families and institutions.",
+    stats: [
+      {
+        value: "1,500 NIS",
+        label:
+          "minimum expected profit from regular local furniture sales, approximately $520 USD",
+      },
+      {
+        value: "$2,000+",
+        label:
+          "possible profit when contracts are secured with schools or institutions",
+      },
+      {
+        value: "12 people",
+        label:
+          "expected direct and indirect impact through workers and their families",
+      },
+    ],
+    sections: [
+      {
+        title: "Key requirements",
+        items: [
+          "A suitable rented workshop or workspace with access to reliable electricity.",
+          "Essential equipment including a circular saw, table saw, electric drill, sanding machine, measuring tools, screwdrivers, hammers, and hand tools.",
+          "Raw materials including available wood, wooden planks, nails, screws, wood glue, hinges, furniture accessories, paints, and varnish.",
+        ],
+      },
+      {
+        title: "Expected products and services",
+        items: [
+          "Wooden chairs, home tables, school tables, cabinets, and shelves.",
+          "Custom woodworking services based on local demand.",
+          "School desks and benches, with potential work furnishing facilities and institutions when contract opportunities become available.",
+        ],
+      },
+      {
+        title: "Social impact",
+        items: [
+          "The workshop is expected to create direct employment opportunities for at least two people alongside Moamen.",
+          "It helps move families away from long-term dependence on aid by creating sustainable income opportunities.",
+          "A portion of future profits will be allocated to support other small community projects.",
+        ],
+      },
+      {
+        title: "Current need",
+        items: [
+          "Because of the destruction and ongoing challenges in Gaza, many families are turning to wooden furniture as a practical alternative for tents and temporary living conditions.",
+          "The workshop can produce chairs, school desks, cabinets, and other furniture that directly improves daily living conditions.",
+        ],
+      },
+    ],
+    conclusion:
+      "Moamen Woodworking Project is a practical and sustainable small business that combines economic and social impact. It provides a stable source of income, creates employment opportunities, and produces essential furniture needed by the local community.",
   },
   ask: {
     eyebrow: { en: "The Ask · Project No. 001", ar: "المطلوب · المشروع رقم 001" },
