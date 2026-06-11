@@ -1,15 +1,17 @@
 import Image from "next/image";
+import type { ReactNode } from "react";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Reveal } from "@/components/reveal";
 import { Parallax } from "@/components/parallax";
 
-type ProblemKey = "collapse" | "displacement" | "aid" | "unemployment";
+type ComparisonKey = "capital" | "trust" | "aid" | "jobs" | "dependence";
 
-const PROBLEM_KEYS: ProblemKey[] = [
-  "collapse",
-  "displacement",
+const COMPARISON_KEYS: ComparisonKey[] = [
+  "capital",
+  "trust",
   "aid",
-  "unemployment",
+  "jobs",
+  "dependence",
 ];
 
 type StepKey = "apply" | "verify" | "fund" | "build" | "forest";
@@ -24,22 +26,40 @@ export default async function Home({
   const { locale } = await params;
   setRequestLocale(locale);
   const tHero = await getTranslations("Hero");
-  const tProblems = await getTranslations("Problems");
-  const tManifesto = await getTranslations("Manifesto");
+  const tSeedModel = await getTranslations("SeedModel");
+  const tProblemSolution = await getTranslations("ProblemSolution");
   const tHow = await getTranslations("HowItWorks");
-
-  const exampleKeys = ["bakery", "seamstress", "shop"] as const;
 
   return (
     <div className="flex flex-1 flex-col bg-background font-sans">
       <main className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-8 sm:py-28">
         <Reveal direction="fade">
           <section
-            aria-label={tHero("line")}
-            className="mb-24 sm:mb-32"
+            aria-labelledby="home-hero-heading"
+            className="mb-24 flex flex-col gap-10 sm:mb-32 sm:gap-14"
           >
+            <header className="mx-auto flex w-full max-w-6xl flex-col items-center gap-5 overflow-hidden text-center">
+              <h1
+                id="home-hero-heading"
+                className="max-w-full text-[clamp(2.75rem,7vw,5rem)] font-semibold leading-[1.05] tracking-tight text-foreground"
+              >
+                <span className="block 2xl:whitespace-nowrap">
+                  <span className="hero-red-underline">
+                    {tHero("headingEmphasis")}
+                  </span>{" "}
+                  {tHero("headingLine1Rest")}
+                </span>
+                <span className="block 2xl:whitespace-nowrap">
+                  {tHero("headingLine2")}
+                </span>
+              </h1>
+              <p className="max-w-3xl text-balance text-lg leading-relaxed text-muted-foreground sm:text-2xl">
+                {tHero("subheading")}
+              </p>
+            </header>
+
             <div className="grid grid-cols-1 items-center gap-6 md:grid-cols-[1fr_auto_1fr] md:gap-0">
-              <Parallax speed={0.12} className="w-full">
+              <Parallax speed={0.18} maxOffset={72} className="w-full">
                 <figure className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-muted">
                   <Image
                     src="/hero/after.jpeg"
@@ -64,12 +84,9 @@ export default async function Home({
                   aria-hidden
                   className="block h-px w-full bg-gradient-to-r from-transparent via-border to-transparent md:hidden"
                 />
-                <p className="float-soft relative max-w-[18ch] text-balance bg-background px-3 py-2 text-center text-sm font-medium leading-snug tracking-tight text-foreground sm:text-lg md:max-w-[14ch] md:px-3 md:py-6">
-                  {tHero("line")}
-                </p>
               </div>
 
-              <Parallax speed={-0.12} className="w-full">
+              <Parallax speed={-0.18} maxOffset={72} className="w-full">
                 <figure className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-muted">
                   <Image
                     src="/hero/before.png"
@@ -89,125 +106,106 @@ export default async function Home({
         </Reveal>
 
         <Reveal direction="up">
-          <header className="flex flex-col gap-6 pb-16">
-            <span className="seed-badge inline-flex items-center gap-2.5 self-start rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-accent">
-              <span className="relative flex h-2 w-2 items-center justify-center">
-                <span className="seed-halo absolute h-2 w-2 rounded-full bg-accent" />
-                <span className="seed-dot relative h-2 w-2 rounded-full bg-accent" />
+          <section
+            aria-labelledby="seed-model-heading"
+            className="mb-24 grid items-center gap-10 border-y border-border py-14 sm:mb-32 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14"
+          >
+            <div className="order-2 flex flex-col gap-6 lg:order-1">
+              <span className="inline-flex items-center self-start rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-accent">
+                {tSeedModel("eyebrow")}
               </span>
-              {tProblems("eyebrow")}
-            </span>
-            <h1 className="max-w-3xl text-balance text-3xl font-semibold leading-[1.1] tracking-tight text-foreground sm:text-5xl md:text-[3.75rem]">
-              {tProblems("heading")}
-            </h1>
-            <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-2xl">
-              {tProblems("subheading")}
-            </p>
-          </header>
+              <h2
+                id="seed-model-heading"
+                className="max-w-3xl text-balance text-3xl font-semibold leading-[1.08] tracking-tight text-foreground sm:text-5xl"
+              >
+                {tSeedModel("title")}
+              </h2>
+              <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-2xl">
+                {tSeedModel("body")}
+              </p>
+            </div>
+
+            <div className="order-1 lg:order-2">
+              <Parallax speed={-0.16} maxOffset={56}>
+                <figure className="relative mx-auto aspect-[9/16] w-full max-w-sm overflow-hidden rounded-2xl border border-border bg-muted/30 shadow-2xl shadow-black/25 sm:max-w-md lg:max-w-sm">
+                  <Image
+                    src="/hero/seed-to-forest-card.png"
+                    alt={tSeedModel("imageAlt")}
+                    fill
+                    sizes="(min-width: 1024px) 360px, (min-width: 640px) 448px, 100vw"
+                    className="object-cover"
+                  />
+                </figure>
+              </Parallax>
+            </div>
+          </section>
         </Reveal>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
-          {PROBLEM_KEYS.map((key, i) => (
-            <Reveal
-              key={key}
-              direction="up"
-              delay={i * 90}
-              className="h-full"
-            >
-              <article
-                className="group relative flex h-full flex-col gap-4 overflow-hidden rounded-2xl border border-border bg-muted/40 p-5 transition duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-muted/60 hover:shadow-lg sm:gap-5 sm:p-8"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-border bg-background text-xs font-semibold text-muted-foreground">
-                    {tProblems(`items.${key}.label`)}
-                  </span>
-                  <span className="h-px flex-1 mx-4 bg-border" />
-                </div>
-
-                <p className="text-balance text-5xl font-semibold leading-none tracking-tight text-accent sm:text-7xl">
-                  {tProblems(`items.${key}.stat`)}
-                </p>
-
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  {tProblems(`items.${key}.statCaption`)}
-                </p>
-
-                <div className="mt-2 flex flex-col gap-3 border-t border-border pt-5">
-                  <h2 className="text-xl font-semibold leading-snug text-foreground sm:text-2xl">
-                    {tProblems(`items.${key}.title`)}
-                  </h2>
-                  <p className="text-base leading-relaxed text-foreground/80">
-                    {tProblems(`items.${key}.body`)}
-                  </p>
-                </div>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-
         <Reveal direction="up">
-          <section className="mt-20 sm:mt-36">
-            <div className="relative overflow-hidden rounded-3xl border border-border bg-muted/40 px-5 py-10 sm:px-12 sm:py-20">
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent"
-              />
-              <Parallax speed={-0.08} className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-accent/10 blur-3xl">
-                <span className="sr-only" />
-              </Parallax>
-              <div className="relative flex flex-col gap-8">
-                <span className="inline-flex items-center self-start rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-accent">
-                  {tManifesto("eyebrow")}
-                </span>
-                <h2 className="max-w-3xl text-balance text-3xl font-semibold leading-[1.1] tracking-tight text-foreground sm:text-5xl md:text-[3.5rem]">
-                  {tManifesto("heading")}
-                </h2>
-                <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-2xl">
-                  {tManifesto("lede")}
-                </p>
+          <section
+            aria-labelledby="problem-solution-heading"
+            className="mb-20 sm:mb-36"
+          >
+            <header className="mx-auto flex max-w-4xl flex-col items-center gap-5 pb-10 text-center sm:pb-14">
+              <span className="inline-flex items-center rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-accent">
+                {tProblemSolution("eyebrow")}
+              </span>
+              <h2
+                id="problem-solution-heading"
+                className="text-balance text-3xl font-semibold leading-[1.08] tracking-tight text-foreground sm:text-5xl"
+              >
+                {tProblemSolution("heading")}
+              </h2>
+            </header>
 
-                <div className="mt-2 grid gap-8 border-t border-border pt-8 sm:gap-10 sm:pt-10 md:grid-cols-[1.2fr_1fr]">
-                  <p className="text-base leading-relaxed text-foreground/85 sm:text-xl">
-                    {tManifesto("body")}
-                  </p>
-                  <ul className="flex flex-col gap-4">
-                    {exampleKeys.map((key, i) => (
-                      <Reveal
+            <Parallax speed={0.1} maxOffset={46}>
+              <div className="overflow-hidden rounded-2xl border border-border bg-muted/30 shadow-2xl shadow-black/20">
+                <div className="grid divide-y divide-border md:grid-cols-2 md:divide-x md:divide-y-0">
+                  <ComparisonColumn
+                    title={tProblemSolution("today.title")}
+                    tone="problem"
+                  >
+                    {COMPARISON_KEYS.map((key) => (
+                      <ComparisonItem
                         key={key}
-                        as="li"
-                        direction="left"
-                        delay={i * 120}
-                        amount={16}
-                        className="flex items-center gap-3 text-base text-foreground/90 sm:text-lg"
-                      >
-                        <span
-                          aria-hidden
-                          className="inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
-                        />
-                        {tManifesto(`examples.${key}`)}
-                      </Reveal>
+                        tone="problem"
+                        title={tProblemSolution(`today.items.${key}.title`)}
+                        body={tProblemSolution(`today.items.${key}.body`)}
+                      />
                     ))}
-                  </ul>
-                </div>
+                  </ComparisonColumn>
 
-                <p className="mt-2 max-w-3xl text-balance text-lg font-medium leading-snug tracking-tight text-foreground sm:text-2xl">
-                  {tManifesto("closing")}
-                </p>
+                  <ComparisonColumn
+                    title={tProblemSolution("withBidhra.title")}
+                    tone="solution"
+                  >
+                    {COMPARISON_KEYS.map((key) => (
+                      <ComparisonItem
+                        key={key}
+                        tone="solution"
+                        title={tProblemSolution(`withBidhra.items.${key}.title`)}
+                        body={tProblemSolution(`withBidhra.items.${key}.body`)}
+                      />
+                    ))}
+                  </ComparisonColumn>
+                </div>
               </div>
-            </div>
+            </Parallax>
           </section>
         </Reveal>
 
         <section className="mt-20 sm:mt-36">
           <Reveal direction="up">
-            <header className="flex flex-col gap-4 pb-10 sm:gap-6 sm:pb-12">
-              <span className="inline-flex items-center self-start rounded-full border border-border bg-muted/60 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground">
-                {tHow("eyebrow")}
-              </span>
-              <h2 className="max-w-3xl text-3xl font-semibold leading-tight tracking-tight text-foreground sm:text-4xl md:text-5xl">
-                {tHow("heading")}
-              </h2>
-            </header>
+            <Parallax speed={0.12} maxOffset={42}>
+              <header className="flex flex-col gap-4 pb-10 sm:gap-6 sm:pb-12">
+                <span className="inline-flex items-center self-start rounded-full border border-border bg-muted/60 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+                  {tHow("eyebrow")}
+                </span>
+                <h2 className="max-w-3xl text-3xl font-semibold leading-tight tracking-tight text-foreground sm:text-4xl md:text-5xl">
+                  {tHow("heading")}
+                </h2>
+              </header>
+            </Parallax>
           </Reveal>
 
           <ol className="flex flex-col">
@@ -255,12 +253,96 @@ export default async function Home({
           </ol>
 
           <Reveal direction="up">
-            <p className="mt-10 max-w-3xl text-balance text-xl font-medium leading-snug tracking-tight text-foreground sm:mt-12 sm:text-3xl">
-              {tHow("closing")}
-            </p>
+            <Parallax speed={-0.1} maxOffset={36}>
+              <p className="mt-10 max-w-3xl text-balance text-xl font-medium leading-snug tracking-tight text-foreground sm:mt-12 sm:text-3xl">
+                {tHow("closing")}
+              </p>
+            </Parallax>
           </Reveal>
         </section>
       </main>
     </div>
+  );
+}
+
+function ComparisonColumn({
+  children,
+  title,
+  tone,
+}: {
+  children: ReactNode;
+  title: string;
+  tone: "problem" | "solution";
+}) {
+  const borderClass =
+    tone === "solution" ? "border-accent/60" : "border-red-400/60";
+
+  return (
+    <div className="p-5 sm:p-8">
+      <div className={`mb-7 border-s-4 ${borderClass} ps-4`}>
+        <h3 className="text-xl font-semibold leading-snug text-foreground sm:text-2xl">
+          {title}
+        </h3>
+      </div>
+      <div className="flex flex-col gap-6">{children}</div>
+    </div>
+  );
+}
+
+function ComparisonItem({
+  body,
+  title,
+  tone,
+}: {
+  body: string;
+  title: string;
+  tone: "problem" | "solution";
+}) {
+  return (
+    <article className="flex gap-3.5">
+      <ComparisonIcon tone={tone} />
+      <div className="flex flex-col gap-1.5">
+        <h4 className="text-base font-semibold leading-snug text-foreground">
+          {title}
+        </h4>
+        <p className="text-sm leading-relaxed text-muted-foreground sm:text-[15px]">
+          {body}
+        </p>
+      </div>
+    </article>
+  );
+}
+
+function ComparisonIcon({ tone }: { tone: "problem" | "solution" }) {
+  const isSolution = tone === "solution";
+
+  return (
+    <span
+      aria-hidden
+      className={`mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full border ${
+        isSolution
+          ? "border-accent/30 bg-accent/10 text-accent"
+          : "border-red-400/30 bg-red-400/10 text-red-300"
+      }`}
+    >
+      <svg
+        viewBox="0 0 16 16"
+        className="h-3.5 w-3.5"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2.2"
+      >
+        {isSolution ? (
+          <path d="M3.5 8.5 6.5 11.5 12.5 4.5" />
+        ) : (
+          <>
+            <path d="M4.5 4.5 11.5 11.5" />
+            <path d="M11.5 4.5 4.5 11.5" />
+          </>
+        )}
+      </svg>
+    </span>
   );
 }

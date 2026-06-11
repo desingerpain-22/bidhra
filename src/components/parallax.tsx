@@ -5,10 +5,16 @@ import { useEffect, useRef, type ReactNode } from "react";
 type ParallaxProps = {
   children: ReactNode;
   className?: string;
+  maxOffset?: number;
   speed?: number;
 };
 
-export function Parallax({ children, className = "", speed = 0.2 }: ParallaxProps) {
+export function Parallax({
+  children,
+  className = "",
+  maxOffset = 72,
+  speed = 0.2,
+}: ParallaxProps) {
   const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -17,23 +23,40 @@ export function Parallax({ children, className = "", speed = 0.2 }: ParallaxProp
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     let raf = 0;
+    let current = 0;
+    let target = 0;
 
-    const update = () => {
-      raf = 0;
+    const clamp = (value: number) =>
+      Math.max(-maxOffset, Math.min(maxOffset, value));
+
+    const measure = () => {
       const rect = el.getBoundingClientRect();
       const viewportH = window.innerHeight || document.documentElement.clientHeight;
       const center = rect.top + rect.height / 2;
       const progress = (center - viewportH / 2) / viewportH;
-      const offset = -progress * speed * 100;
-      el.style.setProperty("--parallax-y", `${offset}px`);
+      target = clamp(-progress * speed * 100);
+    };
+
+    const animate = () => {
+      current += (target - current) * 0.14;
+      if (Math.abs(target - current) < 0.1) current = target;
+      el.style.setProperty("--parallax-y", `${current.toFixed(2)}px`);
+
+      if (current !== target) {
+        raf = requestAnimationFrame(animate);
+      } else {
+        raf = 0;
+      }
     };
 
     const onScroll = () => {
-      if (raf) return;
-      raf = requestAnimationFrame(update);
+      measure();
+      if (!raf) raf = requestAnimationFrame(animate);
     };
 
-    update();
+    measure();
+    current = target;
+    el.style.setProperty("--parallax-y", `${current.toFixed(2)}px`);
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {

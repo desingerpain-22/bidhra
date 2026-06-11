@@ -48,11 +48,64 @@ html,
 body {
   background: var(--background);
   color: var(--foreground);
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
   font-family: var(--font-sans-latin), var(--font-sans-arabic), system-ui,
     sans-serif;
+}
+
+.page-parallax-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: var(--page-parallax-opacity, 0.2);
+  background-image:
+    linear-gradient(
+      115deg,
+      transparent 0%,
+      transparent 34%,
+      color-mix(in oklch, var(--accent) 18%, transparent) 35%,
+      transparent 36%,
+      transparent 100%
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 88px,
+      color-mix(in oklch, var(--accent) 10%, transparent) 89px,
+      transparent 90px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 110px,
+      color-mix(in oklch, var(--foreground) 5%, transparent) 111px,
+      transparent 112px
+    );
+  background-position:
+    center var(--page-parallax-a, 0),
+    center var(--page-parallax-b, 0),
+    center var(--page-parallax-a, 0);
+  background-size:
+    140% 140%,
+    100% 100%,
+    100% 100%;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 18%,
+    black 82%,
+    transparent
+  );
+}
+
+body > *:not(.page-parallax-backdrop) {
+  position: relative;
+  z-index: 1;
 }
 
 [dir="rtl"] body {
@@ -106,6 +159,10 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .page-parallax-backdrop {
+    display: none;
+  }
+
   .seed-badge,
   .seed-dot,
   .seed-halo {
@@ -151,6 +208,61 @@ body {
   .promise-highlight::after {
     animation: none;
     transform: scaleX(1);
+  }
+}
+
+@keyframes red-underline-draw {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  45%,
+  72% {
+    clip-path: inset(0 0 0 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 100%);
+  }
+}
+
+.hero-red-underline {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.12em;
+}
+
+.hero-red-underline::after {
+  content: "";
+  position: absolute;
+  left: 0.01em;
+  right: 0.01em;
+  bottom: 0;
+  height: 0.055em;
+  border-radius: 999px;
+  background: oklch(0.62 0.22 25);
+  animation: red-underline-draw 4.8s 350ms cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+[dir="rtl"] .hero-red-underline::after {
+  animation-name: red-underline-draw-rtl;
+}
+
+@keyframes red-underline-draw-rtl {
+  0% {
+    clip-path: inset(0 0 0 100%);
+  }
+  45%,
+  72% {
+    clip-path: inset(0 0 0 0);
+  }
+  100% {
+    clip-path: inset(0 100% 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-red-underline::after {
+    animation: none;
+    clip-path: inset(0 0 0 0);
   }
 }
 

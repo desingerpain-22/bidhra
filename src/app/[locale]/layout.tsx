@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono, Raleway } from "next/font/google";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { localeDirection, routing, type Locale } from "@/i18n/routing";
+import { ParallaxBackdrop } from "@/components/parallax-backdrop";
 import { SiteHeader } from "@/components/site-header";
 import "../globals.css";
 
-const geistSans = Geist({
+const raleway = Raleway({
   variable: "--font-sans-latin",
   subsets: ["latin"],
 });
@@ -46,9 +47,10 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       dir={dir}
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${raleway.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <ParallaxBackdrop />
         <NextIntlClientProvider>
           <SiteHeader />
           <div className="flex flex-1 flex-col">{children}</div>

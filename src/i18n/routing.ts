@@ -1,12 +1,12 @@
 import { defineRouting } from "next-intl/routing";
 
 export const routing = defineRouting({
-  locales: ["en", "ar"],
+  locales: ["en"],
   defaultLocale: "en",
   localePrefix: "always",
 });
 
-export type Locale = (typeof routing.locales)[number];
+export type Locale = "en" | "ar";
 
 export const localeDirection: Record<Locale, "ltr" | "rtl"> = {
   en: "ltr",
@@ -15,5 +15,5 @@ export const localeDirection: Record<Locale, "ltr" | "rtl"> = {
 
 export const localeLabels: Record<Locale, string> = {
   en: "English",
-  ar: "العربية",
+  ar: "Arabic",
 };

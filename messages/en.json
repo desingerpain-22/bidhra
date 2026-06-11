@@ -8,10 +8,77 @@
   },
   "Hero": {
     "line": "Empower Palestinians to rebuild themselves",
+    "heading": "Transforming Aid into an Economic Engine for Palestine",
+    "headingEmphasis": "Transforming Aid",
+    "headingLine1": "Transforming Aid into an Economic",
+    "headingLine1Rest": "into an Economic",
+    "headingLine2": "Engine for Palestine",
+    "subheading": "Empowering Palestinian entrepreneurs to rebuild businesses, create jobs, and fuel a self-sustaining economy.",
     "beforeAlt": "A thriving Palestinian city before the war",
     "afterAlt": "The same neighborhood destroyed by war",
     "beforeCaption": "Before",
     "afterCaption": "After"
+  },
+  "SeedModel": {
+    "eyebrow": "The Bidhra model",
+    "title": "From One Seed to an Economic Engine",
+    "body": "Your support helps one Palestinian business grow, create jobs, and fund the next. One seed becomes a forest of opportunity.",
+    "cta": "Plant the first seed",
+    "imageAlt": "A person holding a red card that reads From a seed to a forest"
+  },
+  "ProblemSolution": {
+    "eyebrow": "The problem & the solution",
+    "heading": "Palestinians Don't Need More Sympathy. They Need Economic Opportunity.",
+    "today": {
+      "title": "Today",
+      "items": {
+        "capital": {
+          "title": "Businesses have ideas but no access to capital",
+          "body": "Talented entrepreneurs have the skills, experience, and determination to build businesses, but cannot access the funding needed to start or grow."
+        },
+        "trust": {
+          "title": "Millions want to help, but don't know how",
+          "body": "Palestinians in the diaspora and ethical supporters around the world want to contribute, yet there is no trusted and transparent way to invest in local businesses."
+        },
+        "aid": {
+          "title": "Aid solves today's problem, not tomorrow's",
+          "body": "Traditional aid helps families survive, but when the money is spent, the impact often ends there."
+        },
+        "jobs": {
+          "title": "Skilled people remain unemployed",
+          "body": "Engineers, teachers, designers, craftsmen, and business owners are ready to work but lack opportunities to create income."
+        },
+        "dependence": {
+          "title": "Communities depend on continuous assistance",
+          "body": "Without sustainable businesses, communities remain dependent on external support rather than creating their own economic growth."
+        }
+      }
+    },
+    "withBidhra": {
+      "title": "With Bidhra",
+      "items": {
+        "capital": {
+          "title": "Entrepreneurs receive the capital they need",
+          "body": "Qualified Palestinian business owners receive funding to launch, rebuild, or expand businesses with real growth potential."
+        },
+        "trust": {
+          "title": "Supporters directly fund economic growth",
+          "body": "Every contribution becomes an investment in a real entrepreneur, a real business, and a real future."
+        },
+        "aid": {
+          "title": "One contribution creates lasting impact",
+          "body": "Instead of supporting a family for a week, a funded business can create jobs and income for years."
+        },
+        "jobs": {
+          "title": "Businesses create jobs for Palestinians",
+          "body": "Every successful business becomes an economic engine that hires workers, serves customers, and strengthens the local economy."
+        },
+        "dependence": {
+          "title": "Success funds the next entrepreneur",
+          "body": "Profitable businesses contribute back to Bidhra, allowing future entrepreneurs to receive support and creating a self-sustaining cycle of growth."
+        }
+      }
+    }
   },
   "Problems": {
     "eyebrow": "Seed a Palestinian business",
