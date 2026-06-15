@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 const NOWPAYMENTS_INVOICE_URL = "https://api.nowpayments.io/v1/invoice";
 
@@ -28,6 +29,8 @@ export async function POST(request: Request) {
 
   const { amount, projectSlug, projectTitle, locale, payCurrency } = parsed.data;
   const projectUrl = new URL(`/${locale}/projects/${projectSlug}`, request.url).toString();
+  const ipnCallbackUrl = new URL("/api/nowpayments/ipn", request.url).toString();
+  const orderId = `${projectSlug}-${Date.now()}`;
 
   const response = await fetch(NOWPAYMENTS_INVOICE_URL, {
     method: "POST",
@@ -39,10 +42,11 @@ export async function POST(request: Request) {
       price_amount: amount,
       price_currency: "usd",
       pay_currency: payCurrency,
-      order_id: `${projectSlug}-${Date.now()}`,
+      order_id: orderId,
       order_description: `Donation to ${projectTitle}`,
       success_url: projectUrl,
       cancel_url: projectUrl,
+      ipn_callback_url: ipnCallbackUrl,
     }),
   });
 
@@ -53,12 +57,27 @@ export async function POST(request: Request) {
     );
   }
 
-  const data = (await response.json()) as { invoice_url?: string };
+  const data = (await response.json()) as { id?: string; invoice_url?: string };
   if (!data.invoice_url) {
     return NextResponse.json(
       { error: "NOWPayments did not return an invoice URL" },
       { status: 502 },
     );
+  }
+
+  if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    const supabase = createAdminClient();
+    const { error } = await supabase.from("donations").insert({
+      project_slug: projectSlug,
+      order_id: orderId,
+      invoice_id: data.id ?? null,
+      pay_currency: payCurrency,
+      price_amount: amount,
+      status: "waiting",
+    });
+    if (error) {
+      console.error("Failed to record pending donation:", error.message);
+    }
   }
 
   return NextResponse.json({ invoiceUrl: data.invoice_url });

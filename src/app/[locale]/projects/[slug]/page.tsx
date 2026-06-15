@@ -11,6 +11,7 @@ import { PortraitSlideshow } from "@/components/portrait-slideshow";
 import { Reveal } from "@/components/reveal";
 import { FeasibilityStudy } from "@/components/feasibility-study";
 import { moamenContent } from "@/lib/moamen-content";
+import { getDonationTotals } from "@/lib/donations";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -31,6 +32,9 @@ export default async function ProjectDetail({
   const loc = locale as Locale;
   const knowledgeRequest = knowledgeRequests.find((item) => item.projectSlug === slug);
   const isEditorial = EDITORIAL_SLUGS.has(slug);
+  const donationTotals = await getDonationTotals(project.slug);
+  const raised = project.raised + donationTotals.raised;
+  const supporters = project.supporters + donationTotals.supporters;
 
   if (!isEditorial) {
     return (
@@ -81,8 +85,8 @@ export default async function ProjectDetail({
             projectSlug={project.slug}
             projectTitle={project.title[loc]}
             goal={project.goal}
-            initialRaised={project.raised}
-            initialSupporters={project.supporters}
+            initialRaised={raised}
+            initialSupporters={supporters}
             daysLeft={project.daysLeft}
             locale={locale}
             hasKnowledgeRequest={Boolean(knowledgeRequest)}
@@ -395,8 +399,8 @@ export default async function ProjectDetail({
                 projectSlug={project.slug}
                 projectTitle={project.title[loc]}
                 goal={project.goal}
-                initialRaised={project.raised}
-                initialSupporters={project.supporters}
+                initialRaised={raised}
+                initialSupporters={supporters}
                 daysLeft={project.daysLeft}
                 locale={locale}
                 hasKnowledgeRequest={Boolean(knowledgeRequest)}
