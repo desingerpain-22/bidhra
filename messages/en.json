@@ -328,6 +328,8 @@
       "card": "Card",
       "applePay": "Apple Pay",
       "googlePay": "Google Pay",
+      "crypto": "Crypto (NOWPayments)",
+      "cryptoNote": "You'll be redirected to NOWPayments to complete your payment with any supported cryptocurrency.",
       "cardNumber": "Card number",
       "expiry": "MM/YY",
       "cvc": "CVC",
@@ -352,6 +354,7 @@
     "failure": {
       "heading": "Payment failed",
       "body": "Your card was not charged. Please try again or use a different method.",
+      "bodyCrypto": "We couldn't start your crypto payment. Please try again or use a different method.",
       "retry": "Try again",
       "cancel": "Cancel"
     },

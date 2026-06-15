@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 type Step = "amount" | "payment" | "confirm";
-type Method = "card" | "applePay" | "googlePay";
+type Method = "card" | "applePay" | "googlePay" | "crypto";
 type Phase = "form" | "submitting" | "success" | "failure";
 type Draft = {
   step: Step;
@@ -24,6 +24,23 @@ async function processPayment(amount: number, method: Method): Promise<void> {
   void method;
 }
 
+async function createCryptoInvoice(
+  amount: number,
+  projectSlug: string,
+  projectTitle: string,
+  locale: string,
+): Promise<string> {
+  const res = await fetch("/api/nowpayments/create-invoice", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ amount, projectSlug, projectTitle, locale }),
+  });
+  if (!res.ok) throw new Error("invoice_failed");
+  const data = (await res.json()) as { invoiceUrl?: string };
+  if (!data.invoiceUrl) throw new Error("invoice_failed");
+  return data.invoiceUrl;
+}
+
 export function DonateModal({
   open,
   onOpenChange,
@@ -38,6 +55,7 @@ export function DonateModal({
   onSuccess: (amount: number) => void;
 }) {
   const t = useTranslations("Donate");
+  const locale = useLocale();
 
   const [step, setStep] = useState<Step>("amount");
   const [amount, setAmount] = useState<number | null>(null);
@@ -169,6 +187,21 @@ export function DonateModal({
   async function submit() {
     if (!amount) return;
     setPhase("submitting");
+    if (method === "crypto") {
+      try {
+        const invoiceUrl = await createCryptoInvoice(
+          amount,
+          projectSlug,
+          projectTitle,
+          locale,
+        );
+        localStorage.removeItem(draftKey);
+        window.location.href = invoiceUrl;
+      } catch {
+        setPhase("failure");
+      }
+      return;
+    }
     try {
       await processPayment(amount, method);
       localStorage.removeItem(draftKey);
@@ -209,6 +242,7 @@ export function DonateModal({
     card: t("paymentStep.card"),
     applePay: t("paymentStep.applePay"),
     googlePay: t("paymentStep.googlePay"),
+    crypto: t("paymentStep.crypto"),
   }[method];
 
   return (
@@ -341,7 +375,15 @@ export function DonateModal({
                     label={t("paymentStep.googlePay")}
                   />
                 )}
+                <MethodTile
+                  selected={method === "crypto"}
+                  onClick={() => setMethod("crypto")}
+                  label={t("paymentStep.crypto")}
+                />
               </div>
+              {method === "crypto" && (
+                <p className="text-sm text-zinc-400">{t("paymentStep.cryptoNote")}</p>
+              )}
               {method === "card" && (
                 <div className="grid gap-3 sm:grid-cols-[1fr_auto_auto]">
                   <Input
@@ -424,7 +466,9 @@ export function DonateModal({
               <h2 className="text-xl font-semibold text-rose-300">
                 {t("failure.heading")}
               </h2>
-              <p className="text-zinc-400">{t("failure.body")}</p>
+              <p className="text-zinc-400">
+                {method === "crypto" ? t("failure.bodyCrypto") : t("failure.body")}
+              </p>
               <div className="flex gap-2">
                 <button
                   type="button"
