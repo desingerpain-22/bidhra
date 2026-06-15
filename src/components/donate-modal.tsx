@@ -65,11 +65,10 @@ export function DonateModal({
   const [step, setStep] = useState<Step>("amount");
   const [amount, setAmount] = useState<number | null>(null);
   const [custom, setCustom] = useState("");
-  const [method, setMethod] = useState<Method>("card");
+  const [method, setMethod] = useState<Method>("usdtTrc20");
   const [card, setCard] = useState({ number: "", expiry: "", cvc: "" });
   const [phase, setPhase] = useState<Phase>("form");
   const [resumeAvail, setResumeAvail] = useState(false);
-  const [methods, setMethods] = useState({ applePay: false, googlePay: false });
 
   const draftKey = `bidhra:donation-draft:${projectSlug}`;
 
@@ -77,24 +76,10 @@ export function DonateModal({
     setStep("amount");
     setAmount(null);
     setCustom("");
-    setMethod("card");
+    setMethod("usdtTrc20");
     setCard({ number: "", expiry: "", cvc: "" });
     setPhase("form");
   }
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const w = window as unknown as {
-      ApplePaySession?: { canMakePayments?: () => boolean };
-      PaymentRequest?: unknown;
-    };
-    setMethods({
-      applePay:
-        typeof w.ApplePaySession !== "undefined" &&
-        w.ApplePaySession?.canMakePayments?.() === true,
-      googlePay: typeof w.PaymentRequest === "function",
-    });
-  }, []);
 
   useEffect(() => {
     if (!open || typeof window === "undefined") return;
@@ -146,7 +131,7 @@ export function DonateModal({
       setStep(d.step);
       setAmount(d.amount);
       if (d.amount) setCustom(String(d.amount));
-      setMethod(d.method ?? "card");
+      setMethod(d.method === "usdtErc20" ? "usdtErc20" : "usdtTrc20");
       setResumeAvail(false);
     } catch {
       setResumeAvail(false);
@@ -365,25 +350,6 @@ export function DonateModal({
               </h2>
               <div className="grid gap-2">
                 <MethodTile
-                  selected={method === "card"}
-                  onClick={() => setMethod("card")}
-                  label={t("paymentStep.card")}
-                />
-                {methods.applePay && (
-                  <MethodTile
-                    selected={method === "applePay"}
-                    onClick={() => setMethod("applePay")}
-                    label={t("paymentStep.applePay")}
-                  />
-                )}
-                {methods.googlePay && (
-                  <MethodTile
-                    selected={method === "googlePay"}
-                    onClick={() => setMethod("googlePay")}
-                    label={t("paymentStep.googlePay")}
-                  />
-                )}
-                <MethodTile
                   selected={method === "usdtTrc20"}
                   onClick={() => setMethod("usdtTrc20")}
                   label={t("paymentStep.usdtTrc20")}
@@ -397,29 +363,6 @@ export function DonateModal({
               </div>
               {isCrypto && (
                 <p className="text-sm text-zinc-400">{t("paymentStep.cryptoNote")}</p>
-              )}
-              {method === "card" && (
-                <div className="grid gap-3 sm:grid-cols-[1fr_auto_auto]">
-                  <Input
-                    placeholder={t("paymentStep.cardNumber")}
-                    value={card.number}
-                    onChange={(v) => setCard((c) => ({ ...c, number: v }))}
-                    inputMode="numeric"
-                  />
-                  <Input
-                    placeholder={t("paymentStep.expiry")}
-                    value={card.expiry}
-                    onChange={(v) => setCard((c) => ({ ...c, expiry: v }))}
-                    className="sm:w-24"
-                  />
-                  <Input
-                    placeholder={t("paymentStep.cvc")}
-                    value={card.cvc}
-                    onChange={(v) => setCard((c) => ({ ...c, cvc: v }))}
-                    className="sm:w-20"
-                    inputMode="numeric"
-                  />
-                </div>
               )}
             </section>
           )}
@@ -590,30 +533,6 @@ function MethodTile({
   );
 }
 
-function Input({
-  value,
-  onChange,
-  placeholder,
-  className = "",
-  inputMode,
-}: {
-  value: string;
-  onChange: (v: string) => void;
-  placeholder: string;
-  className?: string;
-  inputMode?: "numeric" | "decimal";
-}) {
-  return (
-    <input
-      type="text"
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      placeholder={placeholder}
-      inputMode={inputMode}
-      className={`h-11 rounded-xl border border-zinc-700 bg-zinc-950 px-3 text-zinc-100 outline-none placeholder:text-zinc-500 focus:border-emerald-400 ${className}`}
-    />
-  );
-}
 
 function Row({ label, value }: { label: string; value: string }) {
   return (
