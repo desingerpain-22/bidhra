@@ -4,8 +4,12 @@ import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 
 type Step = "amount" | "payment" | "confirm";
-type Method = "card" | "applePay" | "googlePay" | "crypto";
+type Method = "card" | "applePay" | "googlePay" | "usdtTrc20" | "usdtErc20";
 type Phase = "form" | "submitting" | "success" | "failure";
+const PAY_CURRENCY: Record<"usdtTrc20" | "usdtErc20", "usdttrc20" | "usdterc20"> = {
+  usdtTrc20: "usdttrc20",
+  usdtErc20: "usdterc20",
+};
 type Draft = {
   step: Step;
   amount: number | null;
@@ -29,11 +33,12 @@ async function createCryptoInvoice(
   projectSlug: string,
   projectTitle: string,
   locale: string,
+  payCurrency: "usdttrc20" | "usdterc20",
 ): Promise<string> {
   const res = await fetch("/api/nowpayments/create-invoice", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ amount, projectSlug, projectTitle, locale }),
+    body: JSON.stringify({ amount, projectSlug, projectTitle, locale, payCurrency }),
   });
   if (!res.ok) throw new Error("invoice_failed");
   const data = (await res.json()) as { invoiceUrl?: string };
@@ -187,13 +192,14 @@ export function DonateModal({
   async function submit() {
     if (!amount) return;
     setPhase("submitting");
-    if (method === "crypto") {
+    if (method === "usdtTrc20" || method === "usdtErc20") {
       try {
         const invoiceUrl = await createCryptoInvoice(
           amount,
           projectSlug,
           projectTitle,
           locale,
+          PAY_CURRENCY[method],
         );
         localStorage.removeItem(draftKey);
         window.location.href = invoiceUrl;
@@ -242,8 +248,10 @@ export function DonateModal({
     card: t("paymentStep.card"),
     applePay: t("paymentStep.applePay"),
     googlePay: t("paymentStep.googlePay"),
-    crypto: t("paymentStep.crypto"),
+    usdtTrc20: t("paymentStep.usdtTrc20"),
+    usdtErc20: t("paymentStep.usdtErc20"),
   }[method];
+  const isCrypto = method === "usdtTrc20" || method === "usdtErc20";
 
   return (
     <div
@@ -376,12 +384,18 @@ export function DonateModal({
                   />
                 )}
                 <MethodTile
-                  selected={method === "crypto"}
-                  onClick={() => setMethod("crypto")}
-                  label={t("paymentStep.crypto")}
+                  selected={method === "usdtTrc20"}
+                  onClick={() => setMethod("usdtTrc20")}
+                  label={t("paymentStep.usdtTrc20")}
+                  badge={t("paymentStep.recommended")}
+                />
+                <MethodTile
+                  selected={method === "usdtErc20"}
+                  onClick={() => setMethod("usdtErc20")}
+                  label={t("paymentStep.usdtErc20")}
                 />
               </div>
-              {method === "crypto" && (
+              {isCrypto && (
                 <p className="text-sm text-zinc-400">{t("paymentStep.cryptoNote")}</p>
               )}
               {method === "card" && (
@@ -467,7 +481,7 @@ export function DonateModal({
                 {t("failure.heading")}
               </h2>
               <p className="text-zinc-400">
-                {method === "crypto" ? t("failure.bodyCrypto") : t("failure.body")}
+                {isCrypto ? t("failure.bodyCrypto") : t("failure.body")}
               </p>
               <div className="flex gap-2">
                 <button
@@ -549,22 +563,29 @@ function MethodTile({
   selected,
   onClick,
   label,
+  badge,
 }: {
   selected: boolean;
   onClick: () => void;
   label: string;
+  badge?: string;
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`flex h-12 items-center justify-center rounded-xl border text-sm font-medium transition ${
+      className={`flex h-12 items-center justify-center gap-2 rounded-xl border text-sm font-medium transition ${
         selected
           ? "border-emerald-400 bg-emerald-400/10 text-emerald-200"
           : "border-zinc-700 text-zinc-200 hover:border-zinc-500 hover:bg-zinc-800"
       }`}
     >
       {label}
+      {badge && (
+        <span className="rounded-full bg-emerald-400/15 px-2 py-0.5 text-xs font-semibold text-emerald-300">
+          {badge}
+        </span>
+      )}
     </button>
   );
 }

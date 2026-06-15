@@ -8,6 +8,7 @@ const requestSchema = z.object({
   projectSlug: z.string().min(1),
   projectTitle: z.string().min(1),
   locale: z.string().min(2),
+  payCurrency: z.enum(["usdttrc20", "usdterc20"]),
 });
 
 export async function POST(request: Request) {
@@ -25,7 +26,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid request" }, { status: 400 });
   }
 
-  const { amount, projectSlug, projectTitle, locale } = parsed.data;
+  const { amount, projectSlug, projectTitle, locale, payCurrency } = parsed.data;
   const projectUrl = new URL(`/${locale}/projects/${projectSlug}`, request.url).toString();
 
   const response = await fetch(NOWPAYMENTS_INVOICE_URL, {
@@ -37,6 +38,7 @@ export async function POST(request: Request) {
     body: JSON.stringify({
       price_amount: amount,
       price_currency: "usd",
+      pay_currency: payCurrency,
       order_id: `${projectSlug}-${Date.now()}`,
       order_description: `Donation to ${projectTitle}`,
       success_url: projectUrl,
