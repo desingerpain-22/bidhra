@@ -5,12 +5,12 @@ export type DonationTotals = {
   supporters: number;
 };
 
-/**
- * Sum of confirmed/finished crypto donations for a project, read from the
- * project_donation_totals view (public read-only aggregate). Falls back to
- * zero if Supabase isn't configured or the query fails, so the page always
- * renders.
- */
+export type ProjectDonor = {
+  displayName: string;
+  amount: number;
+  createdAt: string;
+};
+
 export async function getDonationTotals(projectSlug: string): Promise<DonationTotals> {
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     return { raised: 0, supporters: 0 };
@@ -28,4 +28,28 @@ export async function getDonationTotals(projectSlug: string): Promise<DonationTo
   }
 
   return { raised: Number(data.raised_usd), supporters: data.supporters };
+}
+
+export async function getProjectDonors(projectSlug: string): Promise<ProjectDonor[]> {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return [];
+  }
+
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("project_donor_list")
+    .select("display_name, price_amount, created_at")
+    .eq("project_slug", projectSlug)
+    .order("created_at", { ascending: false })
+    .limit(50);
+
+  if (error || !data) {
+    return [];
+  }
+
+  return data.map((row) => ({
+    displayName: row.display_name as string,
+    amount: Number(row.price_amount),
+    createdAt: row.created_at as string,
+  }));
 }
