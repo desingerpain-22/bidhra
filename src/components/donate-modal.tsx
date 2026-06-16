@@ -2,43 +2,38 @@
 
 import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
-type Step = "amount" | "payment" | "confirm";
-type Method = "card" | "applePay" | "googlePay" | "usdtTrc20" | "usdtErc20";
+type Step = "amount" | "donor" | "confirm";
 type Phase = "form" | "submitting" | "success" | "failure";
-const PAY_CURRENCY: Record<"usdtTrc20" | "usdtErc20", "usdttrc20" | "usdterc20"> = {
-  usdtTrc20: "usdttrc20",
-  usdtErc20: "usdterc20",
-};
+
 type Draft = {
   step: Step;
   amount: number | null;
-  method: Method;
+  donorName: string;
+  donorEmail: string;
+  isPublic: boolean;
   updatedAt: number;
 };
 
 const PRESETS = [50, 100, 250, 500];
 const DRAFT_TTL_MS = 24 * 60 * 60 * 1000;
 
-async function processPayment(amount: number, method: Method): Promise<void> {
-  await new Promise((r) => setTimeout(r, 1200));
-  // Simulated decline ~18% of the time so the failure UX is reachable.
-  if (Math.random() < 0.18) throw new Error("declined");
-  void amount;
-  void method;
-}
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 async function createCryptoInvoice(
   amount: number,
   projectSlug: string,
   projectTitle: string,
   locale: string,
-  payCurrency: "usdttrc20" | "usdterc20",
+  donorName: string,
+  donorEmail: string,
+  isPublic: boolean,
 ): Promise<string> {
   const res = await fetch("/api/nowpayments/create-invoice", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ amount, projectSlug, projectTitle, locale, payCurrency }),
+    body: JSON.stringify({ amount, projectSlug, projectTitle, locale, donorName, donorEmail, isPublic }),
   });
   if (!res.ok) throw new Error("invoice_failed");
   const data = (await res.json()) as { invoiceUrl?: string };
@@ -65,8 +60,9 @@ export function DonateModal({
   const [step, setStep] = useState<Step>("amount");
   const [amount, setAmount] = useState<number | null>(null);
   const [custom, setCustom] = useState("");
-  const [method, setMethod] = useState<Method>("usdtTrc20");
-  const [card, setCard] = useState({ number: "", expiry: "", cvc: "" });
+  const [donorName, setDonorName] = useState("");
+  const [donorEmail, setDonorEmail] = useState("");
+  const [isPublic, setIsPublic] = useState(true);
   const [phase, setPhase] = useState<Phase>("form");
   const [resumeAvail, setResumeAvail] = useState(false);
 
@@ -76,8 +72,9 @@ export function DonateModal({
     setStep("amount");
     setAmount(null);
     setCustom("");
-    setMethod("usdtTrc20");
-    setCard({ number: "", expiry: "", cvc: "" });
+    setDonorName("");
+    setDonorEmail("");
+    setIsPublic(true);
     setPhase("form");
   }
 
@@ -107,9 +104,9 @@ export function DonateModal({
 
   useEffect(() => {
     if (!open || phase !== "form" || resumeAvail || amount === null) return;
-    const d: Draft = { step, amount, method, updatedAt: Date.now() };
+    const d: Draft = { step, amount, donorName, donorEmail, isPublic, updatedAt: Date.now() };
     localStorage.setItem(draftKey, JSON.stringify(d));
-  }, [open, step, amount, method, phase, resumeAvail, draftKey]);
+  }, [open, step, amount, donorName, donorEmail, isPublic, phase, resumeAvail, draftKey]);
 
   useEffect(() => {
     if (!open) return;
@@ -122,16 +119,15 @@ export function DonateModal({
 
   function applyResume() {
     const raw = localStorage.getItem(draftKey);
-    if (!raw) {
-      setResumeAvail(false);
-      return;
-    }
+    if (!raw) { setResumeAvail(false); return; }
     try {
       const d = JSON.parse(raw) as Draft;
       setStep(d.step);
       setAmount(d.amount);
       if (d.amount) setCustom(String(d.amount));
-      setMethod(d.method === "usdtErc20" ? "usdtErc20" : "usdtTrc20");
+      setDonorName(d.donorName ?? "");
+      setDonorEmail(d.donorEmail ?? "");
+      setIsPublic(d.isPublic ?? true);
       setResumeAvail(false);
     } catch {
       setResumeAvail(false);
@@ -155,49 +151,39 @@ export function DonateModal({
     setAmount(Number.isFinite(n) && n > 0 ? n : null);
   }
 
+  const emailValid = EMAIL_RE.test(donorEmail);
+
   const canNext =
     step === "amount"
       ? Boolean(amount && amount >= 1)
-      : step === "payment"
-        ? method !== "card" ||
-          (card.number.replace(/\s/g, "").length >= 12 &&
-            card.expiry.length >= 4 &&
-            card.cvc.length >= 3)
+      : step === "donor"
+        ? donorName.trim().length >= 1 && emailValid
         : true;
 
   function next() {
-    if (step === "amount") setStep("payment");
-    else if (step === "payment") setStep("confirm");
+    if (step === "amount") setStep("donor");
+    else if (step === "donor") setStep("confirm");
   }
   function back() {
-    if (step === "payment") setStep("amount");
-    else if (step === "confirm") setStep("payment");
+    if (step === "donor") setStep("amount");
+    else if (step === "confirm") setStep("donor");
   }
 
   async function submit() {
     if (!amount) return;
     setPhase("submitting");
-    if (method === "usdtTrc20" || method === "usdtErc20") {
-      try {
-        const invoiceUrl = await createCryptoInvoice(
-          amount,
-          projectSlug,
-          projectTitle,
-          locale,
-          PAY_CURRENCY[method],
-        );
-        localStorage.removeItem(draftKey);
-        window.location.href = invoiceUrl;
-      } catch {
-        setPhase("failure");
-      }
-      return;
-    }
     try {
-      await processPayment(amount, method);
+      const invoiceUrl = await createCryptoInvoice(
+        amount,
+        projectSlug,
+        projectTitle,
+        locale,
+        donorName,
+        donorEmail,
+        isPublic,
+      );
       localStorage.removeItem(draftKey);
-      onSuccess(amount);
-      setPhase("success");
+      window.location.href = invoiceUrl;
     } catch {
       setPhase("failure");
     }
@@ -210,33 +196,23 @@ export function DonateModal({
       try {
         await navigator.share({ title: "Bidhra", text, url });
         return;
-      } catch {
-        /* user canceled */
-      }
+      } catch { /* user canceled */ }
     }
     try {
       await navigator.clipboard?.writeText(url);
-    } catch {
-      /* clipboard unavailable */
-    }
+    } catch { /* clipboard unavailable */ }
   }
 
   if (!open) return null;
 
-  const stepIndex = step === "amount" ? 1 : step === "payment" ? 2 : 3;
+  const stepIndex = step === "amount" ? 1 : step === "donor" ? 2 : 3;
   const stepLabel = {
     amount: t("step.amount"),
-    payment: t("step.payment"),
+    donor: t("step.donor"),
     confirm: t("step.confirm"),
   }[step];
-  const methodLabel = {
-    card: t("paymentStep.card"),
-    applePay: t("paymentStep.applePay"),
-    googlePay: t("paymentStep.googlePay"),
-    usdtTrc20: t("paymentStep.usdtTrc20"),
-    usdtErc20: t("paymentStep.usdtErc20"),
-  }[method];
-  const isCrypto = method === "usdtTrc20" || method === "usdtErc20";
+
+  const displayName = isPublic ? donorName || t("donorStep.anonymousLabel") : t("donorStep.anonymousLabel");
 
   return (
     <div
@@ -279,18 +255,10 @@ export function DonateModal({
             <div className="mb-5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-zinc-800 bg-zinc-950 p-3 text-sm">
               <span className="text-zinc-300">{t("resume.banner")}</span>
               <div className="flex gap-2">
-                <button
-                  type="button"
-                  onClick={discardResume}
-                  className="rounded-full px-3 py-1 text-zinc-400 hover:text-zinc-100"
-                >
+                <button type="button" onClick={discardResume} className="rounded-full px-3 py-1 text-zinc-400 hover:text-zinc-100">
                   {t("resume.discard")}
                 </button>
-                <button
-                  type="button"
-                  onClick={applyResume}
-                  className="rounded-full bg-emerald-400 px-3 py-1 font-medium text-zinc-950 hover:bg-emerald-300"
-                >
+                <button type="button" onClick={applyResume} className="rounded-full bg-emerald-400 px-3 py-1 font-medium text-zinc-950 hover:bg-emerald-300">
                   {t("resume.resume")}
                 </button>
               </div>
@@ -319,9 +287,7 @@ export function DonateModal({
                 ))}
               </div>
               <label className="flex flex-col gap-2">
-                <span className="text-sm text-zinc-400">
-                  {t("amountStep.customLabel")}
-                </span>
+                <span className="text-sm text-zinc-400">{t("amountStep.customLabel")}</span>
                 <div className="flex items-center gap-2 rounded-xl border border-zinc-700 bg-zinc-950 ps-3">
                   <span className="text-zinc-400">$</span>
                   <input
@@ -335,55 +301,105 @@ export function DonateModal({
                   />
                 </div>
                 {custom && amount === null && (
-                  <span className="text-xs text-rose-400">
-                    {t("amountStep.minError")}
-                  </span>
+                  <span className="text-xs text-rose-400">{t("amountStep.minError")}</span>
                 )}
               </label>
+              <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 text-sm text-zinc-400">
+                <p className="mb-1 font-medium text-zinc-200">{t("amountStep.cryptoOnlyTitle")}</p>
+                <p>{t("amountStep.cryptoOnlyNote")}</p>
+                <Link href="/how-to-donate" className="mt-2 inline-flex items-center gap-1 text-emerald-400 hover:text-emerald-300">
+                  {t("amountStep.howToLink")} →
+                </Link>
+              </div>
             </section>
           )}
 
-          {phase === "form" && step === "payment" && (
-            <section className="flex flex-col gap-4">
-              <h2 className="text-xl font-semibold">
-                {t("paymentStep.heading")}
-              </h2>
-              <div className="grid gap-2">
-                <MethodTile
-                  selected={method === "usdtTrc20"}
-                  onClick={() => setMethod("usdtTrc20")}
-                  label={t("paymentStep.usdtTrc20")}
-                  badge={t("paymentStep.recommended")}
+          {phase === "form" && step === "donor" && (
+            <section className="flex flex-col gap-5">
+              <h2 className="text-xl font-semibold">{t("donorStep.heading")}</h2>
+              <p className="text-sm text-zinc-400">{t("donorStep.subheading")}</p>
+
+              <label className="flex flex-col gap-1.5">
+                <span className="text-sm font-medium text-zinc-300">{t("donorStep.nameLabel")}</span>
+                <input
+                  type="text"
+                  value={donorName}
+                  onChange={(e) => setDonorName(e.target.value)}
+                  placeholder={t("donorStep.namePlaceholder")}
+                  className="h-11 rounded-xl border border-zinc-700 bg-zinc-950 px-3 text-zinc-100 outline-none placeholder:text-zinc-500 focus:border-emerald-400"
                 />
-                <MethodTile
-                  selected={method === "usdtErc20"}
-                  onClick={() => setMethod("usdtErc20")}
-                  label={t("paymentStep.usdtErc20")}
+              </label>
+
+              <label className="flex flex-col gap-1.5">
+                <span className="text-sm font-medium text-zinc-300">{t("donorStep.emailLabel")}</span>
+                <input
+                  type="email"
+                  inputMode="email"
+                  value={donorEmail}
+                  onChange={(e) => setDonorEmail(e.target.value)}
+                  placeholder={t("donorStep.emailPlaceholder")}
+                  className="h-11 rounded-xl border border-zinc-700 bg-zinc-950 px-3 text-zinc-100 outline-none placeholder:text-zinc-500 focus:border-emerald-400"
                 />
+                <span className="text-xs text-zinc-500">{t("donorStep.emailNote")}</span>
+                {donorEmail && !emailValid && (
+                  <span className="text-xs text-rose-400">{t("donorStep.emailError")}</span>
+                )}
+              </label>
+
+              <div className="flex flex-col gap-2">
+                <span className="text-sm font-medium text-zinc-300">{t("donorStep.visibilityLabel")}</span>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsPublic(true)}
+                    className={`flex flex-col items-start rounded-xl border p-3 text-start transition ${
+                      isPublic
+                        ? "border-emerald-400 bg-emerald-400/10"
+                        : "border-zinc-700 hover:border-zinc-500 hover:bg-zinc-800"
+                    }`}
+                  >
+                    <span className={`text-sm font-medium ${isPublic ? "text-emerald-200" : "text-zinc-200"}`}>
+                      {t("donorStep.publicLabel")}
+                    </span>
+                    <span className="mt-0.5 text-xs text-zinc-500">{t("donorStep.publicHint")}</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setIsPublic(false)}
+                    className={`flex flex-col items-start rounded-xl border p-3 text-start transition ${
+                      !isPublic
+                        ? "border-emerald-400 bg-emerald-400/10"
+                        : "border-zinc-700 hover:border-zinc-500 hover:bg-zinc-800"
+                    }`}
+                  >
+                    <span className={`text-sm font-medium ${!isPublic ? "text-emerald-200" : "text-zinc-200"}`}>
+                      {t("donorStep.anonymousLabel")}
+                    </span>
+                    <span className="mt-0.5 text-xs text-zinc-500">{t("donorStep.anonymousHint")}</span>
+                  </button>
+                </div>
               </div>
-              {isCrypto && (
-                <p className="text-sm text-zinc-400">{t("paymentStep.cryptoNote")}</p>
-              )}
+
+              <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 text-sm">
+                <p className="font-medium text-zinc-200">{t("donorStep.paymentNote")}</p>
+                <p className="mt-1 text-zinc-400">{t("donorStep.paymentNoteBody")}</p>
+                <Link href="/how-to-donate" className="mt-2 inline-flex items-center gap-1 text-emerald-400 hover:text-emerald-300">
+                  {t("donorStep.howToLink")} →
+                </Link>
+              </div>
             </section>
           )}
 
           {(phase === "form" || phase === "submitting") && step === "confirm" && (
             <section className="flex flex-col gap-5">
-              <h2 className="text-xl font-semibold">
-                {t("confirmStep.heading")}
-              </h2>
+              <h2 className="text-xl font-semibold">{t("confirmStep.heading")}</h2>
               <dl className="divide-y divide-zinc-800 rounded-xl border border-zinc-800 bg-zinc-950 text-sm">
                 <Row label={t("confirmStep.amount")} value={`$${amount}`} />
-                <Row
-                  label={t("confirmStep.method")}
-                  value={
-                    method === "card"
-                      ? `${methodLabel} •••• ${card.number.replace(/\s/g, "").slice(-4) || "----"}`
-                      : methodLabel
-                  }
-                />
+                <Row label={t("confirmStep.method")} value="USDT · Tron (TRC-20)" />
+                <Row label={t("confirmStep.name")} value={displayName} />
                 <Row label={t("confirmStep.project")} value={projectTitle} />
               </dl>
+              <p className="text-sm text-zinc-400">{t("confirmStep.redirectNote")}</p>
             </section>
           )}
 
@@ -394,10 +410,7 @@ export function DonateModal({
               </div>
               <h2 className="text-xl font-semibold">{t("success.heading")}</h2>
               <p className="text-zinc-400">
-                {t("success.body", {
-                  amount: amount ?? 0,
-                  project: projectTitle,
-                })}
+                {t("success.body", { amount: amount ?? 0, project: projectTitle })}
               </p>
               <div className="flex flex-col gap-2 sm:flex-row">
                 <button
@@ -420,19 +433,12 @@ export function DonateModal({
 
           {phase === "failure" && (
             <section className="flex flex-col gap-5">
-              <h2 className="text-xl font-semibold text-rose-300">
-                {t("failure.heading")}
-              </h2>
-              <p className="text-zinc-400">
-                {isCrypto ? t("failure.bodyCrypto") : t("failure.body")}
-              </p>
+              <h2 className="text-xl font-semibold text-rose-300">{t("failure.heading")}</h2>
+              <p className="text-zinc-400">{t("failure.bodyCrypto")}</p>
               <div className="flex gap-2">
                 <button
                   type="button"
-                  onClick={() => {
-                    setPhase("form");
-                    setStep("payment");
-                  }}
+                  onClick={() => { setPhase("form"); setStep("confirm"); }}
                   className="inline-flex h-11 items-center rounded-full border border-zinc-700 px-5 text-sm hover:bg-zinc-800"
                 >
                   {t("failure.cancel")}
@@ -458,7 +464,7 @@ export function DonateModal({
                   onClick={back}
                   className="rounded-full px-4 py-2 text-sm text-zinc-300 hover:bg-zinc-800"
                 >
-                  {t("paymentStep.back")}
+                  {t("back")}
                 </button>
               ) : (
                 <span />
@@ -502,39 +508,7 @@ export function DonateModal({
   );
 }
 
-function MethodTile({
-  selected,
-  onClick,
-  label,
-  badge,
-}: {
-  selected: boolean;
-  onClick: () => void;
-  label: string;
-  badge?: string;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`flex h-12 items-center justify-center gap-2 rounded-xl border text-sm font-medium transition ${
-        selected
-          ? "border-emerald-400 bg-emerald-400/10 text-emerald-200"
-          : "border-zinc-700 text-zinc-200 hover:border-zinc-500 hover:bg-zinc-800"
-      }`}
-    >
-      {label}
-      {badge && (
-        <span className="rounded-full bg-emerald-400/15 px-2 py-0.5 text-xs font-semibold text-emerald-300">
-          {badge}
-        </span>
-      )}
-    </button>
-  );
-}
-
-
-function Row({ label, value }: { label: string; value: string }) {
+function Row({ label, value }: { label: string; value: string | number | undefined | null }) {
   return (
     <div className="flex items-center justify-between px-4 py-3">
       <dt className="text-zinc-400">{label}</dt>

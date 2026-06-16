@@ -164,7 +164,63 @@
     "apply": "Apply",
     "mentor": "Become a mentor",
     "knowledge": "Knowledge Match",
-    "scholarships": "Scholarships"
+    "scholarships": "Scholarships",
+    "howToDonate": "How to donate"
+  },
+  "Footer": {
+    "mission": "Bidhra turns global support into sustainable economic opportunity for Palestinians — one verified business at a time.",
+    "linksHeading": "Explore",
+    "browse": "Browse projects",
+    "apply": "Apply with your idea",
+    "howToDonate": "How to donate",
+    "knowledge": "Knowledge Match",
+    "scholarships": "Scholarships",
+    "legalHeading": "About",
+    "mission2": "Our mission",
+    "contact": "Contact",
+    "copyright": "© {year} Bidhra. All rights reserved.",
+    "tagline": "Empowering Palestinians through entrepreneurship."
+  },
+  "Donors": {
+    "heading": "Supporters",
+    "empty": "Be the first to support this project.",
+    "anonymous": "Anonymous",
+    "amount": "${amount}"
+  },
+  "CryptoExplainer": {
+    "heading": "Why crypto?",
+    "body": "Gaza's banking system has been severely disrupted by the conflict, making traditional wire transfers unreliable or impossible. USDT on the Tron network bypasses these barriers — funds reach Palestinian entrepreneurs directly, with low fees and within minutes.",
+    "trc20Label": "USDT · TRC-20 (Tron)",
+    "trc20Note": "Lowest fees. Fastest settlement. Our recommended method.",
+    "howToLink": "Learn how to send USDT →"
+  },
+  "HowToDonate": {
+    "title": "How to donate with USDT",
+    "subtitle": "A step-by-step guide for first-time crypto users. No experience needed.",
+    "whyHeading": "Why USDT on Tron?",
+    "whyBody": "Gaza's banks are largely inaccessible due to the conflict. USDT (a dollar-pegged cryptocurrency) on the Tron network bypasses those barriers — it's fast, cheap, and reaches Palestinian entrepreneurs directly.",
+    "step1Heading": "Step 1 — Get a crypto wallet",
+    "step1Body": "Download a free crypto wallet app on your phone. We recommend Trust Wallet or Binance Web3 Wallet. Create an account and back up your 12-word seed phrase somewhere safe.",
+    "step2Heading": "Step 2 — Buy USDT",
+    "step2Body": "Inside your wallet app, use the built-in Buy feature to purchase USDT. Alternatively, use a crypto exchange like Binance, Coinbase, or Kraken — buy USDT, then withdraw it to your wallet address.",
+    "step2Note": "Make sure you select the Tron (TRC-20) network when buying or withdrawing. Sending on the wrong network means the funds don't arrive.",
+    "step3Heading": "Step 3 — Click 'Contribute money' on the project page",
+    "step3Body": "Choose your amount and fill in your details. After confirming, you'll be sent to a secure payment page provided by NOWPayments.",
+    "step4Heading": "Step 4 — Send USDT to the address shown",
+    "step4Body": "The NOWPayments page will show a wallet address and a QR code. In your wallet app, tap Send, paste the address (or scan the QR code), enter the exact USDT amount shown, and confirm the transaction.",
+    "step4Note": "Double-check the address before sending. Crypto transactions are irreversible.",
+    "step5Heading": "Step 5 — Wait for confirmation",
+    "step5Body": "Tron transactions typically confirm within 1–3 minutes. Once confirmed, your donation is recorded and the project's raised total updates automatically.",
+    "faqHeading": "Common questions",
+    "faq1Q": "Is USDT the same as US dollars?",
+    "faq1A": "Yes — USDT (Tether) is a stablecoin pegged 1:1 to the US dollar. $100 USDT equals $100 USD.",
+    "faq2Q": "What is TRC-20?",
+    "faq2A": "TRC-20 is a token standard on the Tron blockchain. It's the cheapest and fastest way to send USDT — fees are typically less than $1.",
+    "faq3Q": "Can I use Ethereum (ERC-20) instead?",
+    "faq3A": "We only accept USDT on the Tron (TRC-20) network. Ethereum fees are much higher and we cannot guarantee receipt of other networks.",
+    "faq4Q": "Will I get a receipt?",
+    "faq4A": "Yes — you'll receive a confirmation email once your payment is verified on-chain. Your donation will also appear on the campaign page.",
+    "backToProjects": "← Browse projects"
   },
   "GetStarted": {
     "title": "How would you like to start?",
@@ -312,40 +368,48 @@
   },
   "Donate": {
     "close": "Close",
+    "back": "Back",
     "step": {
       "amount": "Amount",
-      "payment": "Payment",
+      "donor": "Your details",
       "confirm": "Confirm"
     },
     "amountStep": {
       "heading": "How much would you like to contribute?",
       "customLabel": "Or enter a custom amount",
       "minError": "Minimum $1",
-      "next": "Continue"
+      "next": "Continue",
+      "cryptoOnlyTitle": "Payments via USDT (Tron · TRC-20) only",
+      "cryptoOnlyNote": "Bidhra accepts crypto donations to reach supporters in Gaza without banking barriers. Low fees, fast settlement.",
+      "howToLink": "New to crypto? See our guide"
     },
-    "paymentStep": {
-      "heading": "Choose payment method",
-      "card": "Card",
-      "applePay": "Apple Pay",
-      "googlePay": "Google Pay",
-      "usdtTrc20": "USDT (Tron network)",
-      "usdtErc20": "USDT (Ethereum network)",
-      "recommended": "Recommended",
-      "cryptoNote": "You'll go straight to a secure NOWPayments page with your amount and currency already set — no extra steps. Just send USDT from your wallet to the address shown. Tron (TRC-20) has lower network fees and is the fastest way to get funds to Gaza.",
-      "cardNumber": "Card number",
-      "expiry": "MM/YY",
-      "cvc": "CVC",
-      "back": "Back",
-      "next": "Continue"
+    "donorStep": {
+      "heading": "Your details",
+      "subheading": "Your email is private and never shown publicly. Your name appears on the campaign page unless you choose anonymous.",
+      "nameLabel": "Full name",
+      "namePlaceholder": "e.g. Sarah K.",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "you@example.com",
+      "emailNote": "Used to notify you when your payment is confirmed. Not shared publicly.",
+      "emailError": "Enter a valid email address",
+      "visibilityLabel": "Show your name on the campaign?",
+      "publicLabel": "Show my name",
+      "publicHint": "Displayed on the campaign page",
+      "anonymousLabel": "Anonymous",
+      "anonymousHint": "Shown as Anonymous publicly",
+      "paymentNote": "Payment: USDT · Tron (TRC-20)",
+      "paymentNoteBody": "After confirming, you'll be sent to a secure NOWPayments page to complete your transfer. Low fees, no bank needed.",
+      "howToLink": "How to pay with USDT"
     },
     "confirmStep": {
       "heading": "Confirm your donation",
       "amount": "Amount",
       "method": "Payment method",
+      "name": "Your name",
       "project": "Project",
-      "back": "Back",
-      "submit": "Confirm donation",
-      "submitting": "Processing…"
+      "redirectNote": "You'll be sent to NOWPayments to complete the transfer. Once you send USDT to the address shown, your donation is on its way.",
+      "submit": "Go to payment →",
+      "submitting": "Preparing payment…"
     },
     "success": {
       "heading": "Thank you for your support",
@@ -354,9 +418,9 @@
       "close": "Done"
     },
     "failure": {
-      "heading": "Payment failed",
-      "body": "Your card was not charged. Please try again or use a different method.",
-      "bodyCrypto": "We couldn't start your crypto payment. Please try again or use a different method.",
+      "heading": "Payment couldn't start",
+      "body": "Something went wrong. Please try again.",
+      "bodyCrypto": "We couldn't reach the payment processor. Please try again.",
       "retry": "Try again",
       "cancel": "Cancel"
     },
