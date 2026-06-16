@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Geist_Mono, Raleway } from "next/font/google";
+import Script from "next/script";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { localeDirection, routing, type Locale } from "@/i18n/routing";
@@ -18,6 +19,8 @@ const geistMono = Geist_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
 });
+
+const GA_MEASUREMENT_ID = "G-HWKPE0QMPT";
 
 export const metadata: Metadata = {
   title: "Bidhra",
@@ -58,6 +61,18 @@ export default async function LocaleLayout({
           <SiteFooter />
         </NextIntlClientProvider>
       </body>
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${GA_MEASUREMENT_ID}');
+        `}
+      </Script>
     </html>
   );
 }
