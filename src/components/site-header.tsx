@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { LocaleSwitcher } from "./locale-switcher";
 
 export async function SiteHeader() {
   const t = await getTranslations("Nav");
@@ -41,6 +42,7 @@ export async function SiteHeader() {
           >
             {t("apply")}
           </Link>
+          <LocaleSwitcher />
         </nav>
         <div className="flex min-w-0 items-center justify-self-end gap-1.5 text-sm sm:gap-2 md:hidden">
           <Link
@@ -55,6 +57,7 @@ export async function SiteHeader() {
           >
             {t("knowledge")}
           </Link>
+          <LocaleSwitcher />
         </div>
       </div>
     </header>
