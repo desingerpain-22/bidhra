@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 
 export async function SiteFooter() {
   const t = await getTranslations("Footer");
+  const tNav = await getTranslations("Nav");
 
   return (
     <footer className="mt-auto border-t border-border bg-background">
@@ -27,6 +28,13 @@ export async function SiteFooter() {
             {t("brief")}
           </p>
         </div>
+
+        <Link
+          href="/projects"
+          className="inline-flex min-h-11 items-center justify-center rounded-full bg-accent px-5 text-sm font-semibold text-accent-foreground shadow-lg shadow-accent/15 transition hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:px-6"
+        >
+          {tNav("cta")}
+        </Link>
 
         <nav
           aria-label={t("linksHeading")}
@@ -51,7 +59,7 @@ export async function SiteFooter() {
             <LinkedInIcon />
           </SocialLink>
           <SocialLink
-            href="https://www.instagram.com/bidhra"
+            href="https://www.instagram.com/moh.share/"
             label={t("instagram")}
           >
             <InstagramIcon />
