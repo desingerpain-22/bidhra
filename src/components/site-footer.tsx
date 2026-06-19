@@ -33,18 +33,6 @@ export async function SiteFooter() {
           <Link href="/apply" className="transition hover:text-foreground">
             {t("apply")}
           </Link>
-          <Link
-            href="/how-to-donate"
-            className="transition hover:text-foreground"
-          >
-            {t("howToDonate")}
-          </Link>
-          <Link
-            href="/scholarships"
-            className="transition hover:text-foreground"
-          >
-            {t("scholarships")}
-          </Link>
         </nav>
 
         <div
