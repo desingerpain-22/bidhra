@@ -19,6 +19,21 @@ type StepKey = "apply" | "verify" | "fund" | "build" | "forest";
 
 const STEP_KEYS: StepKey[] = ["apply", "verify", "fund", "build", "forest"];
 
+const LINKEDIN_POSTS = [
+  {
+    id: "7473005846462033921",
+    href: "https://www.linkedin.com/posts/mohammedhosni-ux_i-swear-your-donations-are-costing-palestinians-share-7473005846462033921-VVV7/",
+  },
+  {
+    id: "7472258458294116353",
+    href: "https://www.linkedin.com/posts/mohammedhosni-ux_want-to-destroy-palestinian-dignity-keep-share-7472258458294116353--lcO/",
+  },
+  {
+    id: "7471827839370125312",
+    href: "https://www.linkedin.com/posts/mohammedhosni-ux_if-youre-giving-donations-to-palestinians-share-7471827839370125312-8Sqd/",
+  },
+] as const;
+
 export default async function Home({
   params,
 }: {
@@ -30,6 +45,7 @@ export default async function Home({
   const tNav = await getTranslations("Nav");
   const tSeedModel = await getTranslations("SeedModel");
   const tProblemSolution = await getTranslations("ProblemSolution");
+  const tSocialProof = await getTranslations("SocialProof");
   const tHow = await getTranslations("HowItWorks");
 
   return (
@@ -199,6 +215,56 @@ export default async function Home({
                 </div>
               </div>
             </Parallax>
+          </section>
+        </Reveal>
+
+        <Reveal direction="up">
+          <section
+            aria-labelledby="linkedin-proof-heading"
+            className="mb-20 overflow-hidden border-y border-border py-12 sm:mb-32 sm:py-16"
+          >
+            <header className="mx-auto flex max-w-3xl flex-col items-center gap-3 pb-8 text-center sm:pb-10">
+              <span className="inline-flex items-center rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-accent">
+                {tSocialProof("eyebrow")}
+              </span>
+              <h2
+                id="linkedin-proof-heading"
+                className="text-balance text-2xl font-semibold leading-tight tracking-tight text-foreground sm:text-4xl"
+              >
+                {tSocialProof("heading")}
+              </h2>
+            </header>
+
+            <div className="linkedin-ticker -mx-4 overflow-hidden sm:-mx-8">
+              <div className="linkedin-ticker-track flex w-max gap-5 px-4 sm:gap-6 sm:px-8">
+                {[...LINKEDIN_POSTS, ...LINKEDIN_POSTS].map((post, index) => (
+                  <article
+                    key={`${post.id}-${index}`}
+                    aria-hidden={index >= LINKEDIN_POSTS.length}
+                    className="w-[min(82vw,360px)] shrink-0 overflow-hidden rounded-lg border border-border bg-muted/20 shadow-2xl shadow-black/15"
+                  >
+                    <iframe
+                      src={`https://www.linkedin.com/embed/feed/update/urn:li:share:${post.id}`}
+                      title={`${tSocialProof("postTitle")} ${
+                        (index % LINKEDIN_POSTS.length) + 1
+                      }`}
+                      loading="lazy"
+                      tabIndex={index >= LINKEDIN_POSTS.length ? -1 : 0}
+                      className="h-[520px] w-full border-0 bg-background"
+                    />
+                    <a
+                      href={post.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      tabIndex={index >= LINKEDIN_POSTS.length ? -1 : 0}
+                      className="flex items-center justify-center border-t border-border px-4 py-3 text-sm font-semibold text-foreground/75 transition hover:text-accent"
+                    >
+                      {tSocialProof("openPost")}
+                    </a>
+                  </article>
+                ))}
+              </div>
+            </div>
           </section>
         </Reveal>
 

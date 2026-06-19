@@ -159,6 +159,12 @@
     },
     "closing": "One funded family becomes a community. A community becomes an economy."
   },
+  "SocialProof": {
+    "eyebrow": "On LinkedIn",
+    "heading": "The conversation behind Bidhra",
+    "postTitle": "LinkedIn post",
+    "openPost": "Open on LinkedIn"
+  },
   "Nav": {
     "browse": "Projects",
     "apply": "Submit Your Business Idea",

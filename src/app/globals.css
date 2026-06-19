@@ -301,9 +301,33 @@ body > *:not(.page-parallax-backdrop) {
   animation: float-soft 6s ease-in-out infinite;
 }
 
+@keyframes linkedin-ticker-scroll {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.linkedin-ticker-track {
+  animation: linkedin-ticker-scroll 42s linear infinite;
+  will-change: transform;
+}
+
+.linkedin-ticker:hover .linkedin-ticker-track,
+.linkedin-ticker:focus-within .linkedin-ticker-track {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .float-soft {
     animation: none;
+  }
+
+  .linkedin-ticker-track {
+    animation: none;
+    transform: none;
   }
 }
 
