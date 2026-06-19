@@ -34,6 +34,8 @@ const LINKEDIN_POSTS = [
   },
 ] as const;
 
+const LINKEDIN_TICKER_POSTS = [...LINKEDIN_POSTS, ...LINKEDIN_POSTS] as const;
+
 export default async function Home({
   params,
 }: {
@@ -221,7 +223,7 @@ export default async function Home({
         <Reveal direction="up">
           <section
             aria-labelledby="linkedin-proof-heading"
-            className="mb-20 overflow-hidden border-y border-border py-12 sm:mb-32 sm:py-16"
+            className="relative left-1/2 mb-20 w-screen -translate-x-1/2 overflow-hidden border-y border-border py-12 sm:mb-32 sm:py-16"
           >
             <header className="mx-auto flex max-w-3xl flex-col items-center gap-3 pb-8 text-center sm:pb-10">
               <span className="inline-flex items-center rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-accent">
@@ -243,14 +245,16 @@ export default async function Home({
                     aria-hidden={groupIndex === 1}
                     className="flex shrink-0 gap-5 px-2 sm:gap-6 sm:px-3"
                   >
-                    {LINKEDIN_POSTS.map((post, postIndex) => (
+                    {LINKEDIN_TICKER_POSTS.map((post, postIndex) => (
                       <article
-                        key={`${post.id}-${groupIndex}`}
+                        key={`${post.id}-${groupIndex}-${postIndex}`}
                         className="w-[min(76vw,320px)] shrink-0 overflow-hidden rounded-lg border border-border bg-muted/20 shadow-2xl shadow-black/15"
                       >
                         <iframe
                           src={`https://www.linkedin.com/embed/feed/update/urn:li:share:${post.id}`}
-                          title={`${tSocialProof("postTitle")} ${postIndex + 1}`}
+                          title={`${tSocialProof("postTitle")} ${
+                            (postIndex % LINKEDIN_POSTS.length) + 1
+                          }`}
                           loading="lazy"
                           tabIndex={groupIndex === 1 ? -1 : 0}
                           className="h-[560px] w-full border-0 bg-background"
