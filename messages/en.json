@@ -170,9 +170,9 @@
   },
   "Footer": {
     "mission": "Bidhra turns global support into sustainable economic opportunity for Palestinians — one verified business at a time.",
-    "linksHeading": "Explore",
-    "browse": "Browse projects",
-    "apply": "Apply with your idea",
+    "linksHeading": "Pages",
+    "browse": "Projects",
+    "apply": "Submit Your Business Idea",
     "howToDonate": "How to donate",
     "knowledge": "Knowledge Match",
     "scholarships": "Scholarships",
@@ -180,7 +180,10 @@
     "mission2": "Our mission",
     "contact": "Contact",
     "copyright": "© {year} Bidhra. All rights reserved.",
-    "tagline": "Empowering Palestinians through entrepreneurship."
+    "tagline": "Empowering Palestinians through entrepreneurship.",
+    "socialHeading": "Social media",
+    "linkedin": "LinkedIn",
+    "instagram": "Instagram"
   },
   "Donors": {
     "heading": "Supporters",
