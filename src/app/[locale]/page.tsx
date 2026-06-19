@@ -241,7 +241,7 @@ export default async function Home({
                   <article
                     key={`${post.id}-${index}`}
                     aria-hidden={index >= LINKEDIN_POSTS.length}
-                    className="w-[min(82vw,360px)] shrink-0 overflow-hidden rounded-lg border border-border bg-muted/20 shadow-2xl shadow-black/15"
+                    className="w-[min(76vw,320px)] shrink-0 overflow-hidden rounded-lg border border-border bg-muted/20 shadow-2xl shadow-black/15"
                   >
                     <iframe
                       src={`https://www.linkedin.com/embed/feed/update/urn:li:share:${post.id}`}
@@ -250,7 +250,7 @@ export default async function Home({
                       }`}
                       loading="lazy"
                       tabIndex={index >= LINKEDIN_POSTS.length ? -1 : 0}
-                      className="h-[520px] w-full border-0 bg-background"
+                      className="h-[560px] w-full border-0 bg-background"
                     />
                     <a
                       href={post.href}
