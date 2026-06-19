@@ -30,12 +30,6 @@ export async function SiteHeader() {
             {t("browse")}
           </Link>
           <Link
-            href="/knowledge"
-            className="whitespace-nowrap rounded-full px-2.5 py-1.5 text-muted-foreground transition hover:text-foreground lg:px-3"
-          >
-            {t("knowledge")}
-          </Link>
-          <Link
             href="/apply"
             className="whitespace-nowrap rounded-full px-2.5 py-1.5 text-muted-foreground transition hover:text-foreground lg:px-3"
           >
@@ -54,12 +48,6 @@ export async function SiteHeader() {
             className="rounded-full px-2 py-1.5 text-xs text-muted-foreground transition hover:text-foreground sm:text-sm md:hidden"
           >
             {t("browse")}
-          </Link>
-          <Link
-            href="/knowledge"
-            className="hidden rounded-full px-2 py-1.5 text-xs text-muted-foreground transition hover:text-foreground sm:inline md:hidden"
-          >
-            {t("knowledge")}
           </Link>
         </div>
       </div>
