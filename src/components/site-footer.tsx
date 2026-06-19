@@ -19,9 +19,14 @@ export async function SiteFooter() {
           />
         </Link>
 
-        <p className="max-w-2xl text-balance text-sm leading-relaxed text-muted-foreground sm:text-base">
-          {t("mission")}
-        </p>
+        <div className="flex max-w-2xl flex-col items-center gap-2">
+          <p className="text-balance text-base font-semibold leading-snug text-foreground sm:text-xl">
+            {t("mission")}
+          </p>
+          <p className="text-balance text-sm leading-relaxed text-muted-foreground sm:text-base">
+            {t("brief")}
+          </p>
+        </div>
 
         <nav
           aria-label={t("linksHeading")}
