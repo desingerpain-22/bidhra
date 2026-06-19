@@ -3,7 +3,6 @@ import type { ReactNode } from "react";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Reveal } from "@/components/reveal";
 import { Parallax } from "@/components/parallax";
-import { Link } from "@/i18n/navigation";
 
 type ComparisonKey = "capital" | "trust" | "aid" | "jobs" | "dependence";
 
@@ -57,12 +56,6 @@ export default async function Home({
               <p className="max-w-3xl text-balance text-lg leading-relaxed text-muted-foreground sm:text-2xl">
                 {tHero("subheading")}
               </p>
-              <Link
-                href="/projects"
-                className="inline-flex min-h-12 items-center justify-center rounded-full bg-accent px-6 text-base font-semibold text-accent-foreground shadow-lg shadow-accent/15 transition hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
-              >
-                {tHero("cta")}
-              </Link>
             </header>
 
             <div className="grid grid-cols-1 items-center gap-6 md:grid-cols-[1fr_auto_1fr] md:gap-0">

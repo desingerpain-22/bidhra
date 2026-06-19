@@ -41,6 +41,12 @@ export async function SiteHeader() {
           >
             {t("apply")}
           </Link>
+          <Link
+            href="/projects"
+            className="ms-2 inline-flex min-h-9 items-center justify-center whitespace-nowrap rounded-full bg-accent px-4 text-sm font-semibold text-accent-foreground shadow-lg shadow-accent/15 transition hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+          >
+            {t("cta")}
+          </Link>
         </nav>
         <div className="flex min-w-0 items-center justify-self-end gap-1.5 text-sm sm:gap-2 md:hidden">
           <Link
