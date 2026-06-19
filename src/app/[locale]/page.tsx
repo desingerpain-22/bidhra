@@ -236,32 +236,37 @@ export default async function Home({
             </header>
 
             <div className="linkedin-ticker -mx-4 overflow-hidden sm:-mx-8">
-              <div className="linkedin-ticker-track flex w-max gap-5 px-4 sm:gap-6 sm:px-8">
-                {[...LINKEDIN_POSTS, ...LINKEDIN_POSTS].map((post, index) => (
-                  <article
-                    key={`${post.id}-${index}`}
-                    aria-hidden={index >= LINKEDIN_POSTS.length}
-                    className="w-[min(76vw,320px)] shrink-0 overflow-hidden rounded-lg border border-border bg-muted/20 shadow-2xl shadow-black/15"
+              <div className="linkedin-ticker-track flex w-max">
+                {[0, 1].map((groupIndex) => (
+                  <div
+                    key={groupIndex}
+                    aria-hidden={groupIndex === 1}
+                    className="flex shrink-0 gap-5 px-2 sm:gap-6 sm:px-3"
                   >
-                    <iframe
-                      src={`https://www.linkedin.com/embed/feed/update/urn:li:share:${post.id}`}
-                      title={`${tSocialProof("postTitle")} ${
-                        (index % LINKEDIN_POSTS.length) + 1
-                      }`}
-                      loading="lazy"
-                      tabIndex={index >= LINKEDIN_POSTS.length ? -1 : 0}
-                      className="h-[560px] w-full border-0 bg-background"
-                    />
-                    <a
-                      href={post.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      tabIndex={index >= LINKEDIN_POSTS.length ? -1 : 0}
-                      className="flex items-center justify-center border-t border-border px-4 py-3 text-sm font-semibold text-foreground/75 transition hover:text-accent"
-                    >
-                      {tSocialProof("openPost")}
-                    </a>
-                  </article>
+                    {LINKEDIN_POSTS.map((post, postIndex) => (
+                      <article
+                        key={`${post.id}-${groupIndex}`}
+                        className="w-[min(76vw,320px)] shrink-0 overflow-hidden rounded-lg border border-border bg-muted/20 shadow-2xl shadow-black/15"
+                      >
+                        <iframe
+                          src={`https://www.linkedin.com/embed/feed/update/urn:li:share:${post.id}`}
+                          title={`${tSocialProof("postTitle")} ${postIndex + 1}`}
+                          loading="lazy"
+                          tabIndex={groupIndex === 1 ? -1 : 0}
+                          className="h-[560px] w-full border-0 bg-background"
+                        />
+                        <a
+                          href={post.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          tabIndex={groupIndex === 1 ? -1 : 0}
+                          className="flex items-center justify-center border-t border-border px-4 py-3 text-sm font-semibold text-foreground/75 transition hover:text-accent"
+                        >
+                          {tSocialProof("openPost")}
+                        </a>
+                      </article>
+                    ))}
+                  </div>
                 ))}
               </div>
             </div>
