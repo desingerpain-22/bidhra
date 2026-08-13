@@ -71,8 +71,6 @@ export default async function ScholarshipDetail({
 
       {scholarship.supportType !== "guidance" && (
         <ScholarshipFunding
-          slug={scholarship.slug}
-          studentName={scholarship.studentName}
           goal={scholarship.goal}
           initialRaised={scholarship.raised}
           initialSupporters={scholarship.supporters}

@@ -29,12 +29,14 @@ export async function SiteFooter() {
           </p>
         </div>
 
-        <Link
-          href="/projects"
+        <a
+          href="https://chuffed.org/donate/bidhra-project-turning-aid-into-palestinian-businesses-for-economic-recovery"
+          target="_blank"
+          rel="noreferrer"
           className="inline-flex min-h-11 items-center justify-center rounded-full bg-accent px-5 text-sm font-semibold text-accent-foreground shadow-lg shadow-accent/15 transition hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:px-6"
         >
           {tNav("cta")}
-        </Link>
+        </a>
 
         <nav
           aria-label={t("linksHeading")}

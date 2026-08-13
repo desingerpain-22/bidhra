@@ -86,8 +86,6 @@ export default async function ProjectDetail({
 
         {project.supportType !== "knowledge" && (
           <ProjectFunding
-            projectSlug={project.slug}
-            projectTitle={project.title[loc]}
             goal={project.goal}
             initialRaised={raised}
             initialSupporters={supporters}
@@ -404,8 +402,6 @@ export default async function ProjectDetail({
           <Reveal direction="up" delay={400}>
             <div className="mt-16 text-start">
               <ProjectFunding
-                projectSlug={project.slug}
-                projectTitle={project.title[loc]}
                 goal={project.goal}
                 initialRaised={raised}
                 initialSupporters={supporters}
