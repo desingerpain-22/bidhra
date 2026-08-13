@@ -138,8 +138,6 @@ export default async function ProjectDetail({
         </section>
 
         <ProjectDonors donors={donors} />
-
-        <CryptoExplainer locale={loc} />
       </main>
     );
   }
@@ -428,40 +426,8 @@ export default async function ProjectDetail({
       <section className="mx-auto w-full max-w-5xl px-4 pb-16 sm:px-12 sm:pb-24">
         <div className="flex flex-col gap-10">
           <ProjectDonors donors={donors} />
-          <CryptoExplainer locale={loc} />
         </div>
       </section>
-
     </div>
-  );
-}
-
-async function CryptoExplainer({ locale }: { locale: string }) {
-  const t = await getTranslations("CryptoExplainer");
-  const isAr = locale === "ar";
-
-  return (
-    <section className="flex flex-col gap-4 rounded-2xl border border-border bg-muted/20 p-5 sm:p-6">
-      <div className="flex items-center gap-3">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent text-lg">
-          ₮
-        </div>
-        <h2 className="text-base font-semibold text-foreground">{t("heading")}</h2>
-      </div>
-      <p className="text-sm leading-relaxed text-muted-foreground">{t("body")}</p>
-      <div className="flex items-center gap-3 rounded-xl border border-accent/20 bg-accent/5 px-4 py-3">
-        <span className="h-2 w-2 shrink-0 rounded-full bg-accent" />
-        <div className="flex flex-col gap-0.5">
-          <span className="text-sm font-semibold text-foreground">{t("trc20Label")}</span>
-          <span className="text-xs text-muted-foreground">{t("trc20Note")}</span>
-        </div>
-      </div>
-      <a
-        href={isAr ? "/ar/how-to-donate" : "/en/how-to-donate"}
-        className="inline-flex items-center gap-1 text-sm text-accent hover:underline"
-      >
-        {t("howToLink")}
-      </a>
-    </section>
   );
 }
