@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getScholarship, scholarships } from "@/lib/scholarships";
-import { ScholarshipFunding } from "@/components/scholarship-funding";
 import { ScholarshipGuidance } from "@/components/scholarship-guidance";
 import type { Locale } from "@/i18n/routing";
 
@@ -68,16 +67,6 @@ export default async function ScholarshipDetail({
           {scholarship.summary[loc]}
         </p>
       </header>
-
-      {scholarship.supportType !== "guidance" && (
-        <ScholarshipFunding
-          goal={scholarship.goal}
-          initialRaised={scholarship.raised}
-          initialSupporters={scholarship.supporters}
-          daysLeft={scholarship.daysLeft}
-          locale={locale}
-        />
-      )}
 
       {scholarship.guidanceAsk && (
         <ScholarshipGuidance

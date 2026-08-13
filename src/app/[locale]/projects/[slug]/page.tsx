@@ -3,7 +3,6 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getProject, projects } from "@/lib/projects";
 import type { Locale } from "@/i18n/routing";
-import { ProjectFunding } from "@/components/project-funding";
 import { knowledgeRequests } from "@/lib/knowledge-requests";
 import { ProjectKnowledgeSection } from "@/components/project-knowledge-section";
 import { FootageMedia } from "@/components/footage-media";
@@ -11,7 +10,7 @@ import { PortraitSlideshow } from "@/components/portrait-slideshow";
 import { Reveal } from "@/components/reveal";
 import { FeasibilityStudy } from "@/components/feasibility-study";
 import { moamenContent } from "@/lib/moamen-content";
-import { getDonationTotals, getProjectDonors } from "@/lib/donations";
+import { getProjectDonors } from "@/lib/donations";
 import { ProjectDonors } from "@/components/project-donors";
 
 export function generateStaticParams() {
@@ -33,12 +32,7 @@ export default async function ProjectDetail({
   const loc = locale as Locale;
   const knowledgeRequest = knowledgeRequests.find((item) => item.projectSlug === slug);
   const isEditorial = EDITORIAL_SLUGS.has(slug);
-  const [donationTotals, donors] = await Promise.all([
-    getDonationTotals(project.slug),
-    getProjectDonors(project.slug),
-  ]);
-  const raised = project.raised + donationTotals.raised;
-  const supporters = project.supporters + donationTotals.supporters;
+  const donors = await getProjectDonors(project.slug);
 
   if (!isEditorial) {
     return (
@@ -83,17 +77,6 @@ export default async function ProjectDetail({
             {project.summary[loc]}
           </p>
         </header>
-
-        {project.supportType !== "knowledge" && (
-          <ProjectFunding
-            goal={project.goal}
-            initialRaised={raised}
-            initialSupporters={supporters}
-            daysLeft={project.daysLeft}
-            locale={locale}
-            hasKnowledgeRequest={Boolean(knowledgeRequest)}
-          />
-        )}
 
         {knowledgeRequest && (
           <div id="project-knowledge" className="scroll-mt-24">
@@ -395,21 +378,6 @@ export default async function ProjectDetail({
             ))}
           </div>
         </Reveal>
-
-        {project.supportType !== "knowledge" && (
-          <Reveal direction="up" delay={400}>
-            <div className="mt-16 text-start">
-              <ProjectFunding
-                goal={project.goal}
-                initialRaised={raised}
-                initialSupporters={supporters}
-                daysLeft={project.daysLeft}
-                locale={locale}
-                hasKnowledgeRequest={Boolean(knowledgeRequest)}
-              />
-            </div>
-          </Reveal>
-        )}
 
         {knowledgeRequest && (
           <div id="project-knowledge" className="mt-12 scroll-mt-24 text-start">
