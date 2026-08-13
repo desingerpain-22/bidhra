@@ -10,8 +10,6 @@ import { PortraitSlideshow } from "@/components/portrait-slideshow";
 import { Reveal } from "@/components/reveal";
 import { FeasibilityStudy } from "@/components/feasibility-study";
 import { moamenContent } from "@/lib/moamen-content";
-import { getProjectDonors } from "@/lib/donations";
-import { ProjectDonors } from "@/components/project-donors";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -32,7 +30,6 @@ export default async function ProjectDetail({
   const loc = locale as Locale;
   const knowledgeRequest = knowledgeRequests.find((item) => item.projectSlug === slug);
   const isEditorial = EDITORIAL_SLUGS.has(slug);
-  const donors = await getProjectDonors(project.slug);
 
   if (!isEditorial) {
     return (
@@ -119,8 +116,6 @@ export default async function ProjectDetail({
             </p>
           </div>
         </section>
-
-        <ProjectDonors donors={donors} />
       </main>
     );
   }
@@ -389,12 +384,6 @@ export default async function ProjectDetail({
             />
           </div>
         )}
-      </section>
-
-      <section className="mx-auto w-full max-w-5xl px-4 pb-16 sm:px-12 sm:pb-24">
-        <div className="flex flex-col gap-10">
-          <ProjectDonors donors={donors} />
-        </div>
       </section>
     </div>
   );

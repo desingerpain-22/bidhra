@@ -192,12 +192,6 @@
     "linkedin": "لينكدإن",
     "instagram": "إنستغرام"
   },
-  "Donors": {
-    "heading": "الداعمون",
-    "empty": "كن أول من يدعم هذا المشروع.",
-    "anonymous": "مجهول",
-    "amount": "{amount}$"
-  },
   "GetStarted": {
     "title": "كيف تحب أن تبدأ؟",
     "ownerHeading": "لديّ فكرة",

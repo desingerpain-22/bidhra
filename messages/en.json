@@ -192,12 +192,6 @@
     "linkedin": "LinkedIn",
     "instagram": "Instagram"
   },
-  "Donors": {
-    "heading": "Supporters",
-    "empty": "Be the first to support this project.",
-    "anonymous": "Anonymous",
-    "amount": "${amount}"
-  },
   "GetStarted": {
     "title": "How would you like to start?",
     "ownerHeading": "I have an idea",
