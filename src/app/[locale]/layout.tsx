@@ -8,6 +8,7 @@ import { localeDirection, routing, type Locale } from "@/i18n/routing";
 import { ParallaxBackdrop } from "@/components/parallax-backdrop";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { ChatWidget } from "@/components/chat-widget";
 import "../globals.css";
 
 const raleway = Raleway({
@@ -60,6 +61,7 @@ export default async function LocaleLayout({
           <SiteHeader />
           <div className="flex flex-1 flex-col">{children}</div>
           <SiteFooter />
+          <ChatWidget />
         </NextIntlClientProvider>
       </body>
       <Script
