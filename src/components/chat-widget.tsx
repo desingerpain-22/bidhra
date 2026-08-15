@@ -139,7 +139,7 @@ export function ChatWidget() {
                   <div
                     key={message.id}
                     className={
-                      "max-w-[85%] rounded-2xl px-4 py-2 text-sm leading-relaxed whitespace-pre-wrap " +
+                      "max-w-[85%] rounded-2xl px-4 py-2 text-sm leading-relaxed whitespace-pre-wrap break-words " +
                       (message.role === "user"
                         ? "self-end bg-primary text-primary-foreground"
                         : "self-start bg-muted text-foreground")
