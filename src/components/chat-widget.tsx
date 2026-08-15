@@ -30,9 +30,12 @@ export function ChatWidget() {
   }
 
   return (
-    <>
+    // Rendered as a child of <body>; wrapped so the `fixed` children below
+    // aren't direct children of body, which globals.css forces to
+    // `position: relative` via an unlayered `body > *` rule.
+    <div>
       {open && (
-        <div className="fixed bottom-24 end-4 z-50 flex h-[32rem] max-h-[70vh] w-[calc(100vw-2rem)] max-w-sm flex-col overflow-hidden rounded-2xl border border-border bg-background shadow-2xl sm:end-6">
+        <div className="fixed right-4 bottom-24 z-50 flex h-[32rem] max-h-[70vh] w-[calc(100vw-2rem)] max-w-sm flex-col overflow-hidden rounded-2xl border border-border bg-background shadow-2xl sm:right-6">
           <header className="flex items-center justify-between gap-3 border-b border-border px-4 py-3">
             <div className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-accent" aria-hidden />
@@ -50,7 +53,10 @@ export function ChatWidget() {
             </button>
           </header>
 
-          <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-4">
+          <div
+            ref={scrollRef}
+            className="flex-1 overflow-x-hidden overflow-y-auto px-4 py-4"
+          >
             {!started ? (
               <div className="flex flex-col gap-4">
                 <p className="text-sm leading-relaxed text-muted-foreground">
@@ -85,7 +91,7 @@ export function ChatWidget() {
                           </span>
                           <ChevronIcon
                             className={
-                              "shrink-0 text-muted-foreground transition-transform " +
+                              "h-4 w-4 shrink-0 text-muted-foreground transition-transform " +
                               (isOpen ? "rotate-180" : "")
                             }
                           />
@@ -168,11 +174,11 @@ export function ChatWidget() {
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Close chat" : "Open chat"}
-        className="fixed bottom-4 end-4 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition hover:opacity-90 sm:end-6"
+        className="fixed right-4 bottom-4 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition hover:opacity-90 sm:right-6"
       >
         {open ? <CloseIcon className="h-6 w-6" /> : <ChatIcon className="h-6 w-6" />}
       </button>
-    </>
+    </div>
   );
 }
 
