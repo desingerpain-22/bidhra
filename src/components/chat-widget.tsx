@@ -5,6 +5,24 @@ import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import { faqCategories } from "@/lib/faq";
 
+function linkify(text: string) {
+  return text.split(/(https?:\/\/[^\s)]+)/g).map((chunk, i) =>
+    chunk.startsWith("http") ? (
+      <a
+        key={i}
+        href={chunk}
+        target="_blank"
+        rel="noreferrer"
+        className="underline decoration-1 underline-offset-2 hover:text-accent"
+      >
+        {chunk}
+      </a>
+    ) : (
+      chunk
+    ),
+  );
+}
+
 export function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
@@ -129,7 +147,7 @@ export function ChatWidget() {
                   >
                     {message.parts.map((part, i) =>
                       part.type === "text" ? (
-                        <span key={i}>{part.text}</span>
+                        <span key={i}>{linkify(part.text)}</span>
                       ) : null,
                     )}
                   </div>
