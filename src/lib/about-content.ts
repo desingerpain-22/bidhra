@@ -52,8 +52,13 @@ export const aboutChapters: AboutChapter[] = [
     heading: "Why Bidhra Exists",
     image: true,
     paragraphs: [
-      "Bidhra did not start from an idea. It started from people I lost, and from the dreams that remained alive in other Palestinian families.",
-      "As a Palestinian living in Gaza, I know aid is necessary. But I also know that survival is not the same as rebuilding.",
+      "Bidhra did not start from an idea. It started from people I lost.",
+      "In September 2025, I lost the Al-Husari family — a family full of ambition, kindness, and life. They were bombed in the late hours of the night while sleeping in their multi-floor home. Among them were Yara, a doctor, and Ahmad, an engineer. I had sat with them and listened to their goals and dreams — where they wanted to take their lives once the war ended. I saw myself in them: in their ambition, their passion, their hope. Ahmad remained under the rubble for two days. He called for help from his phone, but help arrived too late.",
+      "The dreams of the Al-Husari family left with them. But thousands of dreams remain alive in other Palestinian families. So how can those dreams continue, when the people carrying them have lost everything they need to start again?",
+      "Before the war, the path was clear for many Palestinians: study, learn a craft, or start working early, and slowly turn that effort into something real — a piece of land, a home, a shop, tools, or a small business. But the war broke that path. Many Palestinians didn't only lose their homes. They lost the land, the tools, the business, and the income they'd spent years building.",
+      "The problem today isn't that Palestinians don't want to work. It's that many of them no longer have what they need to start again. So how can they start again when everything they built is gone?",
+      "This is why I built Bidhra: to turn donations into a sustainable economic engine for Palestinians. Part of the funding goes directly to real Palestinian businesses on the ground, and when a supported business succeeds, it shares a percentage of its profits to help the next business that needs it — building sustainable solutions, creating jobs, and reducing dependence on aid.",
+      "Bidhra is not against aid or donations — they matter for the child left alone, for the elderly person left alone. But I believe aid alone isn't effective for most Palestinians in the way it's being used now.",
     ],
     quote: {
       body: "Bidhra exists because Palestinians need more than temporary support. They need the chance to rebuild their lives, their work, their businesses, and their future — with dignity.",
