@@ -23,10 +23,13 @@ function linkify(text: string) {
   );
 }
 
+const GREETING_SEEN_KEY = "bidhra:chat-greeting-seen";
+
 export function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [openCategory, setOpenCategory] = useState<string | null>(null);
+  const [showGreeting, setShowGreeting] = useState(false);
   const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({ api: "/api/chat" }),
   });
@@ -34,6 +37,17 @@ export function ChatWidget() {
 
   const started = messages.length > 0;
   const busy = status === "submitted" || status === "streaming";
+
+  useEffect(() => {
+    if (sessionStorage.getItem(GREETING_SEEN_KEY)) return;
+    const timer = setTimeout(() => setShowGreeting(true), 1200);
+    return () => clearTimeout(timer);
+  }, []);
+
+  function dismissGreeting() {
+    setShowGreeting(false);
+    sessionStorage.setItem(GREETING_SEEN_KEY, "1");
+  }
 
   useEffect(() => {
     if (!scrollRef.current) return;
@@ -188,13 +202,42 @@ export function ChatWidget() {
         </div>
       )}
 
+      {showGreeting && !open && (
+        <div className="fixed right-4 bottom-20 z-50 flex max-w-[15rem] items-start gap-2 rounded-2xl border border-border bg-background px-4 py-3 shadow-2xl sm:right-6">
+          <p className="text-sm leading-snug text-foreground">
+            👋 Ask me anything about Bidhra — I&apos;m an AI assistant, here 24/7.
+          </p>
+          <button
+            type="button"
+            aria-label="Dismiss"
+            onClick={dismissGreeting}
+            className="-me-1 -mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-muted-foreground transition hover:bg-muted hover:text-foreground"
+          >
+            <CloseIcon className="h-3.5 w-3.5" />
+          </button>
+        </div>
+      )}
+
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-label={open ? "Close chat" : "Open chat"}
-        className="fixed right-4 bottom-4 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition hover:opacity-90 sm:right-6"
+        onClick={() => {
+          setOpen((v) => !v);
+          dismissGreeting();
+        }}
+        aria-label={open ? "Close chat" : "Open AI chat"}
+        className={
+          "fixed right-4 bottom-4 z-50 flex h-14 items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground shadow-lg transition hover:opacity-90 sm:right-6 " +
+          (open ? "w-14" : "px-5")
+        }
       >
-        {open ? <CloseIcon className="h-6 w-6" /> : <ChatIcon className="h-6 w-6" />}
+        {open ? (
+          <CloseIcon className="h-6 w-6" />
+        ) : (
+          <>
+            <ChatIcon className="h-5 w-5" />
+            <span className="text-sm font-semibold">Ask AI</span>
+          </>
+        )}
       </button>
     </div>
   );
