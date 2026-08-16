@@ -8,6 +8,7 @@ export type AboutChapter = {
   image?: boolean;
   imageSrc?: string;
   imageAlt?: string;
+  pdfSrc?: string;
   quote?: { body: string; attribution: string };
 };
 
@@ -50,7 +51,7 @@ export const aboutChapters: AboutChapter[] = [
     numeral: "04",
     navLabel: "Why Bidhra Exists",
     heading: "Why Bidhra Exists",
-    image: true,
+    pdfSrc: "/about/bidhra-presentation.pdf",
     paragraphs: [
       "Bidhra did not start from an idea. It started from people I lost.",
       "In September 2025, I lost the Al-Husari family — a family full of ambition, kindness, and life. They were bombed in the late hours of the night while sleeping in their multi-floor home. Among them were Yara, a doctor, and Ahmad, an engineer. I had sat with them and listened to their goals and dreams — where they wanted to take their lives once the war ended. I saw myself in them: in their ambition, their passion, their hope. Ahmad remained under the rubble for two days. He called for help from his phone, but help arrived too late.",

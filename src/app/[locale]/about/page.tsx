@@ -51,7 +51,27 @@ export default async function AboutPage({
               <h2 className="mb-4 text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
                 {chapter.heading}
               </h2>
-              {chapter.imageSrc ? (
+              {chapter.pdfSrc ? (
+                <object
+                  data={chapter.pdfSrc}
+                  type="application/pdf"
+                  className="mb-5 h-[36rem] w-full rounded-xl border border-border"
+                >
+                  <div className="flex h-full w-full flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border p-6 text-center">
+                    <p className="text-sm text-muted-foreground">
+                      Your browser can&apos;t preview this PDF inline.
+                    </p>
+                    <a
+                      href={chapter.pdfSrc}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-sm font-medium text-accent underline underline-offset-2"
+                    >
+                      Open the presentation
+                    </a>
+                  </div>
+                </object>
+              ) : chapter.imageSrc ? (
                 <div className="relative mb-5 aspect-square w-full max-w-sm overflow-hidden rounded-xl">
                   <Image
                     src={chapter.imageSrc}
