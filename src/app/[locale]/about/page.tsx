@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { setRequestLocale } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
 import { aboutChapters, aboutValues, aboutNavItems } from "@/lib/about-content";
 import { AboutRailNav } from "@/components/about-rail-nav";
 
@@ -149,26 +148,6 @@ export default async function AboutPage({
             </div>
           </div>
         </section>
-
-        <div className="mt-20 text-center sm:mt-24">
-          <p className="mb-8 text-lg italic text-foreground">
-            From a seed, to a forest.
-          </p>
-          <div className="flex flex-wrap justify-center gap-3.5">
-            <Link
-              href="/projects"
-              className="inline-flex h-11 items-center justify-center rounded-full bg-accent px-6 text-sm font-semibold text-accent-foreground transition hover:opacity-90"
-            >
-              See Verified Projects
-            </Link>
-            <Link
-              href="/#how-it-works"
-              className="inline-flex h-11 items-center justify-center rounded-full border border-border px-6 text-sm font-medium text-foreground transition hover:bg-muted"
-            >
-              How We Work
-            </Link>
-          </div>
-        </div>
       </div>
     </main>
   );
