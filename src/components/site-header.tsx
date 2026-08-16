@@ -24,6 +24,12 @@ export async function SiteHeader() {
         </Link>
         <nav className="hidden min-w-0 items-center justify-self-end gap-x-2 text-sm md:flex">
           <Link
+            href="/about"
+            className="whitespace-nowrap rounded-full px-2.5 py-1.5 text-muted-foreground transition hover:text-foreground lg:px-3"
+          >
+            {t("about")}
+          </Link>
+          <Link
             href="/projects"
             className="whitespace-nowrap rounded-full px-2.5 py-1.5 text-muted-foreground transition hover:text-foreground lg:px-3"
           >

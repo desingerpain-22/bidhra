@@ -42,6 +42,9 @@ export async function SiteFooter() {
           aria-label={t("linksHeading")}
           className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm font-medium text-foreground/70 sm:text-base"
         >
+          <Link href="/about" className="transition hover:text-foreground">
+            {tNav("about")}
+          </Link>
           <Link href="/projects" className="transition hover:text-foreground">
             {t("browse")}
           </Link>

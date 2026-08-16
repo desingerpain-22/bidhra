@@ -277,7 +277,7 @@ export default async function Home({
           </section>
         </Reveal>
 
-        <section className="mt-20 sm:mt-36">
+        <section id="how-it-works" className="mt-20 scroll-mt-24 sm:mt-36">
           <Reveal direction="up">
             <Parallax speed={0.12} maxOffset={42}>
               <header className="flex flex-col gap-4 pb-10 sm:gap-6 sm:pb-12">
