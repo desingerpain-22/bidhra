@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { aboutChapters, aboutValues, aboutNavItems } from "@/lib/about-content";
@@ -50,13 +51,25 @@ export default async function AboutPage({
               <h2 className="mb-4 text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
                 {chapter.heading}
               </h2>
-              {chapter.image && (
-                <div
-                  aria-hidden
-                  className="mb-5 flex aspect-video w-full items-center justify-center rounded-xl border border-dashed border-border text-xs font-mono uppercase tracking-widest text-muted-foreground"
-                >
-                  Image
+              {chapter.imageSrc ? (
+                <div className="relative mb-5 aspect-square w-full max-w-sm overflow-hidden rounded-xl">
+                  <Image
+                    src={chapter.imageSrc}
+                    alt={chapter.imageAlt ?? ""}
+                    fill
+                    sizes="(min-width: 640px) 24rem, 100vw"
+                    className="object-contain"
+                  />
                 </div>
+              ) : (
+                chapter.image && (
+                  <div
+                    aria-hidden
+                    className="mb-5 flex aspect-video w-full items-center justify-center rounded-xl border border-dashed border-border text-xs font-mono uppercase tracking-widest text-muted-foreground"
+                  >
+                    Image
+                  </div>
+                )
               )}
               {chapter.lede && (
                 <p className="mb-3.5 max-w-[34ch] text-lg leading-snug text-foreground">

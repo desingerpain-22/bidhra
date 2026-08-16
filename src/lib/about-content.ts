@@ -6,6 +6,8 @@ export type AboutChapter = {
   lede?: string;
   paragraphs: string[];
   image?: boolean;
+  imageSrc?: string;
+  imageAlt?: string;
   quote?: { body: string; attribution: string };
 };
 
@@ -15,7 +17,8 @@ export const aboutChapters: AboutChapter[] = [
     numeral: "01",
     navLabel: "Trust & Sponsorship",
     heading: "Trust and Sponsorship",
-    image: true,
+    imageSrc: "/about/t4p-bidhra.png",
+    imageAlt: "Tech for Palestine and Bidhra",
     paragraphs: [
       "Bidhra is a Tech for Palestine Project, sponsored by Tech for Palestine.",
       "This sponsorship helps provide structure, accountability, and a trusted fundraising path for supporters who want to contribute to Bidhra's work.",
