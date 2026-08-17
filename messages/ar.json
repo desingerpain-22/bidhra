@@ -19,6 +19,12 @@
     "beforeCaption": "قبل",
     "afterCaption": "بعد"
   },
+  "TrustSponsorship": {
+    "eyebrow": "الثقة والرعاية",
+    "title": "مشروع تابع لـ Tech for Palestine",
+    "body": "بذرة هي مشروع تابع لـ Tech for Palestine. تعمل T4P كراعٍ مالي لهذه الحملة، بحيث يتم استلام كل تبرع والإبلاغ عنه عبر جهة غير ربحية معتمدة — لا عبر فرد غير موثّق.",
+    "logoAlt": "Tech for Palestine وبذرة"
+  },
   "SeedModel": {
     "eyebrow": "نموذج بذرة",
     "title": "من بذرة واحدة إلى محرّك اقتصادي",

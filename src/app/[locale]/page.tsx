@@ -45,6 +45,7 @@ export default async function Home({
   setRequestLocale(locale);
   const tHero = await getTranslations("Hero");
   const tNav = await getTranslations("Nav");
+  const tTrust = await getTranslations("TrustSponsorship");
   const tSeedModel = await getTranslations("SeedModel");
   const tProblemSolution = await getTranslations("ProblemSolution");
   const tSocialProof = await getTranslations("SocialProof");
@@ -127,6 +128,35 @@ export default async function Home({
                   </figcaption>
                 </figure>
               </Parallax>
+            </div>
+          </section>
+        </Reveal>
+
+        <Reveal direction="up">
+          <section
+            aria-labelledby="trust-sponsorship-heading"
+            className="mb-24 flex flex-col items-center gap-6 text-center sm:mb-32 sm:gap-8"
+          >
+            <span className="inline-flex items-center rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-accent">
+              {tTrust("eyebrow")}
+            </span>
+            <h2
+              id="trust-sponsorship-heading"
+              className="max-w-2xl text-balance text-2xl font-semibold leading-tight tracking-tight text-foreground sm:text-4xl"
+            >
+              {tTrust("title")}
+            </h2>
+            <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
+              {tTrust("body")}
+            </p>
+            <div className="relative mt-2 aspect-[3834/1204] w-full max-w-xl overflow-hidden rounded-2xl border border-border bg-muted/20 p-6 sm:p-10">
+              <Image
+                src="/t4p-bidhra-wide.png"
+                alt={tTrust("logoAlt")}
+                fill
+                sizes="(min-width: 640px) 36rem, 100vw"
+                className="object-contain"
+              />
             </div>
           </section>
         </Reveal>
