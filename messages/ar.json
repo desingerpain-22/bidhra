@@ -22,7 +22,7 @@
   "TrustSponsorship": {
     "eyebrow": "الثقة والرعاية",
     "title": "مشروع تابع لـ Tech for Palestine",
-    "body": "بذرة هي مشروع تابع لـ Tech for Palestine. تعمل T4P كراعٍ مالي لهذه الحملة، بحيث يتم استلام كل تبرع والإبلاغ عنه عبر جهة غير ربحية معتمدة — لا عبر فرد غير موثّق.",
+    "body": "بذرة هي مشروع تابع لـ Tech for Palestine. تعمل T4P كراعٍ مالي لهذه الحملة، بحيث يتم استلام كل تبرع والإبلاغ عنه عبر جهة غير ربحية معتمدة.",
     "logoAlt": "Tech for Palestine وبذرة"
   },
   "SeedModel": {
@@ -227,6 +227,10 @@
   },
   "Project": {
     "back": "→ كل المشاريع",
+    "raised": "تم جمعها من",
+    "supporters": "داعم",
+    "contributeMoney": "ساهم بالمال",
+    "offerSkills": "قدّم مهاراتك",
     "verified": "موثّق",
     "category": "الفئة",
     "owner": "صاحب المشروع",

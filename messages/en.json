@@ -22,7 +22,7 @@
   "TrustSponsorship": {
     "eyebrow": "Trust & Sponsorship",
     "title": "A Tech for Palestine Project",
-    "body": "Bidhra is a Tech for Palestine project. T4P acts as fiscal sponsor for this campaign, so every donation is received and reported through an established nonprofit — not an unverified individual.",
+    "body": "Bidhra is a Tech for Palestine project. T4P acts as fiscal sponsor for this campaign, so every donation is received and reported through an established nonprofit.",
     "logoAlt": "Tech for Palestine and Bidhra"
   },
   "SeedModel": {
@@ -227,6 +227,10 @@
   },
   "Project": {
     "back": "← All projects",
+    "raised": "raised of",
+    "supporters": "supporters",
+    "contributeMoney": "Contribute money",
+    "offerSkills": "Offer skills",
     "verified": "Verified",
     "category": "Category",
     "owner": "Project owner",

@@ -10,6 +10,7 @@ import { PortraitSlideshow } from "@/components/portrait-slideshow";
 import { Reveal } from "@/components/reveal";
 import { FeasibilityStudy } from "@/components/feasibility-study";
 import { moamenContent } from "@/lib/moamen-content";
+import { ProjectFunding } from "@/components/project-funding";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -74,6 +75,16 @@ export default async function ProjectDetail({
             {project.summary[loc]}
           </p>
         </header>
+
+        {project.supportType !== "knowledge" && (
+          <ProjectFunding
+            goal={project.goal}
+            fallbackRaised={project.raised}
+            fallbackSupporters={project.supporters}
+            locale={locale}
+            hasKnowledgeRequest={Boolean(knowledgeRequest)}
+          />
+        )}
 
         {knowledgeRequest && (
           <div id="project-knowledge" className="scroll-mt-24">
@@ -373,6 +384,20 @@ export default async function ProjectDetail({
             ))}
           </div>
         </Reveal>
+
+        {project.supportType !== "knowledge" && (
+          <Reveal direction="up" delay={400}>
+            <div className="mx-auto mt-16 max-w-md text-start sm:mt-20">
+              <ProjectFunding
+                goal={project.goal}
+                fallbackRaised={project.raised}
+                fallbackSupporters={project.supporters}
+                locale={locale}
+                hasKnowledgeRequest={Boolean(knowledgeRequest)}
+              />
+            </div>
+          </Reveal>
+        )}
 
         {knowledgeRequest && (
           <div id="project-knowledge" className="mt-12 scroll-mt-24 text-start">
