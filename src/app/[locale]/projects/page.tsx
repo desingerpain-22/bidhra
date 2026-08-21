@@ -3,6 +3,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { projects } from "@/lib/projects";
 import type { Locale } from "@/i18n/routing";
+import { getChuffedCampaignStats } from "@/lib/chuffed";
 
 export default async function ProjectsPage({
   params,
@@ -14,6 +15,7 @@ export default async function ProjectsPage({
   const t = await getTranslations("Projects");
   const loc = locale as Locale;
   const numberFormatter = new Intl.NumberFormat(locale);
+  const chuffedStats = await getChuffedCampaignStats();
 
   return (
     <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-8 px-4 py-10 sm:gap-12 sm:px-6 sm:py-16">
@@ -26,9 +28,11 @@ export default async function ProjectsPage({
       <div className="grid gap-5 sm:grid-cols-2 sm:gap-6">
         {projects.map((project) => {
           const isKnowledgeOnly = project.supportType === "knowledge";
+          const raised = chuffedStats?.raised ?? project.raised;
+          const supporters = chuffedStats?.supporters ?? project.supporters;
           const pct = isKnowledgeOnly
             ? 0
-            : Math.min(100, Math.round((project.raised / project.goal) * 100));
+            : Math.min(100, Math.round((raised / project.goal) * 100));
           return (
             <Link
               key={project.slug}
@@ -95,13 +99,13 @@ export default async function ProjectsPage({
                   </div>
                   <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-sm">
                     <span className="font-medium text-foreground">
-                      ${numberFormatter.format(project.raised)}{" "}
+                      ${numberFormatter.format(raised)}{" "}
                       <span className="text-muted-foreground">
                         {t("of")} ${numberFormatter.format(project.goal)}
                       </span>
                     </span>
                     <span className="text-muted-foreground">
-                      {numberFormatter.format(project.supporters)}{" "}
+                      {numberFormatter.format(supporters)}{" "}
                       {t("supporters")}
                     </span>
                   </div>
