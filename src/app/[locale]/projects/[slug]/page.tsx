@@ -11,6 +11,7 @@ import { Reveal } from "@/components/reveal";
 import { FeasibilityStudy } from "@/components/feasibility-study";
 import { moamenContent } from "@/lib/moamen-content";
 import { ProjectFunding } from "@/components/project-funding";
+import { StickySupportCta } from "@/components/sticky-support-cta";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -31,6 +32,8 @@ export default async function ProjectDetail({
   const loc = locale as Locale;
   const knowledgeRequest = knowledgeRequests.find((item) => item.projectSlug === slug);
   const isEditorial = EDITORIAL_SLUGS.has(slug);
+  const supportCtaLabel =
+    project.supportType !== "knowledge" ? project.supportCta?.[loc] : undefined;
 
   if (!isEditorial) {
     return (
@@ -127,6 +130,8 @@ export default async function ProjectDetail({
             </p>
           </div>
         </section>
+
+        {supportCtaLabel && <StickySupportCta label={supportCtaLabel} />}
       </main>
     );
   }
@@ -410,6 +415,8 @@ export default async function ProjectDetail({
           </div>
         )}
       </section>
+
+      {supportCtaLabel && <StickySupportCta label={supportCtaLabel} />}
     </div>
   );
 }

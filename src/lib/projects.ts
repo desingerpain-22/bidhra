@@ -20,6 +20,7 @@ export type Project = {
   skillsNeeded: LocalizedString[];
   verified: boolean;
   cover?: string;
+  supportCta?: LocalizedString;
 };
 
 export const projects: Project[] = [
@@ -48,6 +49,10 @@ export const projects: Project[] = [
     skillsNeeded: [],
     verified: true,
     cover: "/projects/moamen-woodworking-deir-al-balah.png",
+    supportCta: {
+      en: "Support Moamen & His Family",
+      ar: "ادعم مؤمن وعائلته",
+    },
   },
 ];
 
