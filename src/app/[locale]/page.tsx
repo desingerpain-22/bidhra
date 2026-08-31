@@ -4,6 +4,8 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Reveal } from "@/components/reveal";
 import { Parallax } from "@/components/parallax";
 import { Link } from "@/i18n/navigation";
+import { getChuffedRecentDonations } from "@/lib/chuffed";
+import { DonationToast } from "@/components/donation-toast";
 
 type ComparisonKey = "capital" | "trust" | "aid" | "jobs" | "dependence";
 
@@ -50,9 +52,11 @@ export default async function Home({
   const tProblemSolution = await getTranslations("ProblemSolution");
   const tSocialProof = await getTranslations("SocialProof");
   const tHow = await getTranslations("HowItWorks");
+  const recentDonations = await getChuffedRecentDonations();
 
   return (
     <div className="flex flex-1 flex-col bg-background font-sans">
+      <DonationToast donations={recentDonations} />
       <main className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-8 sm:py-28">
         <Reveal direction="fade">
           <section

@@ -12,6 +12,8 @@ import { FeasibilityStudy } from "@/components/feasibility-study";
 import { moamenContent } from "@/lib/moamen-content";
 import { ProjectFunding } from "@/components/project-funding";
 import { StickySupportCta } from "@/components/sticky-support-cta";
+import { DonationToast } from "@/components/donation-toast";
+import { getChuffedRecentDonations } from "@/lib/chuffed";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -34,6 +36,8 @@ export default async function ProjectDetail({
   const isEditorial = EDITORIAL_SLUGS.has(slug);
   const supportCtaLabel =
     project.supportType !== "knowledge" ? project.supportCta?.[loc] : undefined;
+  const recentDonations =
+    project.supportType !== "knowledge" ? await getChuffedRecentDonations() : [];
 
   if (!isEditorial) {
     return (
@@ -132,6 +136,7 @@ export default async function ProjectDetail({
         </section>
 
         {supportCtaLabel && <StickySupportCta label={supportCtaLabel} />}
+        <DonationToast donations={recentDonations} />
       </main>
     );
   }
@@ -417,6 +422,7 @@ export default async function ProjectDetail({
       </section>
 
       {supportCtaLabel && <StickySupportCta label={supportCtaLabel} />}
+      <DonationToast donations={recentDonations} />
     </div>
   );
 }

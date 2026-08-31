@@ -56,3 +56,34 @@ export async function getChuffedCampaignStats(): Promise<ChuffedStats | null> {
     return null;
   }
 }
+
+export type ChuffedDonation = {
+  displayName: string;
+  amount: number;
+};
+
+export async function getChuffedRecentDonations(): Promise<ChuffedDonation[]> {
+  try {
+    const res = await fetch(
+      `https://chuffed.org/api/v2/campaigns/${CHUFFED_CAMPAIGN_ID}/supporters?limit=10&offset=0`,
+      { next: { revalidate: 300 } },
+    );
+
+    if (!res.ok) return [];
+
+    const json = await res.json();
+    const rows = Array.isArray(json?.data) ? json.data : [];
+
+    return rows
+      .map((row: { amount?: unknown; name?: unknown; is_anonymous?: unknown }) => ({
+        displayName:
+          row.is_anonymous || !row.name
+            ? "Anonymous"
+            : String(row.name).trim().split(" ")[0],
+        amount: Number(row.amount),
+      }))
+      .filter((d: ChuffedDonation) => Number.isFinite(d.amount) && d.amount > 0);
+  } catch {
+    return [];
+  }
+}
