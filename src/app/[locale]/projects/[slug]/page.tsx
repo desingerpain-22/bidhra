@@ -136,7 +136,7 @@ export default async function ProjectDetail({
         </section>
 
         {supportCtaLabel && <StickySupportCta label={supportCtaLabel} />}
-        <DonationToast donations={recentDonations} />
+        <DonationToast donations={recentDonations} raised={Boolean(supportCtaLabel)} />
       </main>
     );
   }
@@ -422,7 +422,7 @@ export default async function ProjectDetail({
       </section>
 
       {supportCtaLabel && <StickySupportCta label={supportCtaLabel} />}
-      <DonationToast donations={recentDonations} />
+      <DonationToast donations={recentDonations} raised={Boolean(supportCtaLabel)} />
     </div>
   );
 }

@@ -9,8 +9,13 @@ const GAP_MS = 1800;
 
 export function DonationToast({
   donations,
+  raised = false,
 }: {
   donations: { displayName: string; amount: number }[];
+  /** Set when another fixed bottom-left CTA (e.g. StickySupportCta) is also
+   * on the page, so the toast stacks above it instead of aligning with the
+   * chat button on the opposite corner. */
+  raised?: boolean;
 }) {
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(false);
@@ -52,7 +57,12 @@ export function DonationToast({
   const donation = donations[index];
 
   return (
-    <div className="fixed bottom-20 left-4 z-40 flex max-w-[16rem] items-center gap-2 rounded-2xl border border-border bg-background px-4 py-3 shadow-2xl sm:bottom-24 sm:left-6">
+    <div
+      className={
+        "fixed left-4 z-40 flex max-w-[16rem] items-center gap-2 rounded-2xl border border-border bg-background px-4 py-3 shadow-2xl sm:left-6 " +
+        (raised ? "bottom-20 sm:bottom-24" : "bottom-4")
+      }
+    >
       <span className="h-2 w-2 shrink-0 rounded-full bg-accent" aria-hidden />
       <p className="text-sm text-foreground">
         <span className="font-semibold">{donation.displayName}</span> donated $
