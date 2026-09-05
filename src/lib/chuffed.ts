@@ -51,7 +51,9 @@ export async function getChuffedCampaignStats(): Promise<ChuffedStats | null> {
       return null;
     }
 
-    return { raised: Math.round(amountCents) / 100, supporters };
+    // Whole dollars only, matching how Chuffed itself displays the total —
+    // no cents, so every consumer of this value is consistent.
+    return { raised: Math.round(amountCents / 100), supporters };
   } catch {
     return null;
   }
