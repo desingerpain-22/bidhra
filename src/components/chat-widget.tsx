@@ -24,6 +24,8 @@ function linkify(text: string) {
 }
 
 const GREETING_SEEN_KEY = "bidhra:chat-greeting-seen";
+const GREETING_SHOW_DELAY_MS = 1200;
+const GREETING_AUTO_HIDE_MS = 8000;
 
 export function ChatWidget() {
   const [open, setOpen] = useState(false);
@@ -40,7 +42,7 @@ export function ChatWidget() {
 
   useEffect(() => {
     if (sessionStorage.getItem(GREETING_SEEN_KEY)) return;
-    const timer = setTimeout(() => setShowGreeting(true), 1200);
+    const timer = setTimeout(() => setShowGreeting(true), GREETING_SHOW_DELAY_MS);
     return () => clearTimeout(timer);
   }, []);
 
@@ -48,6 +50,12 @@ export function ChatWidget() {
     setShowGreeting(false);
     sessionStorage.setItem(GREETING_SEEN_KEY, "1");
   }
+
+  useEffect(() => {
+    if (!showGreeting) return;
+    const timer = setTimeout(dismissGreeting, GREETING_AUTO_HIDE_MS);
+    return () => clearTimeout(timer);
+  }, [showGreeting]);
 
   useEffect(() => {
     if (!scrollRef.current) return;
