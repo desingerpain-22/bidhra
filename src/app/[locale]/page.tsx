@@ -46,7 +46,6 @@ export default async function Home({
   const { locale } = await params;
   setRequestLocale(locale);
   const tHero = await getTranslations("Hero");
-  const tNav = await getTranslations("Nav");
   const tTrust = await getTranslations("TrustSponsorship");
   const tSeedModel = await getTranslations("SeedModel");
   const tProblemSolution = await getTranslations("ProblemSolution");
@@ -61,77 +60,89 @@ export default async function Home({
         <Reveal direction="fade">
           <section
             aria-labelledby="home-hero-heading"
-            className="mb-24 flex flex-col gap-10 sm:mb-32 sm:gap-14"
+            className="mb-24 grid grid-cols-1 items-center gap-10 sm:mb-32 md:grid-cols-2 md:gap-14"
           >
-            <header className="mx-auto flex w-full max-w-6xl flex-col items-center gap-5 overflow-hidden text-center">
+            <div className="flex flex-col items-start gap-5">
+              <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+                <span aria-hidden className="h-px w-6 bg-muted-foreground" />
+                {tHero("eyebrow")}
+              </span>
               <h1
                 id="home-hero-heading"
-                className="max-w-full text-[clamp(2.75rem,7vw,5rem)] font-semibold leading-[1.05] tracking-tight text-foreground"
+                className="text-balance text-[clamp(2.5rem,5.5vw,4rem)] font-semibold leading-[1.1] tracking-tight text-foreground"
               >
-                <span className="block 2xl:whitespace-nowrap">
-                  <span className="hero-red-underline">
-                    {tHero("headingEmphasis")}
-                  </span>{" "}
-                  {tHero("headingLine1Rest")}
-                </span>
-                <span className="block 2xl:whitespace-nowrap">
-                  {tHero("headingLine2")}
-                </span>
+                {tHero("headingPlain")}{" "}
+                <em className="font-serif italic text-accent">
+                  {tHero("headingEmphasis")}
+                </em>
               </h1>
-              <p className="max-w-3xl text-balance text-lg leading-relaxed text-muted-foreground sm:text-2xl">
+              <p className="max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
                 {tHero("subheading")}
               </p>
-              <Link
-                href="/projects"
-                className="inline-flex min-h-12 items-center justify-center rounded-full bg-accent px-6 text-base font-semibold text-accent-foreground shadow-lg shadow-accent/15 transition hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
-              >
-                {tNav("cta")}
-              </Link>
-            </header>
-
-            <div className="grid grid-cols-1 items-center gap-6 md:grid-cols-[1fr_auto_1fr] md:gap-0">
-              <Parallax speed={0.18} maxOffset={72} className="w-full">
-                <figure className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-muted">
-                  <Image
-                    src="/hero/after.jpeg"
-                    alt={tHero("beforeAlt")}
-                    fill
-                    priority
-                    sizes="(min-width: 768px) 40vw, 100vw"
-                    className="object-cover"
-                  />
-                  <figcaption className="absolute bottom-3 left-3 inline-flex items-center rounded-full bg-background/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-foreground/80 backdrop-blur">
-                    {tHero("beforeCaption")}
-                  </figcaption>
-                </figure>
-              </Parallax>
-
-              <div className="relative flex items-center justify-center md:h-full md:px-8">
-                <span
-                  aria-hidden
-                  className="absolute hidden h-full w-px bg-gradient-to-b from-transparent via-border to-transparent md:block"
-                />
-                <span
-                  aria-hidden
-                  className="block h-px w-full bg-gradient-to-r from-transparent via-border to-transparent md:hidden"
-                />
+              <div className="mt-2 flex flex-wrap items-center gap-3">
+                <Link
+                  href="/projects"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-accent px-6 text-base font-semibold text-accent-foreground shadow-lg shadow-accent/15 transition hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+                >
+                  {tHero("cta")}
+                  <span aria-hidden>→</span>
+                </Link>
+                <Link
+                  href="/#how-it-works"
+                  className="inline-flex min-h-12 items-center justify-center rounded-full border border-border px-6 text-base font-medium text-foreground transition hover:bg-muted"
+                >
+                  {tHero("ctaSecondary")}
+                </Link>
               </div>
+            </div>
 
-              <Parallax speed={-0.18} maxOffset={72} className="w-full">
-                <figure className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-muted">
-                  <Image
-                    src="/hero/before.png"
-                    alt={tHero("afterAlt")}
-                    fill
-                    priority
-                    sizes="(min-width: 768px) 40vw, 100vw"
-                    className="object-cover grayscale"
-                  />
-                  <figcaption className="absolute bottom-3 left-3 inline-flex items-center rounded-full bg-background/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-foreground/80 backdrop-blur">
-                    {tHero("afterCaption")}
-                  </figcaption>
-                </figure>
-              </Parallax>
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              <figure className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-muted">
+                <Image
+                  src="/hero/barber-project.png"
+                  alt={tHero("barberAlt")}
+                  fill
+                  priority
+                  sizes="(min-width: 768px) 25vw, 50vw"
+                  className="object-cover"
+                />
+              </figure>
+              <figure className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-muted">
+                <Image
+                  src="/hero/laundry-project.png"
+                  alt={tHero("laundryAlt")}
+                  fill
+                  sizes="(min-width: 768px) 25vw, 50vw"
+                  className="object-cover"
+                />
+              </figure>
+              <figure className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-muted">
+                <Image
+                  src="/hero/ice-cream-project.png"
+                  alt={tHero("iceCreamAlt")}
+                  fill
+                  sizes="(min-width: 768px) 25vw, 50vw"
+                  className="object-cover"
+                />
+              </figure>
+              <figure className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-muted">
+                <Image
+                  src="/hero/falafel-project.png"
+                  alt={tHero("falafelAlt")}
+                  fill
+                  sizes="(min-width: 768px) 25vw, 50vw"
+                  className="object-cover"
+                />
+              </figure>
+              <figure className="relative col-span-2 aspect-[4/3] w-full overflow-hidden rounded-2xl bg-muted">
+                <Image
+                  src="/hero/carpentry-project.png"
+                  alt={tHero("carpentryAlt")}
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="object-cover object-[center_78%]"
+                />
+              </figure>
             </div>
           </section>
         </Reveal>

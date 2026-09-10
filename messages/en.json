@@ -7,17 +7,17 @@
     "secondaryCta": "Browse projects"
   },
   "Hero": {
-    "line": "Empower Palestinians to rebuild themselves",
-    "heading": "Transforming Aid into a Sustainable Economic Engine for Palestine",
-    "headingEmphasis": "Transforming Aid",
-    "headingLine1": "Transforming Aid into a Sustainable Economic",
-    "headingLine1Rest": "into a Sustainable Economic",
-    "headingLine2": "Engine for Palestine",
-    "subheading": "Empowering Palestinian entrepreneurs to rebuild businesses, create jobs, and fuel a self-sustaining economy.",
-    "beforeAlt": "A thriving Palestinian city before the war",
-    "afterAlt": "The same neighborhood destroyed by war",
-    "beforeCaption": "Before",
-    "afterCaption": "After"
+    "eyebrow": "A Tech for Palestine Project",
+    "headingPlain": "Aid keeps Palestinians alive.",
+    "headingEmphasis": "Businesses let them live.",
+    "subheading": "Bidhra turns donations into the tools, materials, and workspace Palestinian businesses need to start again. Once profitable, each business helps fund the next.",
+    "cta": "Fund a business",
+    "ctaSecondary": "See how it works",
+    "barberAlt": "A Palestinian barber setting up his tent barbershop",
+    "laundryAlt": "A Palestinian woman running a laundry business from a tent",
+    "iceCreamAlt": "A Palestinian ice cream maker at work",
+    "falafelAlt": "A Palestinian falafel vendor cooking amid the rubble",
+    "carpentryAlt": "A Palestinian carpenter building furniture from salvaged wood"
   },
   "TrustSponsorship": {
     "eyebrow": "Trust & Sponsorship",
