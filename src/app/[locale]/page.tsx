@@ -118,11 +118,11 @@ export default async function Home({
               </figure>
               <figure className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-muted">
                 <Image
-                  src="/hero/ice-cream-project.png"
-                  alt={tHero("iceCreamAlt")}
+                  src="/hero/carpentry-project.png"
+                  alt={tHero("carpentryAlt")}
                   fill
                   sizes="(min-width: 768px) 25vw, 50vw"
-                  className="object-cover"
+                  className="object-contain"
                 />
               </figure>
               <figure className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-muted">
