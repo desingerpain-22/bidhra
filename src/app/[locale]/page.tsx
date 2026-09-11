@@ -134,15 +134,6 @@ export default async function Home({
                   className="object-cover"
                 />
               </figure>
-              <figure className="relative col-span-2 aspect-[4/3] w-full overflow-hidden rounded-2xl bg-muted">
-                <Image
-                  src="/hero/carpentry-project.png"
-                  alt={tHero("carpentryAlt")}
-                  fill
-                  sizes="(min-width: 768px) 50vw, 100vw"
-                  className="object-cover object-[center_78%]"
-                />
-              </figure>
             </div>
           </section>
         </Reveal>
