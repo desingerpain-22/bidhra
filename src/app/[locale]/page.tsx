@@ -60,7 +60,7 @@ export default async function Home({
         <Reveal direction="fade">
           <section
             aria-labelledby="home-hero-heading"
-            className="mb-24 grid grid-cols-1 items-center gap-10 sm:mb-32 md:grid-cols-2 md:gap-14"
+            className="mb-24 grid grid-cols-1 items-start gap-10 sm:mb-32 md:grid-cols-2 md:gap-14"
           >
             <div className="flex flex-col items-start gap-5">
               <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground">
