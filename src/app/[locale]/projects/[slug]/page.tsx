@@ -1,7 +1,8 @@
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { getProject, projects } from "@/lib/projects";
+import { allocateFunding, getProject, getProjects } from "@/lib/projects";
 import type { Locale } from "@/i18n/routing";
 import { knowledgeRequests } from "@/lib/knowledge-requests";
 import { ProjectKnowledgeSection } from "@/components/project-knowledge-section";
@@ -11,11 +12,15 @@ import { Reveal } from "@/components/reveal";
 import { FeasibilityStudy } from "@/components/feasibility-study";
 import { moamenContent } from "@/lib/moamen-content";
 import { ProjectFunding } from "@/components/project-funding";
+import { ProjectMediaGallery } from "@/components/project-media-gallery";
 import { StickySupportCta } from "@/components/sticky-support-cta";
 import { DonationToast } from "@/components/donation-toast";
-import { getChuffedRecentDonations } from "@/lib/chuffed";
+import { getChuffedCampaignStats, getChuffedRecentDonations } from "@/lib/chuffed";
 
-export function generateStaticParams() {
+// Prerender the published projects; any project published later is
+// rendered on first visit.
+export async function generateStaticParams() {
+  const projects = await getProjects();
   return projects.map((p) => ({ slug: p.slug }));
 }
 
@@ -28,7 +33,7 @@ export default async function ProjectDetail({
 }) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
-  const project = getProject(slug);
+  const project = await getProject(slug);
   if (!project) notFound();
   const t = await getTranslations("Project");
   const loc = locale as Locale;
@@ -38,6 +43,15 @@ export default async function ProjectDetail({
     project.supportType !== "knowledge" ? project.supportCta?.[loc] : undefined;
   const recentDonations =
     project.supportType !== "knowledge" ? await getChuffedRecentDonations() : [];
+  // This project's share of the shared campaign (needs the full list).
+  const [allProjects, chuffedStats] = await Promise.all([
+    getProjects(),
+    getChuffedCampaignStats(),
+  ]);
+  const funding = allocateFunding(allProjects, chuffedStats).get(project.slug) ?? {
+    raised: project.raised,
+    supporters: project.supporters,
+  };
 
   if (!isEditorial) {
     return (
@@ -83,11 +97,24 @@ export default async function ProjectDetail({
           </p>
         </header>
 
+        {project.cover && (
+          <div className="relative aspect-video overflow-hidden rounded-2xl bg-muted">
+            <Image
+              src={project.cover}
+              alt={project.title[loc]}
+              fill
+              priority
+              sizes="(min-width: 896px) 56rem, 100vw"
+              className="object-cover"
+            />
+          </div>
+        )}
+
         {project.supportType !== "knowledge" && (
           <ProjectFunding
             goal={project.goal}
-            fallbackRaised={project.raised}
-            fallbackSupporters={project.supporters}
+            raised={funding.raised}
+            supporters={funding.supporters}
             locale={locale}
             hasKnowledgeRequest={Boolean(knowledgeRequest)}
           />
@@ -107,6 +134,12 @@ export default async function ProjectDetail({
         <article className="prose prose-neutral max-w-none whitespace-pre-line text-base leading-relaxed text-foreground">
           {project.story[loc]}
         </article>
+
+        <ProjectMediaGallery
+          media={project.media}
+          locale={loc}
+          eyebrow={t("mediaEyebrow")}
+        />
 
         <section className="grid gap-4 rounded-xl border border-border bg-muted/40 p-5 sm:grid-cols-3 sm:p-6">
           <div>
@@ -146,10 +179,10 @@ export default async function ProjectDetail({
   return (
     <div className="editorial flex flex-1 flex-col">
       <div className="mx-auto w-full max-w-6xl px-4 pt-8 sm:px-12 sm:pt-10">
-        <div className="flex items-center justify-between gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground sm:text-[11px]">
+        <div className="flex items-center justify-between gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground sm:text-[11px]">
           <Link
             href="/projects"
-            className="inline-flex items-center text-foreground/80 hover:text-foreground"
+            className="-my-3 inline-flex min-h-11 items-center text-foreground/80 hover:text-foreground"
           >
             {t("back")}
           </Link>
@@ -212,7 +245,7 @@ export default async function ProjectDetail({
                 <p className="whitespace-pre-line text-3xl font-normal leading-[1.05] tracking-[-0.02em] text-foreground sm:text-4xl">
                   {c.profile.name[loc]}
                 </p>
-                <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.25em] text-accent">
+                <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.25em] text-accent">
                   {c.profile.role[loc]}
                 </p>
                 <dl className="mt-8 flex flex-col sm:mt-10">
@@ -222,7 +255,7 @@ export default async function ProjectDetail({
                       className="grid grid-cols-[minmax(0,1fr)_minmax(0,2fr)] items-baseline gap-3 border-t py-4 last:border-b"
                       style={{ borderColor: "var(--line)" }}
                     >
-                      <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                      <dt className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
                         {row.label[loc]}
                       </dt>
                       <dd className="break-words text-sm font-normal text-foreground sm:text-lg">
@@ -232,7 +265,7 @@ export default async function ProjectDetail({
                   ))}
                 </dl>
               </div>
-              <div className="mt-8 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-accent">
+              <div className="mt-8 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.25em] text-accent">
                 <span
                   className="inline-block h-1.5 w-1.5 rounded-full bg-accent"
                   style={{ boxShadow: "0 0 8px var(--accent)" }}
@@ -278,7 +311,7 @@ export default async function ProjectDetail({
                   <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
                     {ch.label[loc].plain}
                   </p>
-                  <h2 className="mt-3 text-[clamp(1.75rem,6vw,3.5rem)] font-normal leading-[1.05] tracking-[-0.025em] text-foreground">
+                  <h2 className="headline-display mt-3 text-[clamp(1.75rem,6vw,3.5rem)] font-normal leading-[1.05] tracking-[-0.025em] text-foreground">
                     {ch.title[loc].plain}
                     <br />
                     <em className="em-accent">{ch.title[loc].accent}</em>
@@ -384,7 +417,7 @@ export default async function ProjectDetail({
                 <p className="text-2xl font-normal italic text-accent">
                   {String.fromCharCode(8544 + i)}.
                 </p>
-                <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
                   {item.label[loc]}
                 </p>
                 <p className="mt-2 text-base font-light leading-[1.5] text-foreground">
@@ -400,8 +433,8 @@ export default async function ProjectDetail({
             <div className="mx-auto mt-16 max-w-md text-start sm:mt-20">
               <ProjectFunding
                 goal={project.goal}
-                fallbackRaised={project.raised}
-                fallbackSupporters={project.supporters}
+                raised={funding.raised}
+                supporters={funding.supporters}
                 locale={locale}
                 hasKnowledgeRequest={Boolean(knowledgeRequest)}
               />

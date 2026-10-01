@@ -399,7 +399,7 @@ export default function ApplyPage() {
           padding: 0 0.875rem;
           border-radius: var(--radius-md);
           border: 1px solid var(--color-border);
-          background: var(--color-background);
+          background: var(--color-surface);
           color: var(--color-foreground);
           font: inherit;
           outline: none;

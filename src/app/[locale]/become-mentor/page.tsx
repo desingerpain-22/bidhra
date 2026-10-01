@@ -122,7 +122,7 @@ export default function BecomeMentorPage() {
         <p className="mt-3 text-base text-muted-foreground sm:text-lg">{t("subtitle")}</p>
       </header>
 
-      <section className="rounded-xl border border-border bg-background p-4 sm:p-6">
+      <section className="rounded-xl border border-border bg-surface p-4 sm:p-6">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3 sm:gap-4">
           <p className="text-sm text-muted-foreground">
             {t("stepLabel", { current: step, total: totalSteps })}
@@ -336,7 +336,7 @@ export default function BecomeMentorPage() {
           padding: 0 0.875rem;
           border-radius: var(--radius-md);
           border: 1px solid var(--color-border);
-          background: var(--color-background);
+          background: var(--color-surface);
           color: var(--color-foreground);
           font: inherit;
           outline: none;

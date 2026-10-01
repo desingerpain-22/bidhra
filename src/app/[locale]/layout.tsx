@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Geist_Mono, Raleway } from "next/font/google";
+import { Caveat, Inter } from "next/font/google";
 import Script from "next/script";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
@@ -11,13 +11,19 @@ import { SiteFooter } from "@/components/site-footer";
 import { ChatWidget } from "@/components/chat-widget";
 import "../globals.css";
 
-const raleway = Raleway({
+// The single site font, used for all text except the handwritten notes.
+// Variable weight plus the optical-size axis, which tightens letterforms at
+// display sizes for the compact headline style.
+const inter = Inter({
   variable: "--font-sans-latin",
   subsets: ["latin"],
+  style: ["normal", "italic"],
+  axes: ["opsz"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-mono",
+// Handwritten face for the hero's small editorial notes.
+const caveat = Caveat({
+  variable: "--font-hand",
   subsets: ["latin"],
 });
 
@@ -53,7 +59,7 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       dir={dir}
-      className={`${raleway.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${caveat.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <ParallaxBackdrop />

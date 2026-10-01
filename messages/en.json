@@ -7,22 +7,41 @@
     "secondaryCta": "Browse projects"
   },
   "Hero": {
-    "eyebrow": "A Tech for Palestine Project",
+    "eyebrow": "A future we’re building in Palestine.",
     "headingPlain": "Aid keeps Palestinians alive.",
-    "headingEmphasis": "Businesses let them live.",
-    "subheading": "Bidhra turns donations into the tools, materials, and workspace Palestinian businesses need to start again. Once profitable, each business helps fund the next.",
+    "headingLead": "Business gives them",
+    "headingWords": [
+      "income",
+      "dignity",
+      "hope",
+      "roots",
+      "a future"
+    ],
+    "subheading": "Bidhra turns donations into the tools, materials, and workspace Palestinian business owners need to start again. So they can rebuild, earn, create jobs, and shape their future.",
     "cta": "Fund a business",
     "ctaSecondary": "See how it works",
-    "barberAlt": "A Palestinian barber setting up his tent barbershop",
+    "noteLeft": "People. Businesses. Communities. A stronger Palestine.",
+    "noteRight": "Real businesses. Stronger futures.",
     "laundryAlt": "A Palestinian woman running a laundry business from a tent",
-    "carpentryAlt": "A Palestinian carpenter building furniture from salvaged wood",
-    "falafelAlt": "A Palestinian falafel vendor cooking amid the rubble"
+    "carpentryAlt": "A Palestinian carpenter sawing wood in his tent workshop",
+    "metricsLabel": "Bidhra at a glance",
+    "metricRaised": "Raised so far",
+    "metricBusinesses": "{count, plural, one {Business supported} other {Businesses supported}}",
+    "metricJobs": "{count, plural, one {Job created} other {Jobs created}}",
+    "metricPeople": "{count, plural, one {Person benefiting} other {People benefiting}}",
+    "farmingAlt": "A Palestinian farmer carrying a hoe through his green field",
+    "embroideryAlt": "A Palestinian woman hand-stitching tatreez embroidery in her sewing workshop",
+    "iceCreamAlt": "A Palestinian worker filling a tub with fresh ice cream in a small factory"
   },
   "TrustSponsorship": {
     "eyebrow": "Trust & Sponsorship",
-    "title": "A Tech for Palestine Project",
+    "titleLead": "A Tech for Palestine",
+    "titleEmphasis": "Project",
     "body": "Bidhra is a Tech for Palestine project. T4P acts as fiscal sponsor for this campaign, so every donation is received and reported through an established nonprofit.",
-    "logoAlt": "Tech for Palestine and Bidhra"
+    "link": "Trust & Transparency",
+    "t4pAlt": "Tech for Palestine",
+    "bidhraAlt": "Bidhra",
+    "partnership": "Tech for Palestine and Bidhra"
   },
   "SeedModel": {
     "eyebrow": "The Bidhra model",
@@ -33,54 +52,51 @@
   },
   "ProblemSolution": {
     "eyebrow": "The problem & the solution",
-    "heading": "Palestinians Don't Need More Sympathy. They Need Economic Opportunity.",
+    "headingLines": [
+      "Palestinians need more than charity.",
+      "They need the chance to stand on their own again."
+    ],
     "today": {
       "title": "Today",
+      "sublabel": "Good intentions aren’t enough",
       "items": {
-        "capital": {
-          "title": "Businesses have ideas but no access to capital",
-          "body": "Talented entrepreneurs have the skills, experience, and determination to build businesses, but cannot access the funding needed to start or grow."
+        "needs": {
+          "title": "People are ready to work, but have lost what they need to start again.",
+          "body": "Skills and experience are still there. Tools, materials, equipment, workspace, and money are not."
         },
         "trust": {
-          "title": "Millions want to help, but don't know how",
-          "body": "Palestinians in the diaspora and ethical supporters around the world want to contribute, yet there is no trusted and transparent way to invest in local businesses."
+          "title": "Palestine supporters’ DMs are full of messages from Palestinians asking for donations and help.",
+          "body": "Their hearts want to support everyone, but they can’t. They don’t have enough to help everyone, and they don’t always know who to trust."
+        },
+        "choice": {
+          "title": "Hundreds of people need help. Who are supporters supposed to choose?",
+          "body": "Even when people want to help, they cannot support everyone. Choosing who to help and who they have to say no to can become overwhelming."
         },
         "aid": {
-          "title": "Aid solves today's problem, not tomorrow's",
-          "body": "Traditional aid helps families survive, but when the money is spent, the impact often ends there."
-        },
-        "jobs": {
-          "title": "Skilled people remain unemployed",
-          "body": "Engineers, teachers, designers, craftsmen, and business owners are ready to work but lack opportunities to create income."
-        },
-        "dependence": {
-          "title": "Communities depend on continuous assistance",
-          "body": "Without sustainable businesses, communities remain dependent on external support rather than creating their own economic growth."
+          "title": "Aid solves today’s problem, not tomorrow’s.",
+          "body": "Traditional aid helps families survive, but when the money is spent, the impact often stops there."
         }
       }
     },
     "withBidhra": {
       "title": "With Bidhra",
+      "sublabel": "Real people. Real businesses. A brighter tomorrow.",
       "items": {
-        "capital": {
-          "title": "Entrepreneurs receive the capital they need",
-          "body": "Qualified Palestinian business owners receive funding to launch, rebuild, or expand businesses with real growth potential."
+        "needs": {
+          "title": "We fund what a business actually needs to start again.",
+          "body": "Support goes toward practical needs like tools, materials, equipment, and workspace."
         },
         "trust": {
-          "title": "Supporters directly fund economic growth",
-          "body": "Every contribution becomes an investment in a real entrepreneur, a real business, and a real future."
+          "title": "With Bidhra, trust is built into the process.",
+          "body": "Businesses are verified, and donations receive financial oversight through Tech for Palestine (T4P), an established nonprofit. You know who you are supporting and what your donation is funding."
+        },
+        "choice": {
+          "title": "Bidhra exists to help fill this gap and create more impact from every donation.",
+          "body": "Instead of only supporting one person for a short time, you can fund a business owner who can earn, support their family, grow their business, and potentially hire more Palestinians."
         },
         "aid": {
-          "title": "One contribution creates lasting impact",
-          "body": "Instead of supporting a family for a week, a funded business can create jobs and income for years."
-        },
-        "jobs": {
-          "title": "Businesses create jobs for Palestinians",
-          "body": "Every successful business becomes an economic engine that hires workers, serves customers, and strengthens the local economy."
-        },
-        "dependence": {
-          "title": "Success funds the next entrepreneur",
-          "body": "Profitable businesses contribute back to Bidhra, allowing future entrepreneurs to receive support and creating a self-sustaining cycle of growth."
+          "title": "One contribution can create impact that keeps going.",
+          "body": "Instead of supporting a family for a week, a funded business can create income for years, support a family, hire other Palestinians, serve customers, and strengthen the local economy."
         }
       }
     }
@@ -134,35 +150,25 @@
   },
   "HowItWorks": {
     "eyebrow": "How Bidhra works",
-    "heading": "The seed grows into a tree. The tree drops new seeds.",
+    "heading": "A simple model. A lasting impact.",
     "steps": {
-      "apply": {
-        "number": "01",
-        "title": "A Palestinian applies",
-        "body": "Any Palestinian, anywhere, applies with a business idea, or one that needs to grow. To be accepted, <promise>they make two promises:</promise> hire only Palestinians who need work, and share a part of future profits to fund the next business."
+      "identify": {
+        "title": "Identify",
+        "body": "We identify Palestinian business owners who are ready to work again."
       },
-      "verify": {
-        "number": "02",
-        "title": "Bidhra verifies",
-        "body": "Our team checks every applicant through video calls, references, and a clear plan. No anonymous projects. No middlemen. Every owner we approve is real, named, and answerable."
+      "equip": {
+        "title": "Get Equipped",
+        "body": "We provide the needed tools, equipment or materials."
       },
-      "fund": {
-        "number": "03",
-        "title": "Supporters fund the seed",
-        "body": "People in the diaspora and ethical supporters contribute $50, $500, or more. Every contribution is tracked. Every dollar is shown in public."
+      "restart": {
+        "title": "Restart Business",
+        "body": "Entrepreneurs get back to work and generate income."
       },
-      "build": {
-        "number": "04",
-        "title": "The business builds. The community grows.",
-        "body": "The owner opens the business and hires Palestinians who need work. Supporters follow the journey through updates, photos, and videos. One funded business becomes a small employer."
-      },
-      "forest": {
-        "number": "05",
-        "title": "The seed becomes a forest",
-        "body": "When the business turns a profit, it gives back a share to Bidhra. That money funds the next Palestinian business. Then that one funds the next. And so on."
+      "forward": {
+        "title": "Pay It Forward",
+        "body": "A portion of the income supports the next business."
       }
-    },
-    "closing": "One funded family becomes a community. A community becomes an economy."
+    }
   },
   "SocialProof": {
     "eyebrow": "On LinkedIn",
@@ -178,7 +184,18 @@
     "knowledge": "Knowledge Match",
     "scholarships": "Scholarships",
     "howToDonate": "How to donate",
-    "cta": "Turn Donations into a Business"
+    "cta": "Turn Donations into a Business",
+    "whoWeAre": "Who We Are",
+    "aboutBidhra": "About Bidhra",
+    "howToDonateNav": "How to Donate",
+    "support": "Support",
+    "fundCta": "Fund a Business",
+    "ourStory": "Our Story",
+    "ourTeam": "Our Team",
+    "trustTransparency": "Trust & Transparency",
+    "faqs": "FAQ's",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "Footer": {
     "mission": "Transforming Aid into a Sustainable Economic Engine for Palestine",
@@ -196,7 +213,8 @@
     "tagline": "Empowering Palestinians through entrepreneurship.",
     "socialHeading": "Social media",
     "linkedin": "LinkedIn",
-    "instagram": "Instagram"
+    "instagram": "Instagram",
+    "sponsor": "A Tech for Palestine project. Donations are received and reported through our fiscal sponsor, T4P."
   },
   "GetStarted": {
     "title": "How would you like to start?",
@@ -214,14 +232,32 @@
     "studentCta": "Browse scholarships"
   },
   "Projects": {
-    "title": "Verified projects",
-    "subtitle": "Hand-picked Palestinian businesses ready for your support.",
+    "title": "One business at a time.",
+    "subtitle": "We focus our support on one business at a time. Once it is fully funded, we move to the next.",
     "of": "of",
     "supporters": "supporters",
     "supportBadge": {
       "funding": "Seeking funding",
       "knowledge": "Seeking guidance",
       "both": "Funding & guidance"
+    },
+    "filtersLabel": "Filter projects",
+    "filters": {
+      "all": "All Projects",
+      "inProgress": "In Progress",
+      "funded": "Funded"
+    },
+    "status": {
+      "inProgress": "In Progress",
+      "funded": "Funded"
+    },
+    "empty": "No projects here yet.",
+    "raised": "raised",
+    "raisedOf": "raised of {goal}",
+    "nextBusiness": {
+      "title": "Every current project is fully funded.",
+      "body": "Your donation now goes toward the next Palestinian business we support.",
+      "cta": "Donate"
     }
   },
   "Project": {
@@ -241,7 +277,8 @@
       "funding": "Seeking funding",
       "knowledge": "Seeking guidance",
       "both": "Funding & guidance"
-    }
+    },
+    "mediaEyebrow": "Photos & videos"
   },
   "Apply": {
     "title": "Apply with your idea",
@@ -477,5 +514,11 @@
     },
     "guidanceTitle": "This student is looking for a mentor",
     "offerGuidance": "Offer guidance"
+  },
+  "HomeProjects": {
+    "eyebrow": "Our projects",
+    "title": "Meet the businesses we support.",
+    "subtitle": "Real Palestinian business owners, verified before they are funded and documented after.",
+    "viewAll": "View all projects"
   }
 }

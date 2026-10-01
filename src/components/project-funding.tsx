@@ -1,33 +1,31 @@
 import { getTranslations } from "next-intl/server";
-import { getChuffedCampaignStats } from "@/lib/chuffed";
 
 const CHUFFED_URL =
   "https://chuffed.org/donate/bidhra-project-turning-aid-into-palestinian-businesses-for-economic-recovery";
 
 export async function ProjectFunding({
   goal,
-  fallbackRaised,
-  fallbackSupporters,
+  raised,
+  supporters,
   locale,
   hasKnowledgeRequest,
 }: {
   goal: number;
-  fallbackRaised: number;
-  fallbackSupporters: number;
+  // This project's share of the funding (see allocateFunding in
+  // src/lib/projects.ts), not the whole campaign total.
+  raised: number;
+  supporters: number;
   locale: string;
   hasKnowledgeRequest: boolean;
 }) {
   const t = await getTranslations("Project");
-  const stats = await getChuffedCampaignStats();
-  const raised = stats?.raised ?? fallbackRaised;
-  const supporters = stats?.supporters ?? fallbackSupporters;
 
   const formatter = new Intl.NumberFormat(locale);
   const pct = Math.min(100, Math.round((raised / goal) * 100));
   const isRTL = locale === "ar";
 
   return (
-    <section className="flex flex-col gap-6 rounded-2xl border border-border bg-background p-5 sm:p-6">
+    <section className="flex flex-col gap-6 rounded-2xl border border-border bg-surface p-5 sm:p-6">
       <div className="flex flex-col gap-3">
         <div className="flex items-end justify-between gap-2">
           <div>
@@ -63,7 +61,7 @@ export async function ProjectFunding({
           href={CHUFFED_URL}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex h-12 flex-1 items-center justify-center rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
+          className="inline-flex h-12 items-center justify-center rounded-full bg-primary sm:flex-1 px-6 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
         >
           {t("contributeMoney")}
         </a>
@@ -84,7 +82,7 @@ function Stat({ value, label }: { value: string; label: string }) {
   return (
     <div className="flex flex-col items-center gap-0.5 rounded-xl border border-border bg-muted/30 px-2 py-3 text-center">
       <span className="text-lg font-bold text-foreground">{value}</span>
-      <span className="text-[10px] uppercase tracking-widest text-muted-foreground">{label}</span>
+      <span className="text-[11px] uppercase tracking-widest text-muted-foreground">{label}</span>
     </div>
   );
 }

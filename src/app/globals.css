@@ -1,29 +1,56 @@
 @import "tailwindcss";
 
 /*
- * Design tokens — drop your design system values here.
- * Currently using sensible neutral defaults so the layout is usable.
- * Anything declared inside @theme becomes a Tailwind utility automatically
- * (e.g. --color-primary becomes bg-primary, text-primary, border-primary).
+ * `dark:` utilities follow an explicit theme attribute, not the OS setting,
+ * so the site stays light until a dark theme is deliberately added.
+ */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/*
+ * Design tokens — semantic, theme-agnostic names. Components reference these
+ * (via the Tailwind utilities generated in @theme below), never raw colors.
+ * A future dark theme only needs to redefine these under
+ * :root[data-theme="dark"].
+ *
+ *   background    page canvas
+ *   surface       raised elements: cards, header, popovers, inputs
+ *   surface-soft  recessed/tinted areas: chips, tracks, image placeholders
+ *   border        hairlines and dividers
  */
 
 :root {
-  color-scheme: dark;
-  --background: oklch(0.14 0 0);
-  --foreground: oklch(0.97 0 0);
-  --muted: oklch(0.22 0 0);
-  --muted-foreground: oklch(0.7 0 0);
-  --primary: oklch(0.97 0 0);
-  --primary-foreground: oklch(0.18 0 0);
-  --accent: oklch(0.74 0.17 155);
-  --accent-foreground: oklch(0.14 0 0);
-  --border: oklch(0.28 0 0);
-  --ring: oklch(0.6 0 0);
+  color-scheme: light;
+  --background: #f7f6f2;
+  --surface: #ffffff;
+  --surface-soft: #f2f0eb;
+  --border: #e4e1da;
+  --muted: var(--surface-soft);
+
+  /* Ink and brand colors, adjusted only as far as needed to stay legible
+     on the light surfaces above. */
+  --foreground: #1c1b18;
+  --muted-foreground: #5f5b53;
+  --primary: #1c1b18;
+  --primary-foreground: #ffffff;
+  --accent: oklch(0.45 0.11 155);
+  --accent-foreground: #ffffff;
+  /* Deep burgundy for emphasis text (the hero's rotating word). */
+  --highlight: #8e3b3b;
+  /* Problem vs solution tints (the comparison section). */
+  --problem: #b24a42;
+  --problem-soft: #fbf1ed;
+  --solution-soft: #f1f4ec;
+  --ring: var(--accent);
   --radius: 0.75rem;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-soft: var(--surface-soft);
+  --color-problem: var(--problem);
+  --color-problem-soft: var(--problem-soft);
+  --color-solution-soft: var(--solution-soft);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
@@ -36,7 +63,9 @@
 
   --font-sans: var(--font-sans-latin), var(--font-sans-arabic), system-ui,
     sans-serif;
-  --font-mono: var(--font-mono), ui-monospace, monospace;
+  /* One site font: `font-mono` labels use Raleway too. */
+  --font-mono: var(--font-sans-latin), var(--font-sans-arabic), system-ui,
+    sans-serif;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -49,12 +78,63 @@ body {
   background: var(--background);
   color: var(--foreground);
   max-width: 100%;
-  overflow-x: hidden;
+  /* clip, not hidden: hidden turns body into a scroll container, which
+     stops position: sticky from working anywhere on the page. */
+  overflow-x: clip;
 }
 
 body {
   font-family: var(--font-sans-latin), var(--font-sans-arabic), system-ui,
     sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: -0.006em;
+}
+
+/* Type system (Inter). These rules sit outside Tailwind's layers on purpose,
+   so they override the per-heading weight, leading and tracking utilities
+   and every page gets the same hierarchy without editing components:
+     h1, .headline-display   major headlines    600, 1,    -0.035em
+     h2                      smaller headings   600, 1.05, -0.03em
+     h3                      sub-headings       600,       -0.02em
+   Major headlines are set with little space between lines and letters, so
+   each reads as one compact block. Apply .headline-display to large section
+   h2s; small h2s (cards, modals) keep the plain style. Headlines are one
+   solid colour; only the hero adds green and burgundy. */
+h2 {
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+h3 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* After h2 so the class wins over the plain h2 rule. */
+h1,
+.headline-display {
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+/* One size scale for every headline except the homepage hero, which sizes
+   itself against the photo arc. Page headlines are a step larger than
+   section headings. */
+h1:not(.hero-title) {
+  font-size: clamp(2.125rem, 4.4vw, 3.5rem);
+}
+
+.headline-display {
+  font-size: clamp(1.75rem, 3.3vw, 2.625rem);
+}
+
+/* Accent words inside headlines take the headline colour, not green
+   (scoped like the .editorial rule so it wins over it). */
+.editorial :is(h1, h2) .em-accent {
+  color: inherit;
 }
 
 .page-parallax-backdrop {
@@ -106,6 +186,14 @@ body {
 body > *:not(.page-parallax-backdrop) {
   position: relative;
   z-index: 1;
+}
+
+/* The site header is a direct body child too, but must stay sticky and sit
+   above the page (the home hero extends up behind it). */
+body > header.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
 }
 
 [dir="rtl"] body {
@@ -274,12 +362,12 @@ body > *:not(.page-parallax-backdrop) {
 /* Editorial scope — applied only on pages opting into the editorial layout
    (e.g. Moamen's project page). Scoped via .editorial wrapper. */
 .editorial {
-  --ink: oklch(0.95 0.01 80);
-  --ink-mute: oklch(0.68 0.01 80);
-  --ink-dim: oklch(0.45 0.01 80);
-  --line: oklch(0.25 0 0);
-  --line-strong: oklch(0.32 0 0);
-  --bg-elev: oklch(0.16 0 0);
+  --ink: var(--foreground);
+  --ink-mute: var(--muted-foreground);
+  --ink-dim: color-mix(in oklch, var(--muted-foreground) 70%, var(--background));
+  --line: var(--border);
+  --line-strong: color-mix(in oklch, var(--border), var(--foreground) 12%);
+  --bg-elev: var(--surface);
   background: var(--background);
   color: var(--ink);
 }
@@ -295,10 +383,12 @@ body > *:not(.page-parallax-backdrop) {
   mix-blend-mode: overlay;
 }
 
+/* Same weight as the headline it sits in; the italic and green carry the
+   emphasis. */
 .editorial .em-accent {
   font-style: italic;
   color: var(--accent);
-  font-weight: 400;
+  font-weight: inherit;
 }
 
 [dir="rtl"] .editorial .em-accent {
@@ -322,5 +412,572 @@ body > *:not(.page-parallax-backdrop) {
 @media (prefers-reduced-motion: reduce) {
   .editorial::before {
     display: none;
+  }
+}
+
+/* Height of the sticky site header: py-3 plus its tallest item plus its 1px
+   border. Below lg that is the 44px Fund pill and menu button (taller than
+   the h-10 / sm:h-11 logo); from lg the h-12 logo. Keep in sync with
+   site-header.tsx and mobile-menu.tsx. */
+:root {
+  --site-header-h: 69px;
+}
+
+@media (width >= 40rem) {
+  :root {
+    --site-header-h: 69px;
+  }
+}
+
+@media (width >= 64rem) {
+  :root {
+    --site-header-h: 73px;
+  }
+}
+
+/* Home hero ---------------------------------------------------------------
+   Cards sit on the top of a circle whose center lies below the hero. Each
+   card carries its polar position as inline vars (--arc-x = sin θ,
+   --arc-y = 1 − cos θ, --arc-rot); the radius (--arc-r) and card width
+   (--card-w) are set per breakpoint below, so the whole arc scales as one.
+   Below md the arc gives way to a simpler three-card fan (--mob-slot). */
+.home-hero {
+  --card-w: min(42vw, 13rem);
+  /* Extend the hero's background (and corner branches) up behind the
+     transparent sticky header without moving its content. */
+  margin-top: calc(-1 * var(--site-header-h));
+  padding-top: var(--site-header-h);
+  background:
+    radial-gradient(
+      ellipse 70% 55% at 50% 38%,
+      color-mix(in oklch, var(--surface) 85%, transparent),
+      transparent 70%
+    ),
+    var(--background);
+}
+
+.hero-landscape {
+  /* Measured against the hero's own area, not the space under the header. */
+  height: calc((100% - var(--site-header-h)) * 0.46);
+  opacity: 0.55;
+  /* Fades in from above and out again at the hero's bottom edge, so the
+     skyline dissolves into the page rather than ending in a hard line. */
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 45%,
+    black 72%,
+    transparent
+  );
+}
+
+.hero-arc {
+  --fan-gap: calc(var(--card-w) * 0.52);
+  position: relative;
+  height: calc(var(--card-w) * 0.82 + 2.75rem);
+}
+
+.hero-arc-card {
+  position: absolute;
+  top: 0.5rem;
+  left: 50%;
+  width: var(--card-w);
+  margin: 0;
+  z-index: var(--mob-z);
+  transform:
+    translate(
+      calc(-50% + var(--mob-slot) * var(--fan-gap)),
+      calc(var(--mob-abs) * 1.1rem)
+    )
+    rotate(calc(var(--mob-slot) * 7deg));
+}
+
+.hero-copy {
+  margin-top: 1.25rem;
+}
+
+/* Both headline lines use the site font at every screen size; the green
+   carries the emphasis, not a second typeface. */
+.hero-title {
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+}
+
+.hero-title em {
+  font-family: inherit;
+  font-style: normal;
+}
+
+/* Rotating last word of the headline, set in deep burgundy text as part of
+   the sentence. It works like a small vertical carousel: the outgoing word
+   floats slowly up and out of a fixed-height window (800ms, soft
+   ease-in-out) while the next one rises into place beneath it a moment
+   later (460ms, quicker ease-out). The 380ms stagger lets the two motions
+   overlap without their letters colliding. Movement carries the effect;
+   opacity only softens the edges.
+
+   All words share one grid cell, so the slot keeps the width of the longest
+   and nothing around it moves. clip-path makes the fixed window (overflow:
+   hidden would move the baseline, and overflow-y: clip doesn't clip this
+   inline box in Chromium). The top edge sits on the word's own line box so
+   the outgoing word vanishes before it reaches the line above; the bottom
+   inset leaves room for descenders. */
+.rotating-word {
+  display: inline-grid;
+  color: var(--highlight);
+  clip-path: inset(0 -0.5em -0.22em);
+}
+
+.rotating-word-item {
+  grid-area: 1 / 1;
+  justify-self: start;
+  white-space: nowrap;
+  will-change: transform, opacity;
+}
+
+.rotating-word-item[data-state="waiting"] {
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.rotating-word-item[data-state="entering"] {
+  animation: rotating-word-enter 460ms cubic-bezier(0.16, 1, 0.3, 1) 380ms
+    both;
+}
+
+.rotating-word-item[data-state="leaving"] {
+  animation: rotating-word-leave 800ms cubic-bezier(0.45, 0, 0.25, 1) both;
+}
+
+@keyframes rotating-word-enter {
+  from {
+    opacity: 0;
+    transform: translateY(90%);
+  }
+  35% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* The outgoing word keeps most of its opacity through the first part of its
+   rise, then thins out as it nears the window's top edge, so no cut sliver
+   lingers under the line above. */
+@keyframes rotating-word-leave {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  35% {
+    opacity: 0.8;
+  }
+  60% {
+    opacity: 0.1;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rotating-word-item[data-state] {
+    animation: none;
+    opacity: 0;
+    transform: none;
+  }
+
+  .rotating-word-item[data-fallback] {
+    opacity: 1;
+  }
+}
+
+/* Tablet and desktop: a true semi-circle. Five cards sit on a circle of
+   radius --arc-r (5.4 card widths) whose center lies below the hero, so the
+   center card is highest and the outer cards drop beside the headline. The
+   copy starts inside the hollow of the arc (--copy-top) rather than below
+   the outer cards, which keeps the hero compact. The headline is sized from
+   the card width so it always fits between the outer cards. */
+@media (width >= 48rem) {
+  .home-hero {
+    --card-w: clamp(7rem, min(16.2vw, 29vh), 19rem);
+    --arc-r: calc(var(--card-w) * 5.4);
+    /* Vertical center of the apex card (7:6 photo plus frame). */
+    --card-mid: calc(var(--card-w) * 0.435);
+    /* Just below the apex card, plus a little breathing room. */
+    --copy-top: calc(var(--card-w) * 0.98 + 1rem);
+  }
+
+  .hero-arc {
+    height: var(--copy-top);
+  }
+
+  .hero-arc-card {
+    top: 0;
+    z-index: var(--arc-z);
+    transform:
+      translate(
+        calc(-50% + var(--arc-r) * var(--arc-x)),
+        calc(var(--arc-r) * var(--arc-y))
+      )
+      rotate(var(--arc-rot))
+      scale(var(--arc-scale));
+  }
+
+  .hero-card-photo {
+    aspect-ratio: 7 / 6;
+  }
+
+  /* Rings share the arc's center, so the lines follow the cards exactly;
+     each fades out before it reaches the copy. */
+  .hero-arc-ring {
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: calc(var(--card-mid) + var(--arc-r) - var(--ring-r));
+    width: calc(var(--ring-r) * 2);
+    aspect-ratio: 1;
+    translate: -50% 0;
+    border-radius: 50%;
+    pointer-events: none;
+    mask-image: linear-gradient(
+      to bottom,
+      black 0,
+      black var(--ring-fade-from),
+      transparent var(--ring-fade-to)
+    );
+  }
+
+  .hero-arc-ring-outer {
+    --ring-r: calc(var(--arc-r) + var(--card-w) * 0.62);
+    --ring-fade-from: calc(var(--card-w) * 0.9);
+    --ring-fade-to: calc(var(--card-w) * 1.6);
+    border: 1px solid color-mix(in oklch, var(--accent) 28%, transparent);
+  }
+
+  .hero-arc-ring-inner {
+    --ring-r: calc(var(--arc-r) - var(--card-w) * 0.05);
+    --ring-fade-from: calc(var(--card-w) * 0.85);
+    --ring-fade-to: calc(var(--card-w) * 1.3);
+    border: 1px dashed color-mix(in oklch, var(--foreground) 18%, transparent);
+  }
+
+  .hero-copy {
+    margin-top: 0;
+    max-width: 68rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, calc(var(--card-w) * 0.3), 4.75rem);
+    margin-top: 2.625rem;
+  }
+
+  /* Hairlines either side of the badge. */
+  .hero-badge {
+    position: relative;
+  }
+
+  .hero-badge::before,
+  .hero-badge::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 2.25rem;
+    height: 1px;
+  }
+
+  .hero-badge::before {
+    right: calc(100% + 0.75rem);
+    background: linear-gradient(to left, var(--border), transparent);
+  }
+
+  .hero-badge::after {
+    left: calc(100% + 0.75rem);
+    background: linear-gradient(to right, var(--border), transparent);
+  }
+
+  /* The city sits low as a distant horizon behind the metrics: clearer
+     toward the left and right edges, softer behind the copy in the center. */
+  .hero-landscape {
+    opacity: 0.8;
+    mask-image:
+      linear-gradient(to bottom, transparent, black 55%, black 75%, transparent),
+      linear-gradient(
+        to right,
+        black,
+        rgb(0 0 0 / 0.42) 34%,
+        rgb(0 0 0 / 0.42) 66%,
+        black
+      );
+    mask-composite: intersect;
+  }
+
+  .hero-landscape img {
+    object-position: center 67%;
+  }
+}
+
+/* Desktop proportions. From lg up the spacing around the copy also scales
+   with viewport height, and the hero fills roughly the first screen: at
+   least the small viewport height (svh, so mobile browser bars don't cause
+   jumps), capped so very tall screens don't stretch it. Its content centres
+   in that space, with room kept below the CTAs. */
+@media (width >= 64rem) {
+  .home-hero {
+    --hero-gap: clamp(0.75rem, 2.2vh, 1.5rem);
+    display: flex;
+    flex-direction: column;
+    min-height: min(100svh, 68rem);
+  }
+
+  .hero-inner {
+    flex: 1;
+    justify-content: center;
+    padding-top: clamp(0.625rem, 2vh, 2rem);
+    padding-bottom: clamp(3rem, 9svh, 6rem);
+  }
+
+  /* The badge gets extra room above the headline (+1.125rem); the space is
+     recovered from the CTA gap and the metrics strip below. */
+  .hero-title {
+    margin-top: calc(var(--hero-gap) + 1.125rem);
+  }
+
+  /* Wide enough to keep the two-sentence paragraph on two lines. */
+  .hero-sub {
+    margin-top: var(--hero-gap);
+    max-width: 54rem;
+  }
+
+  .hero-actions {
+    margin-top: calc(var(--hero-gap) * 0.95);
+  }
+}
+
+/* Handwritten editorial notes at the hero's outer edges: one
+   below the left outer card, one above the right outer card. Positioned
+   against the arc (card widths) so they stay clear of the copy. Shown from
+   xl up; narrower screens leave too little margin beside the headline. */
+@media (width >= 80rem) {
+  .hero-note {
+    position: absolute;
+    z-index: 2;
+    font-family: var(--font-hand), cursive;
+    font-size: clamp(0.95rem, 1.15vw, 1.3rem);
+    line-height: 1.12;
+    color: color-mix(in oklch, var(--accent) 45%, var(--muted-foreground));
+    opacity: 0.75;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .hero-note-left {
+    left: 2.5%;
+    top: calc(var(--card-w) * 1.72);
+    rotate: -9deg;
+  }
+
+  .hero-note-right {
+    right: 3.5%;
+    top: calc(var(--card-w) * 0.3);
+    rotate: -7deg;
+    text-align: right;
+  }
+
+  .hero-note-flourish {
+    display: block;
+    width: 3.25rem;
+    margin: 0.2rem 0 0 auto;
+  }
+}
+
+/* Projects page -----------------------------------------------------------
+   The photo sits on the right, washed out, and dissolves into the cream
+   page towards the copy (start side) and the cards (bottom). The whole page
+   runs up behind the transparent header like the home hero: the page
+   wrapper (which clips its decoration) is pulled up under the header, and
+   the photo's section pads its copy back down below it. */
+.projects-page {
+  margin-top: calc(-1 * var(--site-header-h));
+}
+
+.projects-hero {
+  padding-top: var(--site-header-h);
+}
+
+.projects-hero-photo {
+  opacity: 0.72;
+  filter: saturate(0.8);
+  mask-image:
+    linear-gradient(to right, transparent 0%, black 45%),
+    linear-gradient(to bottom, black 55%, transparent 100%);
+  mask-composite: intersect;
+}
+
+[dir="rtl"] .projects-hero-photo {
+  mask-image:
+    linear-gradient(to left, transparent 0%, black 45%),
+    linear-gradient(to bottom, black 55%, transparent 100%);
+}
+
+/* A soft cream haze over the photo so the copy and navbar stay legible. */
+.projects-hero-veil {
+  background: linear-gradient(
+    to bottom,
+    color-mix(in oklch, var(--background) 40%, transparent) 0%,
+    color-mix(in oklch, var(--background) 12%, transparent) 40%,
+    color-mix(in oklch, var(--background) 30%, transparent) 75%,
+    var(--background) 100%
+  );
+}
+
+@media (width < 48rem) {
+  /* Full-width on phones, so keep it quieter behind the copy. */
+  .projects-hero-photo {
+    opacity: 0.35;
+    mask-image: linear-gradient(to bottom, black 45%, transparent 100%);
+  }
+}
+
+/* One faint arc sweeping across the top, echoing the home hero arc. */
+.projects-arc {
+  left: 50%;
+  top: 5.5rem;
+  width: 150vw;
+  aspect-ratio: 1;
+  translate: -50% 0;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in oklch, var(--foreground) 12%, transparent);
+}
+
+@media (width >= 80rem) {
+  /* It sits over the photo, so unlike the home hero's notes it is set at
+     full strength in forest green, a little larger, with a soft cream halo
+     that keeps the handwriting legible over the busy background. */
+  .projects-note {
+    right: 3%;
+    top: 16.5rem;
+    rotate: -8deg;
+    font-size: clamp(1.2rem, 1.45vw, 1.55rem);
+    line-height: 1.15;
+    font-weight: 600;
+    color: color-mix(in oklch, var(--accent) 70%, var(--foreground));
+    opacity: 1;
+    text-shadow:
+      0 0 2px var(--background),
+      0 0 8px var(--background),
+      0 0 16px var(--background);
+  }
+}
+
+/* Who We Are pages --------------------------------------------------------- */
+/* The warm glow behind the top of the About pages (as on the home hero),
+   fading out before the content below the hero. */
+.about-atmosphere {
+  background: radial-gradient(
+    ellipse 70% 55% at 50% 30%,
+    color-mix(in oklch, var(--surface) 85%, transparent),
+    transparent 70%
+  );
+  mask-image: linear-gradient(to bottom, black 60%, transparent);
+}
+
+/* Handwritten note beside the About hero photos, in the home hero's note
+   style but set a little stronger so it stays legible. */
+.about-hand-note {
+  font-family: var(--font-hand), cursive;
+  font-size: clamp(1.1rem, 1.35vw, 1.4rem);
+  line-height: 1.12;
+  color: color-mix(in oklch, var(--accent) 70%, var(--muted-foreground));
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Horizontal scroller without a visible scrollbar (e.g. the About
+   sub-navigation on phones). */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Trust & Sponsorship: the skyline is a faint horizon, fading in from above
+   and out again at the section's bottom edge, lighter than in the hero. */
+.trust-skyline {
+  height: min(62%, 30rem);
+  opacity: 0.42;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 55%,
+    black 78%,
+    transparent
+  );
+}
+
+@media (width >= 64rem) {
+  .trust-skyline {
+    opacity: 0.5;
+  }
+}
+
+/* On desktop each hero headline line stays on one line; the size clamp
+   keeps it narrower than the gap between the outer cards. */
+@media (width >= 64rem) {
+  .hero-title > span,
+  .hero-title em {
+    white-space: nowrap;
+  }
+}
+
+/* Staggered rise-in; the card's own transform places it on the arc, so the
+   animation runs on the inner frame instead. */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.hero-arc-card-inner,
+.hero-rise {
+  animation: hero-rise 900ms cubic-bezier(0.21, 0.94, 0.34, 1) both;
+  animation-delay: var(--rise-delay, 0ms);
+}
+
+.hero-arc-card-inner {
+  transition: translate 300ms ease;
+}
+
+@media (hover: hover) {
+  .hero-arc-card:hover .hero-arc-card-inner {
+    translate: 0 -6px;
+  }
+}
+
+/* The blurred foreground branches fade out before the hero's bottom edge.
+   They are flipped vertically, so the fade runs along the local top. */
+.hero-branch-low {
+  mask-image: linear-gradient(to bottom, transparent 8%, black 45%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-arc-card-inner,
+  .hero-rise {
+    animation: none;
+  }
+
+  .hero-arc-card-inner {
+    transition: none;
   }
 }

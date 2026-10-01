@@ -59,7 +59,7 @@ export function DonationToast({
   return (
     <div
       className={
-        "fixed left-4 z-40 flex max-w-[16rem] items-center gap-2 rounded-2xl border border-border bg-background px-4 py-3 shadow-2xl sm:left-6 " +
+        "fixed left-4 z-40 hidden max-w-[16rem] items-center gap-2 rounded-2xl border border-border bg-surface px-4 py-3 shadow-2xl sm:left-6 sm:flex " +
         (raised ? "bottom-20 sm:bottom-24" : "bottom-4")
       }
     >

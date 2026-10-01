@@ -54,7 +54,7 @@ export default async function GetStarted({
           <Link
             key={card.href}
             href={card.href}
-            className="group flex flex-col gap-4 rounded-xl border border-border bg-background p-6 transition hover:border-accent hover:shadow-lg sm:p-8"
+            className="group flex flex-col gap-4 rounded-xl border border-border bg-surface p-6 transition hover:border-accent hover:shadow-lg sm:p-8"
           >
             <span className="text-xs font-medium uppercase tracking-widest text-accent">
               {card.heading}

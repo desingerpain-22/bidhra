@@ -1,13 +1,18 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { setRequestLocale } from "next-intl/server";
-import { aboutChapters, aboutValues, aboutNavItems } from "@/lib/about-content";
-import { AboutRailNav } from "@/components/about-rail-nav";
+import { aboutPage as c } from "@/lib/about-content";
+import {
+  ABOUT_CONTAINER,
+  AboutHero,
+  AboutIcon,
+  SectionLabel,
+} from "@/components/about/about-hero";
+import { WithTatreezMap } from "@/components/about/tatreez-map";
 
 export const metadata: Metadata = {
-  title: "About — Bidhra",
+  title: "About Bidhra",
   description:
-    "Bidhra turns aid and donations into real Palestinian businesses — our mission, vision, and the story behind why Bidhra exists.",
+    "Bidhra turns aid and donations into real Palestinian businesses: what we do, why we exist, our mission, and how the model works.",
 };
 
 export default async function AboutPage({
@@ -19,136 +24,98 @@ export default async function AboutPage({
   setRequestLocale(locale);
 
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-1 gap-12 px-4 py-12 sm:px-6 sm:py-20 lg:gap-16 lg:px-10">
-      <aside className="hidden shrink-0 lg:block lg:w-48">
-        <div className="sticky top-24">
-          <p className="mb-7 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
-            About Bidhra
-          </p>
-          <AboutRailNav items={aboutNavItems} />
-        </div>
-      </aside>
+    <main className="flex flex-1 flex-col">
+      <AboutHero
+        eyebrow={c.eyebrow}
+        titleLines={c.titleLines}
+        intro={c.intro}
+        image={c.image}
+        secondaryImage={c.secondaryImage}
+        note={c.note}
+      />
 
-      <div className="min-w-0 flex-1">
-        <div className="mb-8 lg:hidden">
-          <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
-            About Bidhra
-          </p>
-          <AboutRailNav items={aboutNavItems} />
-        </div>
-
-        {aboutChapters.map((chapter) => (
-          <section
-            key={chapter.id}
-            id={chapter.id}
-            className="mb-16 flex scroll-mt-24 gap-5 sm:mb-20 sm:gap-7"
-          >
-            <span className="w-14 shrink-0 font-light italic leading-[0.9] tracking-[-0.03em] text-accent text-[2.5rem] sm:w-20 sm:text-[3.5rem]">
-              {chapter.numeral}
-            </span>
-            <div className="min-w-0 flex-1 pt-1 sm:pt-2">
-              <h2 className="mb-4 text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
-                {chapter.heading}
+      {/* Principles: a full-width band between two rules, like the home
+          page's impact numbers. */}
+      <section id="principles" className="scroll-mt-32 border-y border-foreground/15 px-4 sm:px-8">
+        <ul className="mx-auto grid max-w-6xl grid-cols-2 lg:grid-cols-4">
+          {c.principles.map((p) => (
+            <li
+              key={p.title}
+              className="flex flex-col items-center gap-3 border-foreground/10 px-3 py-10 text-center max-lg:odd:border-e max-lg:[&:nth-child(n+3)]:border-t sm:py-12 lg:border-s lg:px-6 lg:first:border-s-0"
+            >
+              <AboutIcon name={p.icon} className="h-7 w-7" />
+              <h2 className="mt-2 text-base text-foreground sm:text-lg">
+                <span className="font-semibold">{p.title}</span>
               </h2>
-              {chapter.pdfSrc ? (
-                <object
-                  data={chapter.pdfSrc}
-                  type="application/pdf"
-                  className="mb-5 h-[36rem] w-full rounded-xl border border-border"
-                >
-                  <div className="flex h-full w-full flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border p-6 text-center">
-                    <p className="text-sm text-muted-foreground">
-                      Your browser can&apos;t preview this PDF inline.
-                    </p>
-                    <a
-                      href={chapter.pdfSrc}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-sm font-medium text-accent underline underline-offset-2"
-                    >
-                      Open the presentation
-                    </a>
-                  </div>
-                </object>
-              ) : chapter.imageSrc ? (
-                <div className="relative mb-5 aspect-square w-full max-w-sm overflow-hidden rounded-xl">
-                  <Image
-                    src={chapter.imageSrc}
-                    alt={chapter.imageAlt ?? ""}
-                    fill
-                    sizes="(min-width: 640px) 24rem, 100vw"
-                    className="object-contain"
-                  />
+              <p className="max-w-[22ch] text-sm leading-relaxed text-muted-foreground">
+                {p.body}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <WithTatreezMap>
+        <div className={ABOUT_CONTAINER}>
+          {/* Mission and vision */}
+          <section id="mission" className="scroll-mt-32 py-20 sm:py-28">
+            <SectionLabel>Mission &amp; vision</SectionLabel>
+            <div className="mt-12 grid gap-12 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:gap-14">
+              {[c.mission, c.vision].map((block, i) => (
+                <div key={block.label} className={`flex flex-col ${i === 1 ? "md:col-start-3" : ""}`}>
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">
+                    {block.label}
+                  </p>
+                  <p className="mt-5 text-pretty text-2xl font-semibold leading-snug tracking-[-0.02em] text-foreground sm:text-[1.875rem]">
+                    {block.lede}
+                  </p>
+                  <p className="mt-5 max-w-prose text-pretty text-base leading-relaxed text-muted-foreground">
+                    {block.body}
+                  </p>
                 </div>
-              ) : (
-                chapter.image && (
-                  <div
-                    aria-hidden
-                    className="mb-5 flex aspect-video w-full items-center justify-center rounded-xl border border-dashed border-border text-xs font-mono uppercase tracking-widest text-muted-foreground"
-                  >
-                    Image
-                  </div>
-                )
-              )}
-              {chapter.lede && (
-                <p className="mb-3.5 max-w-[34ch] text-lg leading-snug text-foreground">
-                  {chapter.lede}
-                </p>
-              )}
-              {chapter.paragraphs.map((p, i) => (
-                <p
-                  key={i}
-                  className="mb-3.5 max-w-[56ch] text-[15.5px] leading-relaxed text-foreground/80"
-                >
-                  {p}
-                </p>
               ))}
-              {chapter.quote && (
-                <div className="mt-4 border-s-2 border-accent ps-4.5">
-                  <p className="text-base italic leading-relaxed text-foreground">
-                    {chapter.quote.body}
-                  </p>
-                  <p className="mt-2.5 font-mono text-xs tracking-wide text-muted-foreground">
-                    {chapter.quote.attribution}
-                  </p>
-                </div>
-              )}
+              <Divider />
             </div>
           </section>
-        ))}
 
-        <section
-          id="values"
-          className="mb-16 flex scroll-mt-24 gap-5 sm:mb-20 sm:gap-7"
-        >
-          <span className="w-14 shrink-0 font-light italic leading-[0.9] tracking-[-0.03em] text-accent text-[2.5rem] sm:w-20 sm:text-[3.5rem]">
-            05
-          </span>
-          <div className="min-w-0 flex-1 pt-1 sm:pt-2">
-            <h2 className="mb-4 text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
-              Our Values
-            </h2>
-            <div className="grid gap-3.5 sm:grid-cols-2">
-              {aboutValues.map((value) => (
-                <div
-                  key={value.word}
-                  className={
-                    "rounded-xl border border-border bg-muted/20 p-4.5 sm:p-5 " +
-                    (value.spanFull ? "sm:col-span-2" : "")
-                  }
+          {/* Values: a numbered editorial table, like the home page's
+              comparison. */}
+          <section id="values" className="scroll-mt-32 border-t border-foreground/10 py-20 sm:py-28">
+            <SectionLabel>{c.valuesLabel}</SectionLabel>
+            <ol className="mx-auto mt-12 max-w-4xl border-y border-foreground/80">
+              {c.values.map((v, i) => (
+                <li
+                  key={v.word}
+                  className="grid grid-cols-[2.5rem_minmax(0,1fr)] gap-y-2 border-b border-foreground/10 py-7 last:border-b-0 sm:grid-cols-[3.5rem_11rem_minmax(0,1fr)] sm:gap-x-6 sm:py-8"
                 >
-                  <span className="mb-2 block font-mono text-xs font-semibold uppercase tracking-widest text-accent">
-                    {value.word}
+                  <span className="pt-0.5 text-sm font-medium tabular-nums text-muted-foreground/80">
+                    {String(i + 1).padStart(2, "0")}
                   </span>
-                  <p className="text-sm leading-relaxed text-foreground/75">
-                    {value.body}
+                  <h3 className="text-lg text-foreground sm:text-xl">
+                    <span className="font-bold">{v.word}</span>
+                  </h3>
+                  <p className="col-start-2 text-pretty text-base leading-relaxed text-muted-foreground sm:col-start-3">
+                    {v.body}
                   </p>
-                </div>
+                </li>
               ))}
-            </div>
-          </div>
-        </section>
-      </div>
+            </ol>
+          </section>
+        </div>
+      </WithTatreezMap>
     </main>
+  );
+}
+
+// The home page's hairline divider with a small outlined diamond.
+function Divider() {
+  return (
+    <div
+      aria-hidden
+      className="relative hidden items-center justify-center self-stretch md:col-start-2 md:row-start-1 md:flex"
+    >
+      <span className="h-full w-px bg-gradient-to-b from-transparent via-border to-transparent" />
+      <span className="absolute h-2.5 w-2.5 rotate-45 border border-accent/40 bg-background" />
+    </div>
   );
 }

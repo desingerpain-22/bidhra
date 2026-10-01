@@ -7,7 +7,7 @@ export async function POST(request: Request) {
 
   const result = streamText({
     model: google("gemini-3.5-flash-lite"),
-    system: buildSystemPrompt(),
+    system: await buildSystemPrompt(),
     messages: await convertToModelMessages(messages),
   });
 

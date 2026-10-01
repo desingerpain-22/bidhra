@@ -33,7 +33,7 @@ export default async function ScholarshipsPage({
             <Link
               key={s.slug}
               href={`/scholarships/${s.slug}`}
-              className="group flex flex-col gap-4 rounded-xl border border-border bg-background p-5 transition hover:border-accent hover:shadow-lg sm:p-6"
+              className="group flex flex-col gap-4 rounded-xl border border-border bg-surface p-5 transition hover:border-accent hover:shadow-lg sm:p-6"
             >
               <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-xs font-medium uppercase tracking-widest text-muted-foreground">
                 <span>{s.fieldOfStudy[loc]}</span>

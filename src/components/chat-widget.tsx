@@ -75,7 +75,7 @@ export function ChatWidget() {
     // `position: relative` via an unlayered `body > *` rule.
     <div>
       {open && (
-        <div className="fixed right-4 bottom-24 z-50 flex h-[32rem] max-h-[70vh] w-[calc(100vw-2rem)] max-w-sm flex-col overflow-hidden rounded-2xl border border-border bg-background shadow-2xl sm:right-6">
+        <div className="fixed right-4 bottom-24 z-50 flex h-[32rem] max-h-[70vh] w-[calc(100vw-2rem)] max-w-sm flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-2xl sm:right-6">
           <header className="flex items-center justify-between gap-3 border-b border-border px-4 py-3">
             <div className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-accent" aria-hidden />
@@ -211,7 +211,8 @@ export function ChatWidget() {
       )}
 
       {showGreeting && !open && (
-        <div className="fixed right-4 bottom-20 z-50 flex max-w-[15rem] items-start gap-2 rounded-2xl border border-border bg-background px-4 py-3 shadow-2xl sm:right-6">
+        // Tablet and up only: on phones it covers too much of the page.
+        <div className="fixed right-4 bottom-20 z-50 hidden max-w-[15rem] items-start gap-2 rounded-2xl border border-border bg-surface px-4 py-3 shadow-2xl sm:right-6 md:flex">
           <p className="text-sm leading-snug text-foreground">
             👋 Ask me anything about Bidhra — I&apos;m an AI assistant, here 24/7.
           </p>
@@ -234,8 +235,8 @@ export function ChatWidget() {
         }}
         aria-label={open ? "Close chat" : "Open AI chat"}
         className={
-          "fixed right-4 bottom-4 z-50 flex h-14 items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground shadow-lg transition hover:opacity-90 sm:right-6 " +
-          (open ? "w-14" : "px-5")
+          "fixed right-4 bottom-4 z-50 flex h-12 items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground shadow-lg transition hover:opacity-90 sm:right-6 sm:h-14 " +
+          (open ? "w-12 sm:w-14" : "w-12 sm:w-auto sm:px-5")
         }
       >
         {open ? (
@@ -243,7 +244,7 @@ export function ChatWidget() {
         ) : (
           <>
             <ChatIcon className="h-5 w-5" />
-            <span className="text-sm font-semibold">Ask AI</span>
+            <span className="hidden text-sm font-semibold sm:inline">Ask AI</span>
           </>
         )}
       </button>

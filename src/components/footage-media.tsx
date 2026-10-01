@@ -88,7 +88,7 @@ export function FootageMedia(props: Props) {
 function FootagePlaceholderTile({ label }: { label: string }) {
   return (
     <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-muted to-muted/40">
-      <span className="rounded-full border border-border bg-background/70 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+      <span className="rounded-full border border-border bg-surface/70 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-muted-foreground">
         {label}
       </span>
     </div>

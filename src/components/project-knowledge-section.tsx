@@ -41,7 +41,7 @@ function ProjectKnowledgeSectionInner({
 
   return (
     <>
-      <section className="rounded-xl border border-border bg-background p-6">
+      <section className="rounded-xl border border-border bg-surface p-6">
         <h2 className="text-2xl font-semibold tracking-tight text-foreground">
           {t("title")}
         </h2>

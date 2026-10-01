@@ -91,7 +91,7 @@ export function FeasibilityStudy({ sections }: FeasibilityStudyProps) {
           <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-accent">
             Project 001
           </p>
-          <h2 className="mt-5 max-w-sm text-5xl font-semibold leading-[0.95] text-foreground sm:text-6xl xl:text-7xl">
+          <h2 className="headline-display mt-5 max-w-sm text-5xl font-semibold leading-[0.95] text-foreground sm:text-6xl xl:text-7xl">
             Feasibility Study
           </h2>
           <div
@@ -106,7 +106,7 @@ export function FeasibilityStudy({ sections }: FeasibilityStudyProps) {
                   key={section[0]}
                   type="button"
                   onClick={() => openManually(sectionIndex, true)}
-                  className="grid w-full grid-cols-[2.5rem_1fr_auto] items-center gap-3 border-b py-3 text-start font-mono text-[10px] uppercase leading-[1.5] tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
+                  className="grid w-full grid-cols-[2.5rem_1fr_auto] items-center gap-3 border-b py-3 text-start font-mono text-[11px] uppercase leading-[1.5] tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
                   style={{ borderColor: "var(--line)" }}
                   aria-expanded={isOpen}
                 >
@@ -157,7 +157,7 @@ export function FeasibilityStudy({ sections }: FeasibilityStudyProps) {
                     }
                   >
                     <span>
-                      <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-accent">
+                      <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-accent">
                         {String(sectionIndex + 1).padStart(2, "0")}
                       </span>
                       <span

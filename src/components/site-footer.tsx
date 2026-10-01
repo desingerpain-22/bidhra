@@ -3,54 +3,69 @@ import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import type { ReactNode } from "react";
 
+// Footer: one centred column, as before: logo, the hero's headline and
+// promise, the main call to action, the header's four navigation links and
+// the social links. The header's two dropdowns link to their first page.
 export async function SiteFooter() {
   const t = await getTranslations("Footer");
   const tNav = await getTranslations("Nav");
+  const tHero = await getTranslations("Hero");
+  const headingWords = tHero.raw("headingWords") as string[];
+
+  const links = [
+    { href: "/about", label: tNav("whoWeAre") },
+    { href: "/projects", label: tNav("browse") },
+    { href: "/how-to-donate", label: tNav("howToDonateNav") },
+  ];
 
   return (
     <footer className="mt-auto border-t border-border bg-background">
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-7 px-4 py-12 text-center sm:px-6 sm:py-16 lg:px-10">
         <Link href="/" aria-label="Bidhra" className="inline-flex">
           <Image
-            src="/logo.png"
+            src="/bidhra-logo-2026.png"
             alt="Bidhra"
-            width={1124}
-            height={262}
-            className="h-8 w-auto opacity-95"
+            width={1726}
+            height={516}
+            className="h-10 w-auto opacity-95"
           />
         </Link>
 
-        <div className="flex max-w-2xl flex-col items-center gap-2">
-          <p className="text-balance text-base font-semibold leading-snug text-foreground sm:text-xl">
-            {t("mission")}
+        <div className="flex max-w-2xl flex-col items-center gap-3">
+          <p className="headline-display text-balance text-foreground">
+            <span className="block">{tHero("headingPlain")}</span>
+            <span className="block">
+              {tHero("headingLead")} {headingWords[headingWords.length - 1]}.
+            </span>
           </p>
           <p className="text-balance text-sm leading-relaxed text-muted-foreground sm:text-base">
-            {t("brief")}
+            {tHero("subheading")}
           </p>
         </div>
 
-        <a
-          href="https://chuffed.org/donate/bidhra-project-turning-aid-into-palestinian-businesses-for-economic-recovery"
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex min-h-11 items-center justify-center rounded-full bg-accent px-5 text-sm font-semibold text-accent-foreground shadow-lg shadow-accent/15 transition hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:px-6"
+        <Link
+          href="/projects"
+          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-accent px-5 text-sm font-semibold text-accent-foreground shadow-lg shadow-accent/15 transition hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:px-6"
         >
-          {tNav("cta")}
-        </a>
+          {tNav("fundCta")}
+          <span aria-hidden className="inline-block rtl:-scale-x-100">
+            →
+          </span>
+        </Link>
 
         <nav
           aria-label={t("linksHeading")}
-          className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm font-medium text-foreground/70 sm:text-base"
+          className="flex flex-wrap items-center justify-center gap-x-8 text-sm font-medium text-foreground/70 sm:text-base"
         >
-          <Link href="/about" className="transition hover:text-foreground">
-            {tNav("about")}
-          </Link>
-          <Link href="/projects" className="transition hover:text-foreground">
-            {t("browse")}
-          </Link>
-          <Link href="/apply" className="transition hover:text-foreground">
-            {t("apply")}
-          </Link>
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="inline-flex min-h-11 items-center transition hover:text-foreground"
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
 
         <div
@@ -64,7 +79,7 @@ export async function SiteFooter() {
             <LinkedInIcon />
           </SocialLink>
           <SocialLink
-            href="https://www.instagram.com/moh.share/"
+            href="https://www.instagram.com/bidhra.project/"
             label={t("instagram")}
           >
             <InstagramIcon />
