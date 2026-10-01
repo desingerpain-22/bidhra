@@ -7,6 +7,11 @@ export type FootageSlot = {
 
 const placeholder = (slot: string) => `/footage/placeholders/${slot}.svg`;
 
+// Large videos live in the Supabase project-images bucket rather than git
+// (the repo excludes them), so the deployed site can stream them.
+const storage = (file: string) =>
+  `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/project-images/${file}`;
+
 export const footage = {
   portrait: {
     src: "/footage/portrait.jpg",
@@ -15,7 +20,7 @@ export const footage = {
     aspect: "4/5",
   },
   chapter1: {
-    src: "/footage/chapter-1.mp4",
+    src: storage("moamen-chapter-1.mp4"),
     poster: "/footage/chapter-1.jpg",
     alt: "Tent in Deir Al-Balah, walking through rubble",
     aspect: "9/16",
