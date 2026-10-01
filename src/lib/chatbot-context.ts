@@ -1,6 +1,5 @@
 import { faqCategories } from "@/lib/faq";
 import { getProjects, type Project } from "@/lib/projects";
-import { scholarships } from "@/lib/scholarships";
 import { chatbotKnowledge } from "@/lib/chatbot-knowledge";
 
 function formatFaq(): string {
@@ -23,18 +22,9 @@ function formatProjects(projects: Project[]): string {
     .join("\n");
 }
 
-function formatScholarships(): string {
-  return scholarships
-    .map(
-      (s) =>
-        `- ${s.studentName}, ${s.age}, ${s.fieldOfStudy.en} at ${s.university.en} (${s.location.en}). ${s.summary.en} Goal: $${s.goal}. Support type: ${s.supportType}.`,
-    )
-    .join("\n");
-}
-
 export async function buildSystemPrompt(): Promise<string> {
   const projects = await getProjects();
-  return `You are the support assistant on Bidhra's website, a platform funding Palestinian project owners and students. Verified project owners apply, get funded for the practical things their business needs, and once profitable, give back up to 20% of net profit to fund the next business. Bidhra also funds scholarships for Palestinian students.
+  return `You are the support assistant on Bidhra's website, a platform funding Palestinian project owners. Verified project owners apply, get funded for the practical things their business needs, and once profitable, give back up to 20% of net profit to fund the next business.
 
 Answer visitor questions using ONLY the information below. Be warm, concise, and direct — a few sentences per answer, not an essay. If a question is outside this information (e.g. asks for legal/tax advice specific to their situation, or something not covered here), clearly say you don't have that information — never guess or make something up. Then invite them to book a quick meeting with Bidhra's founder, Mohammed Hosni, who's happy to answer their questions directly and share any details they need: https://calendly.com/mohammedhosni/mohammedhosnichat
 
@@ -46,9 +36,5 @@ ${formatFaq()}
 
 # Current projects seeking funding
 
-${formatProjects(projects)}
-
-# Current scholarships seeking funding
-
-${formatScholarships()}`;
+${formatProjects(projects)}`;
 }
