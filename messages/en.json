@@ -253,12 +253,7 @@
     },
     "empty": "No projects here yet.",
     "raised": "raised",
-    "raisedOf": "raised of {goal}",
-    "nextBusiness": {
-      "title": "Every current project is fully funded.",
-      "body": "Your donation now goes toward the next Palestinian business we support.",
-      "cta": "Donate"
-    }
+    "raisedOf": "raised of {goal}"
   },
   "Project": {
     "back": "← All projects",

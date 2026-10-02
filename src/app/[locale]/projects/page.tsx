@@ -117,27 +117,6 @@ export default async function ProjectsPage({
       </section>
 
       <div className="relative mx-auto w-full max-w-6xl px-4 pb-16 sm:px-8 sm:pb-20">
-        {/* With nothing In Progress there is no business to fund on this
-            page, so point donors to the next one instead of a dead end. */}
-        {counts.inProgress === 0 && counts.all > 0 && (
-          <div className="mb-8 flex flex-col gap-4 rounded-2xl border border-accent/30 bg-accent/[0.06] px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
-            <div>
-              <p className="text-base font-semibold text-foreground">{t("nextBusiness.title")}</p>
-              <p className="mt-1 text-[0.9375rem] leading-relaxed text-muted-foreground">
-                {t("nextBusiness.body")}
-              </p>
-            </div>
-            <Link
-              href="/how-to-donate"
-              className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 self-start rounded-full bg-accent px-6 text-sm font-semibold text-accent-foreground shadow-lg shadow-accent/15 transition hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:self-auto"
-            >
-              {t("nextBusiness.cta")}
-              <span aria-hidden className="inline-block rtl:-scale-x-100">
-                →
-              </span>
-            </Link>
-          </div>
-        )}
         {visible.length === 0 ? (
           <p className="py-16 text-base text-muted-foreground">{t("empty")}</p>
         ) : (
