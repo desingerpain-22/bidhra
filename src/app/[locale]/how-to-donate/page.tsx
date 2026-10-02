@@ -23,9 +23,9 @@ export const metadata: Metadata = {
 const CONTAINER = "mx-auto w-full max-w-6xl px-4 sm:px-8";
 const BRANCH = "/hero/olive-branch.webp";
 
-// The partnership form is hidden until its submissions are emailed (see
-// actions.ts); set to true to show it again.
-const SHOW_PARTNER_FORM = false;
+// The partnership form (see src/app/api/partnership/route.ts); set to false
+// to hide the section.
+const SHOW_PARTNER_FORM = true;
 
 export default async function HowToDonatePage({
   params,

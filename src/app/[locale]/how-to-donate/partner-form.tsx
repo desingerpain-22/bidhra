@@ -1,22 +1,39 @@
 "use client";
 
-import { useActionState } from "react";
+import { useState, type FormEvent } from "react";
 import { donatePage } from "@/lib/donate-content";
-import { submitPartnerInquiry, type PartnerInquiryState } from "./actions";
 
 const f = donatePage.organizations.form;
 
 const FIELD =
   "w-full rounded-lg border border-foreground/15 bg-background/60 px-3.5 py-2.5 text-[0.9375rem] text-foreground placeholder:text-muted-foreground/70 transition focus:border-accent/60 focus:outline-none focus:ring-2 focus:ring-accent/20";
 
-// Partnership enquiry form for organizations.
-export function PartnerForm() {
-  const [state, formAction, pending] = useActionState<PartnerInquiryState, FormData>(
-    submitPartnerInquiry,
-    { status: "idle" },
-  );
+type Status = "idle" | "sending" | "success" | "invalid" | "rateLimited" | "unavailable";
 
-  if (state.status === "success") {
+// Partnership enquiry form for organizations; posts to /api/partnership,
+// which saves the enquiry and emails it to Bidhra.
+export function PartnerForm() {
+  const [status, setStatus] = useState<Status>("idle");
+
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const data = Object.fromEntries(new FormData(event.currentTarget));
+    setStatus("sending");
+    try {
+      const res = await fetch("/api/partnership", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      setStatus(
+        res.ok ? "success" : res.status === 429 ? "rateLimited" : res.status === 400 ? "invalid" : "unavailable",
+      );
+    } catch {
+      setStatus("unavailable");
+    }
+  }
+
+  if (status === "success") {
     return (
       <div className="flex min-h-72 flex-col items-center justify-center gap-3 rounded-2xl border border-accent/25 bg-surface/80 p-8 text-center shadow-[0_24px_60px_-44px] shadow-foreground/30">
         <span aria-hidden className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-accent/10 text-accent">
@@ -29,37 +46,48 @@ export function PartnerForm() {
     );
   }
 
+  const errorMessage =
+    status === "invalid" ? f.error : status === "rateLimited" ? f.rateLimited : status === "unavailable" ? f.unavailable : null;
+
   return (
     <form
-      action={formAction}
+      onSubmit={onSubmit}
       className="grid gap-5 rounded-2xl border border-foreground/10 bg-surface/80 p-6 shadow-[0_24px_60px_-44px] shadow-foreground/30 sm:grid-cols-2 sm:p-8"
     >
       <Field id="partner-name" label={f.name.label}>
-        <input id="partner-name" name="name" required autoComplete="name" placeholder={f.name.placeholder} className={FIELD} />
+        <input id="partner-name" name="name" required maxLength={200} autoComplete="name" placeholder={f.name.placeholder} className={FIELD} />
       </Field>
       <Field id="partner-org" label={f.organization.label}>
-        <input id="partner-org" name="organization" autoComplete="organization" placeholder={f.organization.placeholder} className={FIELD} />
+        <input id="partner-org" name="organization" maxLength={200} autoComplete="organization" placeholder={f.organization.placeholder} className={FIELD} />
       </Field>
       <Field id="partner-email" label={f.email.label} wide>
-        <input id="partner-email" name="email" type="email" required autoComplete="email" placeholder={f.email.placeholder} className={FIELD} />
+        <input id="partner-email" name="email" type="email" required maxLength={320} autoComplete="email" placeholder={f.email.placeholder} className={FIELD} />
       </Field>
       <Field id="partner-message" label={f.message.label} wide>
-        <textarea id="partner-message" name="message" required rows={4} placeholder={f.message.placeholder} className={`${FIELD} resize-y`} />
+        <textarea id="partner-message" name="message" required maxLength={5000} rows={4} placeholder={f.message.placeholder} className={`${FIELD} resize-y`} />
       </Field>
 
-      {state.status === "error" && (
+      {/* Honeypot for bots; hidden from people and screen readers. */}
+      <div aria-hidden className="absolute -left-[9999px] h-px w-px overflow-hidden">
+        <label>
+          Website
+          <input name="website" tabIndex={-1} autoComplete="off" />
+        </label>
+      </div>
+
+      {errorMessage && (
         <p role="alert" className="text-sm text-[var(--highlight)] sm:col-span-2">
-          {f.error}
+          {errorMessage}
         </p>
       )}
 
       <button
         type="submit"
-        disabled={pending}
+        disabled={status === "sending"}
         className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-accent px-7 text-base font-semibold text-accent-foreground shadow-lg shadow-accent/20 transition hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent disabled:opacity-60 sm:col-span-2"
       >
-        {pending ? f.submitting : f.submit}
-        {!pending && (
+        {status === "sending" ? f.submitting : f.submit}
+        {status !== "sending" && (
           <span aria-hidden className="rtl:-scale-x-100">
             →
           </span>
