@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { NavDropdown } from "@/components/nav-dropdown";
 import { SiteHeaderShell } from "@/components/site-header-shell";
 import { MobileMenu } from "@/components/mobile-menu";
+import { CHUFFED_URL } from "@/lib/donate-content";
 
 const NAV_LINK =
   "whitespace-nowrap rounded-full px-3 py-1.5 text-muted-foreground transition hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
@@ -50,27 +51,31 @@ export async function SiteHeader() {
             {t("howToDonateNav")}
           </Link>
         </nav>
-        {/* Leads to the projects, so visitors see who they fund before giving. */}
-        <Link
-          href="/projects"
+        {/* Opens the official Chuffed donation page. */}
+        <a
+          href={CHUFFED_URL}
+          target="_blank"
+          rel="noreferrer"
           className="hidden min-h-10 items-center justify-center gap-2 justify-self-end whitespace-nowrap rounded-full bg-accent px-5 text-sm font-semibold text-accent-foreground shadow-lg shadow-accent/15 transition hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent lg:inline-flex"
         >
           {t("fundCta")}
           <span aria-hidden className="inline-block rtl:-scale-x-100">
             →
           </span>
-        </Link>
+        </a>
         {/* Below lg: a compact Fund a Business pill beside the menu button. */}
         <div className="flex min-w-0 items-center justify-self-end gap-2 lg:hidden">
-          <Link
-            href="/projects"
+          <a
+            href={CHUFFED_URL}
+            target="_blank"
+            rel="noreferrer"
             className="inline-flex min-h-11 items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-accent px-3.5 text-[13px] font-semibold text-accent-foreground shadow-lg shadow-accent/15 transition hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:px-5 sm:text-sm"
           >
             {t("fundCta")}
             <span aria-hidden className="hidden rtl:-scale-x-100 sm:inline-block">
               →
             </span>
-          </Link>
+          </a>
           <MobileMenu />
         </div>
       </div>

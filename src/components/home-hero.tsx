@@ -3,6 +3,7 @@ import type { CSSProperties, ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { RotatingWord } from "@/components/rotating-word";
+import { CHUFFED_URL } from "@/lib/donate-content";
 
 type HeroCard = {
   src: string;
@@ -169,15 +170,17 @@ export async function HomeHero({ locale }: { locale: string }) {
             {t("subheading")}
           </p>
           <div className="hero-actions hero-rise mt-8 flex w-full flex-col items-stretch gap-3 [--rise-delay:240ms] sm:w-auto sm:flex-row sm:items-center">
-            <Link
-              href="/projects"
+            <a
+              href={CHUFFED_URL}
+              target="_blank"
+              rel="noreferrer"
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-accent px-7 text-base font-semibold text-accent-foreground shadow-lg shadow-accent/20 transition hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
             >
               {t("cta")}
               <span aria-hidden className="inline-block rtl:-scale-x-100">
                 →
               </span>
-            </Link>
+            </a>
             <Link
               href="/#how-it-works"
               className="inline-flex min-h-12 items-center justify-center gap-2.5 rounded-full border border-border bg-surface/70 px-6 text-base font-medium text-foreground backdrop-blur transition hover:bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"

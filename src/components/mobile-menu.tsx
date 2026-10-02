@@ -3,6 +3,7 @@
 import { useEffect, useId, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
+import { CHUFFED_URL } from "@/lib/donate-content";
 
 // Navigation below lg: a menu button that opens a full-screen panel under
 // the header with every page (Who We Are's four pages grouped) and the
@@ -105,8 +106,10 @@ export function MobileMenu() {
             </div>
           ))}
 
-          <Link
-            href="/projects"
+          <a
+            href={CHUFFED_URL}
+            target="_blank"
+            rel="noreferrer"
             onClick={() => setOpen(false)}
             className="mt-8 inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-accent px-7 py-3.5 text-base font-semibold text-accent-foreground shadow-lg shadow-accent/20 transition hover:opacity-90"
           >
@@ -114,7 +117,7 @@ export function MobileMenu() {
             <span aria-hidden className="inline-block rtl:-scale-x-100">
               →
             </span>
-          </Link>
+          </a>
         </nav>
       </div>
     </div>

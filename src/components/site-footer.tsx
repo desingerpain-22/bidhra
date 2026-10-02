@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import type { ReactNode } from "react";
+import { CHUFFED_URL } from "@/lib/donate-content";
 
 // Footer: one centred column, as before: logo, the hero's headline and
 // promise, the main call to action, the header's four navigation links and
@@ -43,15 +44,17 @@ export async function SiteFooter() {
           </p>
         </div>
 
-        <Link
-          href="/projects"
+        <a
+          href={CHUFFED_URL}
+          target="_blank"
+          rel="noreferrer"
           className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-accent px-5 text-sm font-semibold text-accent-foreground shadow-lg shadow-accent/15 transition hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:px-6"
         >
           {tNav("fundCta")}
           <span aria-hidden className="inline-block rtl:-scale-x-100">
             →
           </span>
-        </Link>
+        </a>
 
         <nav
           aria-label={t("linksHeading")}
